@@ -33,6 +33,11 @@ public class ProductController {
 	public ModelAndView testMethod() {
 		return new ModelAndView("/index.html", "p", "Krishna");
 	}
+	@RequestMapping("/hello")
+	@ResponseBody
+	public String someMethod() {
+		return ("Hello");
+	}
 
 	@RequestMapping("/category/{query}")
 	@ResponseBody
