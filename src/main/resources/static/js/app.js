@@ -3,7 +3,8 @@ var myApp = angular.module('myApp', ["ngRoute"]);
 myApp.controller('myCtrl', function ($scope,$location,$rootScope) {	
       $rootScope.cartCount = 0;
       $rootScope.cart=new Map();
-    if($rootScope.cart.size<=0){
+      $rootScope.cart.set('1','Oppo')
+      if($rootScope.cart.size<=0){
         $('.numberCircle').hide();
     }
   $('.modal').modal();
@@ -67,12 +68,7 @@ myApp.config(function($routeProvider) {
 
 myApp.controller('homeController', function($scope,$rootScope) {
 	  $('.carousel.carousel-slider').carousel({fullWidth: true});           
-            $rootScope.addToCart = function() {
-       $('.numberCircle').show();
-            $rootScope.cart.set('1','Oppo')
-            console.log('cart length',$rootScope.cart)
-            $rootScope.cartCount++;
-      };
+           
 });
 
 myApp.controller('productController', function($scope,userRepository) {
@@ -96,9 +92,10 @@ myApp.controller('listController', function($scope,userRepository,$rootScope) {
            $scope.Products = response;
         });
       }
-    $rootScope.addToCart = function() {
-        console.log('cart', $rootScope.cartCount)
-        $rootScope.cartCount++;
+    $rootScope.addToCart = function(productName) {
+        console.log('cart', productName)
+         $('.numberCircle').show();
+            $rootScope.cartCount++;
     };   
 });
 
