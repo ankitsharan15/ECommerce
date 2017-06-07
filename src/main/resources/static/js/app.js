@@ -6,7 +6,7 @@ myApp.controller('myCtrl', function ($scope,$location,$rootScope) {
       $scope.go = function ( path ) {
       $location.path( path );
     }; 
-    $rootScope.selectedCategory="";
+
     
 
 });
@@ -52,8 +52,8 @@ myApp.controller('listController', function($scope,userRepository,$rootScope) {
 
     $rootScope.getViaCategory=function(x){
 
-         $rootScope.selectedCategory = x ;
-         var product = $rootScope.selectedCategory;
+         $scope.selectedCategory = x ;
+         var product = $scope.selectedCategory;
           userRepository.getByCategory(product).success(function(response) {
            console.log('response'+response);
            $scope.Products = response;
