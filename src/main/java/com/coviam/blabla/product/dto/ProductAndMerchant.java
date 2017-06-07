@@ -1,26 +1,26 @@
-package com.coviam.blabla.dto;
+package com.coviam.blabla.product.dto;
 
 import java.util.List;
 
-import com.coviam.blabla.entity.Product;
-import com.coviam.blabla.entity.ProductMerchant;
+import com.coviam.blabla.product.entity.Product;
+import com.coviam.blabla.product.entity.ProductMerchant;
 
 public class ProductAndMerchant {
 
-	private Product product;
+	private List<Product> product;
 	private List<ProductMerchant> productmerchant;
 	
-	public ProductAndMerchant(Product product, List<ProductMerchant> productmerchant) {
+	public ProductAndMerchant(List<Product> product, List<ProductMerchant> productmerchant) {
 		super();
 		this.product = product;
 		this.productmerchant = productmerchant;
 	}
 
-	public Product getProduct() {
+	public List<Product> getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(List<Product> product) {
 		this.product = product;
 	}
 

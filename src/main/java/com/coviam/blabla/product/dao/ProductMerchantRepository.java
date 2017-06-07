@@ -1,9 +1,9 @@
-package com.coviam.blabla.dao;
+package com.coviam.blabla.product.dao;
 
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
-import com.coviam.blabla.entity.ProductMerchant;
-import com.coviam.blabla.entity.ProductMerchantId;
+import com.coviam.blabla.product.entity.ProductMerchant;
+import com.coviam.blabla.product.entity.ProductMerchantId;
 
 public interface ProductMerchantRepository extends CrudRepository<ProductMerchant, ProductMerchantId> {
 

@@ -1,18 +1,18 @@
-package com.coviam.blabla.service;
+package com.coviam.blabla.product.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.coviam.blabla.dao.ProductMerchantRepository;
-import com.coviam.blabla.dao.ProductRepository;
-import com.coviam.blabla.dao.ProductSpecificationRepository;
-import com.coviam.blabla.dao.SpecificationRepository;
-import com.coviam.blabla.entity.Product;
-import com.coviam.blabla.entity.ProductMerchant;
-import com.coviam.blabla.entity.ProductMerchantId;
-import com.coviam.blabla.entity.ProductSpecification;
-import com.coviam.blabla.entity.Specification;
+import com.coviam.blabla.product.dao.ProductMerchantRepository;
+import com.coviam.blabla.product.dao.ProductRepository;
+import com.coviam.blabla.product.dao.ProductSpecificationRepository;
+import com.coviam.blabla.product.dao.SpecificationRepository;
+import com.coviam.blabla.product.entity.Product;
+import com.coviam.blabla.product.entity.ProductMerchant;
+import com.coviam.blabla.product.entity.ProductMerchantId;
+import com.coviam.blabla.product.entity.ProductSpecification;
+import com.coviam.blabla.product.entity.Specification;
 
 @Service
 public class ProductService implements ProductServiceInterface{
@@ -42,7 +42,7 @@ public class ProductService implements ProductServiceInterface{
 	}
 
 	@Override
-	public Product getProduct(int productCode) {
+	public List<Product> getProduct(int productCode) {
 		// TODO Auto-generated method stub
 		return pr.findByProductCode(productCode);
 	}
@@ -74,5 +74,13 @@ public class ProductService implements ProductServiceInterface{
 		// TODO Auto-generated method stub
 		return (List<Specification>) sr.findAll(id);
 	}
+
+	@Override
+	public List<Product> getProductCodes(String category) {
+		// TODO Auto-generated method stub
+		return pr.findByProductCategory(category);
+	}
+
+	
 
 }

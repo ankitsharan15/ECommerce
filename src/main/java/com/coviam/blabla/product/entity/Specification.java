@@ -1,4 +1,4 @@
-package com.coviam.blabla.entity;
+package com.coviam.blabla.product.entity;
 
 import java.io.Serializable;
 
@@ -10,6 +10,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "specification")
 public class Specification implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "spec_id")

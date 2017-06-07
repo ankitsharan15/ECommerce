@@ -1,4 +1,4 @@
-package com.coviam.blabla.entity;
+package com.coviam.blabla.product.entity;
 
 import java.io.Serializable;
 
