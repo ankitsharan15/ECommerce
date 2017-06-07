@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.coviam.blabla.merchant.dto.RatingList;
 import com.coviam.blabla.merchant.entity.Merchant;
 import com.coviam.blabla.merchant.service.MerchantServiceInterface;
+import com.coviam.blabla.merchant.service.iScoreCalculator;
 import com.coviam.blabla.order.dto.OrderAndItems;
 import com.coviam.blabla.order.entity.Order;
 import com.coviam.blabla.order.service.OrderService;
@@ -32,8 +33,10 @@ public class ProductController {
 	@Autowired
 	OrderService orderservice;
 	
-	@Autowired
 	MerchantServiceInterface msi;
+	@Autowired
+	iScoreCalculator isc;
+
 
 	@RequestMapping(value = "/")
 	public String returnAllProducts() {
@@ -49,6 +52,7 @@ public class ProductController {
 		return productList;
 
 	}
+	
 
 	@RequestMapping("/product/{pCode}/{mId}")
 	@ResponseBody
@@ -96,14 +100,13 @@ public class ProductController {
 
 	@RequestMapping(value = "/orders/checkout", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean saveOrder(@RequestBody OrderAndItems orderanditems) {
-
+	public void saveOrder(@RequestBody OrderAndItems orderanditems){
+		
 		Order savedOrder = orderservice.saveOrder(orderanditems);
 		long orderId = savedOrder.getOrderId();
 		orderservice.saveOrderItems(orderanditems, orderId);
-		return true;
-	}
-
+		}
+	
 	@RequestMapping(value = "/orders/history", method = RequestMethod.POST)
 	@ResponseBody
 	public List<OrderAndItems> fetchOrderHistory(@RequestBody String email) {
