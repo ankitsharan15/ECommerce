@@ -30,17 +30,28 @@ public class Product {
 
 	@Column(name = "product_image")
 	private String productImage;
-	
-	@Column(name = "best_price")
-	private long bestPrice;
-	
-	
 
-	public long getBestPrice() {
+	@Column(name = "best_price")
+	private float bestPrice;
+
+	public Product(int productCode, String productName, String productUsp, String productCategory, String productDesc,
+			String productBrand, String productImage, float bestPrice) {
+		super();
+		this.productCode = productCode;
+		this.productName = productName;
+		this.productUsp = productUsp;
+		this.productCategory = productCategory;
+		this.productDesc = productDesc;
+		this.productBrand = productBrand;
+		this.productImage = productImage;
+		this.bestPrice = bestPrice;
+	}
+
+	public float getBestPrice() {
 		return bestPrice;
 	}
 
-	public void setBestPrice(long bestPrice) {
+	public void setBestPrice(float bestPrice) {
 		this.bestPrice = bestPrice;
 	}
 

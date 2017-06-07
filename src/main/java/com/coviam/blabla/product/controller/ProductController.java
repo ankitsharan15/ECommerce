@@ -37,6 +37,7 @@ public class ProductController {
 
 	@RequestMapping(value = "/")
 	public String returnAllProducts() {
+		
 		return ("index.html");
 	}
 
