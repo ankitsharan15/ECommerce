@@ -26,8 +26,6 @@ public class Order {
 	private long orderId;
 	@Column(name="EMAIL")
 	private String emailId;
-	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="DATE")
 	private Date date;
 	

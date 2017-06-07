@@ -99,23 +99,42 @@ myApp.controller('listController', function($scope,userRepository,$rootScope) {
     };   
 });
 
-myApp.controller('cartController', function($scope,$rootScope) {
-    $rootScope.deleteFromCart = function() {
-    $rootScope.cart.delete('1'); //delete by key -> ProductID
-    if($rootScope.cartCount>0){
-	   $rootScope.cartCount--;
-    }}
-     $scope.emailSubmit = function () {
-      console.log('emailForCart',$('#email').val()); //email_id
-      if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#emailForCart').val())){
-         $rootScope.go('/orders')  
-         $('#email_modal').modal('close'); 
-      }
-      else{
-          alert('You have entered wrong email address');
-      }
-      
-};
+myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
+	 $rootScope.deleteFromCart = function() {
+		    $rootScope.cart.delete('1'); //delete by key -> ProductID
+		    if($rootScope.cartCount>0){
+			   $rootScope.cartCount--;
+		    }}
+		     $scope.emailSubmit = function () {
+		      console.log('emailForCart',$('#email').val()); //email_id
+		      if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#emailForCart').val())){
+		         $rootScope.go('/orders')  
+		         $('#email_modal').modal('close'); 
+		      }
+		      else{
+		          alert('You have entered wrong email address');
+		      }
+		     }
+		      
+	  $scope.testData={
+               "emailId": "neelasha@gmail.com",
+				"date": 1496595243861,
+				"productList": {
+					"productId": 234,
+					"merchantId": 11,
+					"quantity": 1,
+					"rating": 2.0,
+					"reviews": "Nice"
+				}
+			}
+	  var test = $scope.testData;
+	  $rootScope.testPost = function(){
+		  orderRepository.postByOrders(test).success(function(){
+				 console.log("successfully sent"); 
+			  });  
+	  }
+
+
 });
 myApp.controller('orderController',function($scope){
     

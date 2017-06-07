@@ -58,7 +58,7 @@ public class ProductService implements ProductServiceInterface{
 	@Override
 	public List<ProductMerchant> getMerchantDetails(int productCode) {
 		// TODO Auto-generated method stub
-		List<ProductMerchant> productmerchantlist = pmr.findByProductmerchantidProductCode(productCode);
+		List<ProductMerchant> productmerchantlist = pmr.findByProductmerchantidProductCodeOrderByScoreDesc(productCode);
 		return productmerchantlist;
 	}
 
@@ -79,6 +79,21 @@ public class ProductService implements ProductServiceInterface{
 	public List<Product> getProductCodes(String category) {
 		// TODO Auto-generated method stub
 		return pr.findByProductCategory(category);
+	}
+
+	@Override
+	public void saveProduct() {
+		// TODO Auto-generated method stub
+		Product p = new Product(4, "Levis Jeans", "Levis Slim fit Jeans", "fashion", "SLim Fit 98% Cotton Jeans", "Levis", "http://ecx.images-amazon.com/images/I/91EOx1YAVJL._UL1500_.jpg", 1200);
+		pr.save(p);
+		p = new Product(5, "TMH Maths", "Designed And Developed By IIT Professors", "book", "Recommended for JEE Aspirants", "TMH", "http://ecx.images-amazon.com/images/I/61xYqbt6vlL.jpg", 500);
+		pr.save(p);
+		p = new Product(6, "Nike Air", "Blue, 8.5 Running Shoes", "shoes", "Running Shoes", "Nike", "http://ecx.images-amazon.com/images/I/51biuafgJBL.jpg", 4000);
+		pr.save(p);
+		p = new Product(7, "Iphone 7", "64GB,Red", "phone", "Latest release by Apple", "Apple", "http://ecx.images-amazon.com/images/I/814lO6nm9vL._SL1500_.jpg", 70000);
+		pr.save(p);
+		p = new Product(8, "OnePlus 3T", "64GB, 4GB RAM", "phone", "Best Budget phone rated by India Times", "OnePlus", "http://ecx.images-amazon.com/images/I/81%2B4WXlorFL._SL1500_.jpg", 32000);
+		pr.save(p);
 	}
 
 	

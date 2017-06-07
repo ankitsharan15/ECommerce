@@ -34,8 +34,10 @@ footer {
 min-height: 400px;
 }
 body{
-      background: url(../images/white_leather.png) repeat 0 0;
+          background-image: url(https://d2zxo3dbbqu73w.cloudfront.net/fwassets-test/4a24c79a/images/bg.png);
+    background-color: #fff;
 }
+
 .category{
     margin: 0;
     margin-top: 50px;

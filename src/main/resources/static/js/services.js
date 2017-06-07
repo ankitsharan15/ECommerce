@@ -8,3 +8,13 @@ myApp.factory('userRepository',function ($http){
        }
    };
 });
+myApp.factory('orderRepository',function ($http){
+	   return {
+		      postByOrders:function(order){
+	           var url="/orders/checkout";
+
+	           return $http.post(url,order);
+	       }
+	   };
+	});
+

@@ -9,5 +9,5 @@ public interface ProductMerchantRepository extends CrudRepository<ProductMerchan
 
 	public List<ProductMerchant> findByProductmerchantid(ProductMerchantId pmid);
 	
-	public List<ProductMerchant> findByProductmerchantidProductCode(int pCode);
+	public List<ProductMerchant> findByProductmerchantidProductCodeOrderByScoreDesc(int pCode);
 }
