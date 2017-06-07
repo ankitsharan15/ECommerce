@@ -16,10 +16,7 @@ public class MerchantController {
 	@Autowired
 	MerchantServiceInterface msi;
 
-	@RequestMapping("/")
-	public String index(){
-        return "Greetings from BlaBla";
-	}
+
 	
     	@RequestMapping("/merchant")
     	public List<Merchant> Merchantindex(){
