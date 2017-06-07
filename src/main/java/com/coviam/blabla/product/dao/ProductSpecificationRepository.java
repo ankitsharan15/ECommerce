@@ -1,11 +1,11 @@
-package com.coviam.blabla.dao;
+package com.coviam.blabla.product.dao;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.coviam.blabla.entity.ProductSpecification;
-import com.coviam.blabla.entity.ProductSpecificationId;
+import com.coviam.blabla.product.entity.ProductSpecification;
+import com.coviam.blabla.product.entity.ProductSpecificationId;
 
 public interface ProductSpecificationRepository extends CrudRepository<ProductSpecification	, ProductSpecificationId>{
 

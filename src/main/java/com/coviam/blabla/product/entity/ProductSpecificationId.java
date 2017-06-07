@@ -1,4 +1,4 @@
-package com.coviam.blabla.entity;
+package com.coviam.blabla.product.entity;
 
 import java.io.Serializable;
 
@@ -8,6 +8,11 @@ import javax.persistence.Embeddable;
 @Embeddable
 
 public class ProductSpecificationId implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Column(name = "product_code")
 	int productCode;

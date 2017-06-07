@@ -1,20 +1,20 @@
-package com.coviam.blabla.dto;
+package com.coviam.blabla.product.dto;
 
 import java.util.List;
 
-import com.coviam.blabla.entity.Product;
-import com.coviam.blabla.entity.ProductMerchant;
-import com.coviam.blabla.entity.ProductSpecification;
-import com.coviam.blabla.entity.Specification;
+import com.coviam.blabla.product.entity.Product;
+import com.coviam.blabla.product.entity.ProductMerchant;
+import com.coviam.blabla.product.entity.ProductSpecification;
+import com.coviam.blabla.product.entity.Specification;
 
 public class ProductDetails {
 
-	private Product product;
+	private List<Product> product;
 	private List<ProductSpecification> specification;
 	private List<ProductMerchant> productMerchant;
 	private List<Specification> specList;
 
-	public ProductDetails(Product product, List<ProductSpecification> specification,
+	public ProductDetails(List<Product> product, List<ProductSpecification> specification,
 			List<ProductMerchant> productMerchant, List<Specification> specList) {
 		super();
 		this.product = product;
@@ -35,11 +35,11 @@ public class ProductDetails {
 		this.specification = specification;
 	}
 
-	public Product getProduct() {
+	public List<Product> getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(List<Product> product) {
 		this.product = product;
 	}
 

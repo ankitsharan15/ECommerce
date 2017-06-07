@@ -1,4 +1,4 @@
-package com.coviam.blabla.entity;
+package com.coviam.blabla.product.entity;
 
 import java.io.Serializable;
 import javax.persistence.Column;
@@ -35,7 +35,17 @@ public class ProductMerchant implements Serializable {
 	@Column(name = "score")
 	long score;
 
+	@Column(name = "capacity")
+	long capacity;
 	
+
+	public long getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(long capacity) {
+		this.capacity = capacity;
+	}
 
 	public float getPrice() {
 		return price;
@@ -72,8 +82,10 @@ public class ProductMerchant implements Serializable {
 	@Override
 	public String toString() {
 		return "ProductMerchant [productmerchantid=" + productmerchantid + ", price=" + price + ", stock=" + stock
-				+ ", score=" + score + "]";
+				+ ", score=" + score + ", capacity=" + capacity + "]";
 	}
+
+	
 
 	
 

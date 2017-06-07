@@ -1,4 +1,4 @@
-package com.coviam.blabla.entity;
+package com.coviam.blabla.product.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
