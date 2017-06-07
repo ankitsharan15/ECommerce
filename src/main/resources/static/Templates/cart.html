@@ -1,26 +1,45 @@
-<div class="category col s8" style="margin-top:0px;margin-bottom:30px">Shopping Cart</div>
-<a class="waves-effect light-blue darken-2 btn-large col s2 offset-s2">CHECKOUT</a>
+<div ng-controller="cartController" class="category col s8" style="margin-top:0px;margin-bottom:30px">Shopping Cart</div>
+<a class="waves-effect light-blue darken-2 btn-large col s2 offset-s2" href="#email_modal">CHECKOUT</a>
 <div class="row" style="border-bottom:1px dashed;padding-bottom:10px">
     <div class="col s3 offset-s6 merchant left">Price</div>
     <div class="col s2 offset-s1 merchant left">Quantity</div>
 </div>
 <!-- Reusable code for Products in Cart -->
-<div class="row" style="border-bottom:1px dashed;padding-bottom:10px">
-    <div class="col s5">
+<div class="row valign-wrapper" style="border-bottom:1px dashed;padding-bottom:10px" id="product1">
+    <div class="col s6">
         <div class="col s12 l2 m4">
           <img src="http://ecx.images-amazon.com/images/I/41lXbF77NXL._AC_US160_FMwebp_QL70_.jpg" style="height:100px;width:80px">
         </div>
         <div class="col s10">
             <div class="name col s12" style="padding-left:5px">Name</div>
             <div class="merchant col s12" style="padding-bottom:5px;padding-left:5px">Merchant</div>
-            <div class="col l2 s12" style="padding-left:5px;;margin:0">Delete</div>
-            <div class="col l5 s12">Save for later</div>
+            <a ng-click="deleteFromCart()" class="col l2 s12" style="padding-left:5px;;margin:0">Delete</a>
+            <a class="col l5 s12">Save for later</a>
         </div>
     </div>
-    <div class="col s2 center price">
+    <div class="col s2 left price">
         Price
     </div>
-    <div class="col s2">
-      <h1>hello</h1>
+    <div class="col s3 offset-s1">
+      <div class="input-field col s12">
+    <select class="browser-default">
+      <option value="" disabled selected>Choose your option</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+  </div>
+    </div>
+</div>
+<div id="email_modal" class="modal">
+        <div class="row center" style="padding-top:35px">
+         <div class="col s10 offset-s1 input-field">
+             <input id="emailForCart" type="email" class="validate" placeholder="Email ID"  ng-enter="emailSubmit()" autofocus>
+        </div>
+        <button class="btn waves-effect waves-light col s2 offset-s2" type="submit" ng-click="emailSubmit()" name="action">Submit
+          <i class="material-icons right">send</i>
+         </button>
+        <button class="btn waves-effect waves-light col s2 offset-s2 modal-action modal-close"  ng-click="go('/cart')" name="action">Go Back
+         </button> 
     </div>
 </div>

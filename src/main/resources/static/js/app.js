@@ -2,14 +2,46 @@ var myApp = angular.module('myApp', ["ngRoute"]);
 
 myApp.controller('myCtrl', function ($scope,$location,$rootScope) {	
       $rootScope.cartCount = 0;
-      $('.modal').modal();
-      $scope.go = function ( path ) {
-      $location.path( path );
+      $rootScope.cart=new Map();
+    if($rootScope.cart.size<=0){
+        $('.numberCircle').hide();
+    }
+  $('.modal').modal();
+    $('.modal').modal({
+      dismissible: false, 
+    })
+  $rootScope.go = function ( path ) {
+  $location.path( path );$scope.emailSubmit = function () {
+      console.log('email',$('#email').val()); //email_id
+      if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email').val())){
+         $scope.go('/orders')  
+         $('#email_modal').modal('close'); 
+      }
+      else{
+          $("#email").next("label").attr('data-error','Wrong');
+          alert('You have entered wrong email address');
+      }
+      
+};
     }; 
-    $rootScope.selectedCategory="";
+
     
 
 });
+
+myApp.directive('ngEnter', function() {
+        return function(scope, element, attrs) {
+            element.bind("keydown keypress", function(event) {
+                if(event.which === 13) {
+                    scope.$apply(function(){
+                        scope.$eval(attrs.ngEnter, {'event': event});
+                    });
+
+                    event.preventDefault();
+                }
+            });
+        };
+    });
 
 myApp.config(function($routeProvider) {
     $routeProvider
@@ -36,11 +68,16 @@ myApp.config(function($routeProvider) {
 myApp.controller('homeController', function($scope,$rootScope) {
 	  $('.carousel.carousel-slider').carousel({fullWidth: true});           
             $rootScope.addToCart = function() {
-        $rootScope.cartCount++;
+       $('.numberCircle').show();
+            $rootScope.cart.set('1','Oppo')
+            console.log('cart length',$rootScope.cart)
+            $rootScope.cartCount++;
       };
 });
 
 myApp.controller('productController', function($scope,userRepository) {
+    $('ul.tabs').tabs();
+    $('ul.tabs').tabs('select_tab', 'tab_id');
     $scope.getAllProducts=function(){
           userRepository.getByCategory().success(function(data) {
            $scope.Products = data.product;
@@ -52,8 +89,8 @@ myApp.controller('listController', function($scope,userRepository,$rootScope) {
 
     $rootScope.getViaCategory=function(x){
 
-         $rootScope.selectedCategory = x ;
-         var product = $rootScope.selectedCategory;
+         $scope.selectedCategory = x ;
+         var product = $scope.selectedCategory;
           userRepository.getByCategory(product).success(function(response) {
            console.log('response'+response);
            $scope.Products = response;
@@ -65,5 +102,24 @@ myApp.controller('listController', function($scope,userRepository,$rootScope) {
     };   
 });
 
-myApp.controller('cartController', function($scope) {
+myApp.controller('cartController', function($scope,$rootScope) {
+    $rootScope.deleteFromCart = function() {
+    $rootScope.cart.delete('1'); //delete by key -> ProductID
+    if($rootScope.cartCount>0){
+	   $rootScope.cartCount--;
+    }}
+     $scope.emailSubmit = function () {
+      console.log('emailForCart',$('#email').val()); //email_id
+      if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#emailForCart').val())){
+         $rootScope.go('/orders')  
+         $('#email_modal').modal('close'); 
+      }
+      else{
+          alert('You have entered wrong email address');
+      }
+      
+};
+});
+myApp.controller('orderController',function($scope){
+    
 });

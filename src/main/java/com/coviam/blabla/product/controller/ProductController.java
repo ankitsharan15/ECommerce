@@ -22,7 +22,6 @@ public class ProductController {
 
 	@RequestMapping(value = "/")
 	public String returnAllProducts() {
-		// List<Product> p = ps.getAllProducts();
 		return ("index.html");
 	}
 
