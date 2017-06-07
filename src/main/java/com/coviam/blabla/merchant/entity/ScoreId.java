@@ -1,4 +1,4 @@
-package com.coviam.blabla.entity;
+package com.coviam.blabla.merchant.entity;
 
 import java.io.Serializable;
 import javax.persistence.Column;

@@ -117,6 +117,7 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 		      else{
 		          alert('You have entered wrong email address');
 		      }
+		     }
 		      
 	  $scope.testData={
                "emailId": "neelasha@gmail.com",

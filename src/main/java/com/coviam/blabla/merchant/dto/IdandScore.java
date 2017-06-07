@@ -1,7 +1,7 @@
-package com.coviam.blabla.dto;
+package com.coviam.blabla.merchant.dto;
 
-import com.coviam.blabla.entity.ScoreId;
-import com.coviam.blabla.entity.Score;
+import com.coviam.blabla.merchant.entity.ScoreId;
+import com.coviam.blabla.merchant.entity.Score;
 public class IdandScore {
 	private ScoreId scoreid;
 	private double Score;
