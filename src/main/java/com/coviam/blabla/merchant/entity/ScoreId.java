@@ -1,10 +1,9 @@
-package com.coviam.blabla.entity;
+package com.coviam.blabla.merchant.entity;
 
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-@SuppressWarnings("serial")
 @Embeddable
 public class ScoreId implements Serializable{
 	@Column(name="merchant_id")

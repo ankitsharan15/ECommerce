@@ -47,6 +47,10 @@ public class Product {
 		this.bestPrice = bestPrice;
 	}
 
+	public Product(){
+		
+	}
+	
 	public float getBestPrice() {
 		return bestPrice;
 	}

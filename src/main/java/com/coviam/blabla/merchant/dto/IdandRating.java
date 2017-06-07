@@ -1,6 +1,6 @@
-package com.coviam.blabla.dto;
+package com.coviam.blabla.merchant.dto;
 
-import com.coviam.blabla.entity.Merchant;
+import com.coviam.blabla.merchant.entity.Merchant;
 
 public class IdandRating {
 	private long merchantId;
