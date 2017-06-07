@@ -7,5 +7,4 @@ import com.coviam.blabla.entity.Merchant;
 
 @Repository
 public interface MerchantRepository extends CrudRepository<Merchant,Long> {
-
 }

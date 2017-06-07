@@ -15,7 +15,7 @@ import com.coviam.blabla.entity.ScoreId;
 
 @Service
 public class ScoreCalculator implements iScoreCalculator{
-	double weights[]={0.1,0.3,0.2,1.0,0.009,2.0};
+	double weights[]={1,3,2,1,9,2};
 	
 		@Autowired
 		private ScoreRepository scoreRepository;
@@ -24,6 +24,13 @@ public class ScoreCalculator implements iScoreCalculator{
 		
 		List<ScoreUpdaterfromOrder> scoreUpdaterListfromOrder;
 		List<ScoreUpdaterfromProduct> scoreUpdaterListfromProduct;
+
+		public ScoreCalculator(List<ScoreUpdaterfromOrder> scoreUpdaterListfromOrder,
+				List<ScoreUpdaterfromProduct> scoreUpdaterListfromProduct) {
+			super();
+			this.scoreUpdaterListfromOrder = scoreUpdaterListfromOrder;
+			this.scoreUpdaterListfromProduct = scoreUpdaterListfromProduct;
+		}
 
 		private double calcScore;
 		
@@ -42,7 +49,7 @@ public class ScoreCalculator implements iScoreCalculator{
 				int counterCurrRating=score.getCounterCustomerRating();
 				prodRating=((currRating*counterCurrRating)+prodRating)/(counterCurrRating+1);
 				score.setCustomerRating(prodRating);	
-				ScoreCalculator scoreCalculator=new ScoreCalculator();
+				ScoreCalculator scoreCalculator=new ScoreCalculator(scoreUpdaterListfromOrder, scoreUpdaterListfromProduct);
 				scoreCalculator.updatesFromScore(scoreId,score);
 				int numProd=score.getNumOfProd();
 				int numProdSold=score.getNumProdSold();
@@ -50,8 +57,8 @@ public class ScoreCalculator implements iScoreCalculator{
 				Merchant merchant=merchantRepository.findOne(merchantId);
 				double merchantRating=merchant.getMerchantRating();
 				double priceRating=score.getPriceRating();
-				calcScore = (weights[0]*numProd)+(weights[1]*numProdSold)+(weights[2]*stock)+(weights[3]*merchantRating)+(weights[4]*priceRating)+(weights[5]*prodRating);
-			}
+				calcScore = ((weights[0]*numProd)/10)+((weights[1]*numProdSold)/10)+((weights[2]*stock)/10)+(weights[3]*merchantRating)+((weights[4]*priceRating)/100)+(weights[5]*prodRating);
+				}
 				return calcScore;
 			}
 		
