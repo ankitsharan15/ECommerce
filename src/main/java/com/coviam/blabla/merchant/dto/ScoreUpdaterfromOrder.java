@@ -1,6 +1,6 @@
-package com.coviam.blabla.dto;
+package com.coviam.blabla.merchant.dto;
 
-import com.coviam.blabla.entity.Score;
+import com.coviam.blabla.merchant.entity.Score;
 
 public class ScoreUpdaterfromOrder {
 	private long productId;

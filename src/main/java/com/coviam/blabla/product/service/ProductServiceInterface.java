@@ -17,4 +17,5 @@ public interface ProductServiceInterface {
 	public List<ProductSpecification> getProductSpecificationsByProduct(int productCode);
 	public List<Specification> getSpecsById(List<Integer> id);
 	public List<Product> getProductCodes(String category);
+	public void saveProduct();
 }
