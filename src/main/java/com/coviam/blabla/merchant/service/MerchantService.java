@@ -1,17 +1,17 @@
-package com.coviam.blabla.service;
+package com.coviam.blabla.merchant.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.coviam.blabla.dao.MerchantRepository;
-import com.coviam.blabla.dao.ScoreRepository;
-import com.coviam.blabla.dto.IdandRating;
-import com.coviam.blabla.dto.RatingList;
-import com.coviam.blabla.entity.Merchant;
-import com.coviam.blabla.entity.Score;
-import com.coviam.blabla.entity.ScoreId;
+import com.coviam.blabla.merchant.dao.MerchantRepository;
+import com.coviam.blabla.merchant.dao.ScoreRepository;
+import com.coviam.blabla.merchant.dto.IdandRating;
+import com.coviam.blabla.merchant.dto.RatingList;
+import com.coviam.blabla.merchant.entity.Merchant;
+import com.coviam.blabla.merchant.entity.Score;
+import com.coviam.blabla.merchant.entity.ScoreId;
 
 @Service
 public class MerchantService implements MerchantServiceInterface{

@@ -1,17 +1,18 @@
-package com.coviam.blabla.service;
+package com.coviam.blabla.merchant.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.coviam.blabla.dao.MerchantRepository;
-import com.coviam.blabla.dao.ScoreRepository;
-import com.coviam.blabla.dto.ScoreUpdaterfromOrder;
-import com.coviam.blabla.dto.ScoreUpdaterfromProduct;
-import com.coviam.blabla.entity.Merchant;
-import com.coviam.blabla.entity.Score;
-import com.coviam.blabla.entity.ScoreId;
+import com.coviam.blabla.merchant.dao.MerchantRepository;
+import com.coviam.blabla.merchant.dao.ScoreRepository;
+import com.coviam.blabla.merchant.dto.ScoreUpdaterfromOrder;
+import com.coviam.blabla.merchant.dto.ScoreUpdaterfromProduct;
+import com.coviam.blabla.merchant.entity.Merchant;
+import com.coviam.blabla.merchant.entity.Score;
+import com.coviam.blabla.merchant.entity.ScoreId;
 
 @Service
 public class ScoreCalculator implements iScoreCalculator{
@@ -21,20 +22,10 @@ public class ScoreCalculator implements iScoreCalculator{
 		private ScoreRepository scoreRepository;
 		@Autowired
 		private MerchantRepository merchantRepository;
-		
-		List<ScoreUpdaterfromOrder> scoreUpdaterListfromOrder;
-		List<ScoreUpdaterfromProduct> scoreUpdaterListfromProduct;
-
-		public ScoreCalculator(List<ScoreUpdaterfromOrder> scoreUpdaterListfromOrder,
-				List<ScoreUpdaterfromProduct> scoreUpdaterListfromProduct) {
-			super();
-			this.scoreUpdaterListfromOrder = scoreUpdaterListfromOrder;
-			this.scoreUpdaterListfromProduct = scoreUpdaterListfromProduct;
-		}
-
-		private double calcScore;
-		
-		public double generateScore(){
+				
+		public Iterable<Double> generateScore(List<ScoreUpdaterfromOrder> scoreUpdaterListfromOrder,
+					List<ScoreUpdaterfromProduct> scoreUpdaterListfromProduct){
+			List<Double> calcScoreList=new ArrayList<Double>();
 			for(ScoreUpdaterfromOrder scoreUpdater : scoreUpdaterListfromOrder){
 				long merchantId=scoreUpdater.getMerchantId();
 				int numOfProdSold=scoreUpdater.getNumOfProd();
@@ -49,20 +40,24 @@ public class ScoreCalculator implements iScoreCalculator{
 				int counterCurrRating=score.getCounterCustomerRating();
 				prodRating=((currRating*counterCurrRating)+prodRating)/(counterCurrRating+1);
 				score.setCustomerRating(prodRating);	
-				ScoreCalculator scoreCalculator=new ScoreCalculator(scoreUpdaterListfromOrder, scoreUpdaterListfromProduct);
-				scoreCalculator.updatesFromScore(scoreId,score);
+				ScoreCalculator scoreCalculator=new ScoreCalculator();
+				scoreCalculator.updatesFromProduct(scoreId,score,scoreUpdaterListfromProduct);
 				int numProd=score.getNumOfProd();
 				int numProdSold=score.getNumProdSold();
 				int stock=score.getCurrentStock();
 				Merchant merchant=merchantRepository.findOne(merchantId);
 				double merchantRating=merchant.getMerchantRating();
 				double priceRating=score.getPriceRating();
+				double calcScore;
 				calcScore = ((weights[0]*numProd)/10)+((weights[1]*numProdSold)/10)+((weights[2]*stock)/10)+(weights[3]*merchantRating)+((weights[4]*priceRating)/100)+(weights[5]*prodRating);
+				calcScoreList.add(calcScore);
+				score.setCalcScore(calcScore);
+				scoreRepository.save(score);
 				}
-				return calcScore;
+			return calcScoreList;
 			}
 		
-		public void updatesFromScore(ScoreId scoreId, Score score){
+		public void updatesFromProduct(ScoreId scoreId, Score score, List<ScoreUpdaterfromProduct> scoreUpdaterListfromProduct){
 			//send ScoreID to product and fetch the list from there
 				for(ScoreUpdaterfromProduct scoreUpdater: scoreUpdaterListfromProduct){
 					int currentStock=scoreUpdater.getCurrentStock();

@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.coviam.blabla.merchant.dto.RatingList;
+import com.coviam.blabla.merchant.entity.Merchant;
+import com.coviam.blabla.merchant.service.MerchantServiceInterface;
+import com.coviam.blabla.merchant.service.iScoreCalculator;
 import com.coviam.blabla.order.dto.OrderAndItems;
 import com.coviam.blabla.order.entity.Order;
 import com.coviam.blabla.order.service.OrderService;
@@ -24,12 +29,18 @@ public class ProductController {
 
 	@Autowired
 	ProductServiceInterface ps;
-	
+
 	@Autowired
 	OrderService orderservice;
+	
+	MerchantServiceInterface msi;
+	@Autowired
+	iScoreCalculator isc;
+
 
 	@RequestMapping(value = "/")
 	public String returnAllProducts() {
+		
 		return ("index.html");
 	}
 
@@ -76,22 +87,31 @@ public class ProductController {
 
 	}
 
-	
+	@RequestMapping("/merchant")
+	public List<Merchant> Merchantindex() {
+		return (List<Merchant>) msi.getMerchantDetails(null);
+	}
+
+	@RequestMapping("/update")
+	public void updateRating(RatingList rl) {
+		msi.updateMerchantRating(rl);
+	}
+
 	@RequestMapping(value = "/orders/checkout", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean saveOrder(@RequestBody OrderAndItems orderanditems){
-		
+	public boolean saveOrder(@RequestBody OrderAndItems orderanditems) {
+
 		Order savedOrder = orderservice.saveOrder(orderanditems);
 		long orderId = savedOrder.getOrderId();
 		orderservice.saveOrderItems(orderanditems, orderId);
 		return true;
-		}
-	
+	}
+
 	@RequestMapping(value = "/orders/history", method = RequestMethod.POST)
 	@ResponseBody
-	public List<OrderAndItems> fetchOrderHistory(@RequestBody String email){
+	public List<OrderAndItems> fetchOrderHistory(@RequestBody String email) {
 		List<OrderAndItems> orderHistory = orderservice.fetchOrderHistory(email);
-		if(orderHistory.size() == 0)
+		if (orderHistory.size() == 0)
 			return null;
 		return orderHistory;
 	}
