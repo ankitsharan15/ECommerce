@@ -65,5 +65,23 @@ myApp.controller('listController', function($scope,userRepository,$rootScope) {
     };   
 });
 
-myApp.controller('cartController', function($scope) {
+myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
+	  $scope.testData={
+               "emailId": "neelasha@gmail.com",
+				"date": 1496595243861,
+				"productList": {
+					"productId": 234,
+					"merchantId": 11,
+					"quantity": 1,
+					"rating": 2.0,
+					"reviews": "Nice"
+				}
+			}
+	  var test = $scope.testData;
+	  $rootScope.testPost = function(){
+		  orderRepository.postByOrders(test).success(function(){
+				 console.log("successfully sent"); 
+			  });  
+	  }
+
 });
