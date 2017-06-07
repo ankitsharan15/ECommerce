@@ -117,23 +117,28 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 		      else{
 		          alert('You have entered wrong email address');
 		      }
-		      
-	  $scope.testData={
-               "emailId": "neelasha@gmail.com",
-				"date": 1496595243861,
-				"productList": {
+		     }      
+	  $scope.testData= { 
+			  "emailId": "neelasha@gmail.com",
+			  "date"   : "1496595243861",
+		      "productList": [{
 					"productId": 234,
 					"merchantId": 11,
 					"quantity": 1,
 					"rating": 2.0,
 					"reviews": "Nice"
-				}
-			}
+		      },{
+					"productId": 235,
+					"merchantId": 12,
+					"quantity": 2,
+					"rating": 5.0,
+					"reviews": "Very Nice"
+		    	  
+		      }]
+	  }
 	  var test = $scope.testData;
 	  $rootScope.testPost = function(){
-		  orderRepository.postByOrders(test).success(function(){
-				 console.log("successfully sent"); 
-			  });  
+		  orderRepository.postByOrders(test);
 	  }
 
 

@@ -30,6 +30,7 @@ public class ProductController {
 
 	@RequestMapping(value = "/")
 	public String returnAllProducts() {
+		
 		return ("index.html");
 	}
 
@@ -41,6 +42,7 @@ public class ProductController {
 		return productList;
 
 	}
+	
 
 	@RequestMapping("/product/{pCode}/{mId}")
 	@ResponseBody
@@ -79,12 +81,11 @@ public class ProductController {
 	
 	@RequestMapping(value = "/orders/checkout", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean saveOrder(@RequestBody OrderAndItems orderanditems){
+	public void saveOrder(@RequestBody OrderAndItems orderanditems){
 		
 		Order savedOrder = orderservice.saveOrder(orderanditems);
 		long orderId = savedOrder.getOrderId();
 		orderservice.saveOrderItems(orderanditems, orderId);
-		return true;
 		}
 	
 	@RequestMapping(value = "/orders/history", method = RequestMethod.POST)

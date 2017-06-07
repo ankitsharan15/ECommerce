@@ -26,6 +26,7 @@ public class Order {
 	private long orderId;
 	@Column(name="EMAIL")
 	private String emailId;
+
 	@Column(name="DATE")
 	private Date date;
 	
