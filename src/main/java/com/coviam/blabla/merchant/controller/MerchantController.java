@@ -9,20 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.coviam.blabla.dto.RatingList;
 import com.coviam.blabla.entity.Merchant;
 import com.coviam.blabla.service.MerchantServiceInterface;
-import com.coviam.blabla.service.iScoreCalculator;
 
 @RestController
 public class MerchantController {
 	
 	@Autowired
 	MerchantServiceInterface msi;
-	@Autowired
-	iScoreCalculator isc;
 
-	@RequestMapping("/")
-	public String index(){
-        return "Greetings from BlaBla";
-	}
+
 	
     	@RequestMapping("/merchant")
     	public List<Merchant> Merchantindex(){

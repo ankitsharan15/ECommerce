@@ -1,6 +1,5 @@
 package com.coviam.blabla.merchant.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +22,17 @@ public class MerchantService implements MerchantServiceInterface{
 	
 	@Override
 	public Iterable<Merchant> getMerchantDetails(List<Long> merchantId) {
+		// TODO Auto-generated method stub 
 		return merchantrepository.findAll(merchantId);
 	}
 	
 	@Override
-	public List<Double> getScores(List<ScoreId> scoreId) {
-		 Iterable<Score> scores=scorerepository.findAll(scoreId);
-		 List<Double> scoreList=new ArrayList<Double>();
-		 for(Score iterator:scores){
-			 Double score=iterator.getCalcScore();
-			 scoreList.add(score);
-		 }
-		return scoreList;
+	public Iterable<Score> getScores(List<ScoreId> scoreId) {
+		// TODO Auto-generated method stub
+		return scorerepository.findAll(scoreId);
 	}
 
+	
 	@Override
 	public void updateMerchantRating(RatingList ratinglist) {
 		List<IdandRating> idratinglist = ratinglist.getIdandRating();
