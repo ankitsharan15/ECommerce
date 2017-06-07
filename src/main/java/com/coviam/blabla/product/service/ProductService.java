@@ -58,7 +58,7 @@ public class ProductService implements ProductServiceInterface{
 	@Override
 	public List<ProductMerchant> getMerchantDetails(int productCode) {
 		// TODO Auto-generated method stub
-		List<ProductMerchant> productmerchantlist = pmr.findByProductmerchantidProductCode(productCode);
+		List<ProductMerchant> productmerchantlist = pmr.findByProductmerchantidProductCodeOrderByScoreDesc(productCode);
 		return productmerchantlist;
 	}
 
