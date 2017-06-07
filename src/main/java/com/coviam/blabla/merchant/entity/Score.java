@@ -1,13 +1,13 @@
-package com.coviam.blabla.merchant.entity;
+package com.coviam.blabla.entity;
 
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="score")
 public class Score implements Serializable{
@@ -97,6 +97,4 @@ public class Score implements Serializable{
 				+ counterMerchantRating + ", priceRating=" + priceRating + ", customerRating=" + customerRating
 				+ ", counterCustomerRating=" + counterCustomerRating + ", calcScore=" + calcScore + "]";
 	}
-	
-	
 }

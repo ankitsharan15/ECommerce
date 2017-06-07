@@ -1,21 +1,21 @@
-package com.coviam.blabla.merchant.service;
+package com.coviam.blabla.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.coviam.blabla.merchant.dao.MerchantRepository;
-import com.coviam.blabla.merchant.dao.ScoreRepository;
-import com.coviam.blabla.merchant.dto.ScoreUpdaterfromOrder;
-import com.coviam.blabla.merchant.dto.ScoreUpdaterfromProduct;
-import com.coviam.blabla.merchant.entity.Merchant;
-import com.coviam.blabla.merchant.entity.Score;
-import com.coviam.blabla.merchant.entity.ScoreId;
+import com.coviam.blabla.dao.MerchantRepository;
+import com.coviam.blabla.dao.ScoreRepository;
+import com.coviam.blabla.dto.ScoreUpdaterfromOrder;
+import com.coviam.blabla.dto.ScoreUpdaterfromProduct;
+import com.coviam.blabla.entity.Merchant;
+import com.coviam.blabla.entity.Score;
+import com.coviam.blabla.entity.ScoreId;
 
 @Service
 public class ScoreCalculator implements iScoreCalculator{
-	double weights[]={0.1,0.3,0.2,1.0,0.009,2.0};
+	double weights[]={1,3,2,1,9,2};
 	
 		@Autowired
 		private ScoreRepository scoreRepository;
@@ -50,8 +50,8 @@ public class ScoreCalculator implements iScoreCalculator{
 				Merchant merchant=merchantRepository.findOne(merchantId);
 				double merchantRating=merchant.getMerchantRating();
 				double priceRating=score.getPriceRating();
-				calcScore = (weights[0]*numProd)+(weights[1]*numProdSold)+(weights[2]*stock)+(weights[3]*merchantRating)+(weights[4]*priceRating)+(weights[5]*prodRating);
-			}
+				calcScore = ((weights[0]*numProd)/10)+((weights[1]*numProdSold)/10)+((weights[2]*stock)/10)+(weights[3]*merchantRating)+((weights[4]*priceRating)/100)+(weights[5]*prodRating);
+				}
 				return calcScore;
 			}
 		
