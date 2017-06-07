@@ -1,0 +1,104 @@
+.left-nav{
+    position: fixed;
+    color: #fff;
+    left: 0;
+    width: 19%;
+    height: 100%;
+    font-size: 12px;
+    z-index: 1000;
+    box-shadow: 0 0 15px 5px rgba(0,0,0,0.15);
+    transition: left 250ms ease;
+    
+}
+
+.slider-home{
+    height:70%;
+    background: pink
+}
+
+footer {
+    background-color: #141414 ;
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+}
+.col{
+    margin: 0;
+    padding: 0;
+}
+.row{
+    margin: 0;
+    padding: 0
+}
+.carousel { 
+min-height: 400px;
+}
+body{
+      background: url(../images/white_leather.png) repeat 0 0;
+}
+.category{
+    margin: 0;
+    margin-top: 50px;
+    text-transform: uppercase;
+    color: #3e4152 ;
+    letter-spacing: .15em;
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    max-height: 5em;
+    font-weight: 500;
+}
+.category_description{
+    margin-top: 0;
+    font-weight: 400;
+    line-height: 1em;
+    max-height: 3em;
+    color: #7e818c ;
+    margin-bottom: 50px;
+}
+.name{
+    color: #0066c0 ;
+    font-size: 25px;
+    font-weight: 300px
+}
+.merchant{
+    margin-top: 0;
+    font-weight: 200;
+    line-height: 1em;
+    max-height: 3em;
+    color: #7e818c ;
+    font-size: 20px
+}
+.price{
+    color:#b12704 ;
+    font-size: 22px;
+    font-weight: 700
+}
+.product_action{
+    border: 2px outset #d4d5d9 ;
+}
+.product_action,#cart:hover{
+    cursor:pointer
+}
+.modal{
+    padding: 30px;
+    min-height: 200px
+}
+@media only screen and (min-width: 768px) {
+    #menu,#dropdown-nav{
+        display: none
+    }
+
+}
+.numberCircle {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    border:1px solid;
+    color: black;
+    margin-left: 5px;
+    text-align: center;
+    font-size: 2em;
+}

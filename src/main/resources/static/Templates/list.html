@@ -1,0 +1,39 @@
+<div class="col s12"  ng-controller="listController">
+
+                    <div class="col s12 category">{{ selectedCategory }}</div>
+                    <div class="col s3 center item-design" ng-repeat="product in Products">
+                        <div class="col s12">
+                            <img src="{{ product.productImage }}" ng-click="go('#product')" style="width:50%;">
+                        </div>
+                        <div class="col s12 name">
+                            {{ product.productName }}
+                        </div>
+                        <div class="col s12 merchant">
+                            By null
+                        </div>
+                        <div class="col s12 price">
+                            &#8377; {{ product.price }}
+                        </div>
+                        <div class="col s12 product_action valign-wrapper">
+                            <div class="col s6 valign" onclick="Materialize.toast('Product Saved', 4000,'rounded')">
+                                SAVE
+                            </div>
+                            <div class="col s6 valign" ng-click="addToCart()" onclick="Materialize.toast('Product Succesfully Added To Cart', 4000,'rounded')" style="border-left: 1px dotted #d4d5d9 ;">
+                                ADD TO CART
+                            </div>
+                        </div>
+                        <div class="col s12 valign-wrapper">
+                            <div id="email_modal" class="modal">
+                                <div class="col s10 offset-s1 valign" style="padding-top: 40px">
+                                    <input type="text" class="validate" placeholder="Email Id">
+                                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                                  <i class="material-icons right">send</i>
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
