@@ -2,9 +2,9 @@ var myApp = angular.module('myApp', ["ngRoute"]);
 
 myApp.controller('myCtrl', function ($scope,$location,$rootScope) {	
       $rootScope.cartCount = 0;
-      $rootScope.cart=new Map();
-      $rootScope.cart.set('1','Oppo')
-      if($rootScope.cart.size<=0){
+      $rootScope.cartCollection = []
+      //$rootScope.cart.set('1','Oppo')
+      if($rootScope.cartCollection.size<=0){
         $('.numberCircle').hide();
     }
   $('.modal').modal();
@@ -59,7 +59,10 @@ myApp.config(function($routeProvider) {
         controller: 'listController'
         
     })
-
+    .when("/orders", {
+        templateUrl : "Templates/orders.html",
+        controller: 'orderController'
+    })
     .when("/cart", {
         templateUrl : "Templates/cart.html",
         controller: 'cartController'
@@ -92,19 +95,22 @@ myApp.controller('listController', function($scope,userRepository,$rootScope) {
            $scope.Products = response;
         });
       }
-    $rootScope.addToCart = function(productName) {
-        console.log('cart', productName)
+    $rootScope.addToCart = function(product) {
+        console.log('product', product)
+        $rootScope.cartCollection.push(product)
          $('.numberCircle').show();
-            $rootScope.cartCount++;
+        console.log('cartitems',$rootScope.cartCollection)
     };   
 });
 
 myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
-	 $rootScope.deleteFromCart = function() {
-		    $rootScope.cart.delete('1'); //delete by key -> ProductID
-		    if($rootScope.cartCount>0){
-			   $rootScope.cartCount--;
-		    }}
+
+	 $rootScope.deleteFromCart = function(x) {
+          var i = $rootScope.cartCollection.indexOf(x);
+          if(i!=-1){
+              $rootScope.cartCollection.splice(i,1);
+          }
+		    }
 		     $scope.emailSubmit = function () {
 		      console.log('emailForCart',$('#email').val()); //email_id
 		      if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#emailForCart').val())){
@@ -115,6 +121,8 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 		          alert('You have entered wrong email address');
 		      }
 		     }
+        
+    
 		      
 	  $scope.testData={
                "emailId": "neelasha@gmail.com",

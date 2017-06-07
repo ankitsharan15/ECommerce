@@ -37,7 +37,7 @@ public class ProductController {
 
 	@RequestMapping(value = "/")
 	public String returnAllProducts() {
-		
+		ps.saveProduct();
 		return ("index.html");
 	}
 

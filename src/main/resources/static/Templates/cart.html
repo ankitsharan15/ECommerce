@@ -1,26 +1,24 @@
 <div ng-controller="cartController" class="category col s8" style="margin-top:0px;margin-bottom:30px">Shopping Cart</div>
-
-<button ng-click="testPost()">tessssssssssssssssst me</button>
 <a class="waves-effect light-blue darken-2 btn-large col s2 offset-s2" href="#email_modal">CHECKOUT</a>
 <div class="row" style="border-bottom:1px dashed;padding-bottom:10px">
     <div class="col s3 offset-s6 merchant left">Price</div>
     <div class="col s2 offset-s1 merchant left">Quantity</div>
 </div>
 <!-- Reusable code for Products in Cart -->
-<div class="row valign-wrapper" style="border-bottom:1px dashed;padding-bottom:10px" id="product1">
+<div class="row valign-wrapper" style="border-bottom:1px dashed;padding-bottom:10px" id="product1" ng-repeat="value in cartCollection track by $index">
     <div class="col s6">
         <div class="col s12 l2 m4">
           <img src="http://ecx.images-amazon.com/images/I/41lXbF77NXL._AC_US160_FMwebp_QL70_.jpg" style="height:100px;width:80px">
         </div>
         <div class="col s10">
-            <div class="name col s12" style="padding-left:5px">Name</div>
-            <div class="merchant col s12" style="padding-bottom:5px;padding-left:5px">Merchant</div>
-            <a ng-click="deleteFromCart()" class="col l2 s12" style="padding-left:5px;;margin:0">Delete</a>
+            <div class="name col s12" style="padding-left:5px">{{ value.productName }}</div>
+            <div class="merchant col s12" style="padding-bottom:5px;padding-left:5px">By null</div>
+            <a ng-click="deleteFromCart(value)" class="col l2 s12" style="padding-left:5px;;margin:0">Delete</a>
             <a class="col l5 s12">Save for later</a>
         </div>
     </div>
     <div class="col s2 left price">
-        Price
+       {{ value.bestPrice }}
     </div>
     <div class="col s3 offset-s1">
       <div class="input-field col s12">
