@@ -9,13 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.coviam.blabla.order.dto.OrderAndItems;
 import com.coviam.blabla.order.entity.Order;
 import com.coviam.blabla.order.service.OrderService;
 import com.coviam.blabla.product.dto.ProductDetails;
-import com.coviam.blabla.product.dto.ProductListing;
 import com.coviam.blabla.product.entity.Product;
 import com.coviam.blabla.product.entity.ProductMerchant;
 import com.coviam.blabla.product.entity.ProductSpecification;
@@ -33,28 +30,15 @@ public class ProductController {
 
 	@RequestMapping(value = "/")
 	public String returnAllProducts() {
-//		List<Product> p = ps.getAllProducts();
 		return ("index.html");
-	}
-
-	@RequestMapping("/test")
-	@ResponseBody
-	public ModelAndView testMethod() {
-		return new ModelAndView("/index.html", "p", "Krishna");
 	}
 
 	@RequestMapping("/category/{query}")
 	@ResponseBody
-	public ProductListing getProductByCategory(@PathVariable("query") String query) {
+	public List<Product> getProductByCategory(@PathVariable("query") String query) {
 
 		List<Product> productList = ps.findProduct(query);
-		List<Product> productCodes = ps.getProductCodes(query);
-		List<List<ProductMerchant>> pmList = new ArrayList<List<ProductMerchant>>();
-		for (Product pCode : productCodes) {
-			pmList.add(ps.getMerchantDetails(pCode.getProductCode()));
-		}
-		ProductListing productListing = new ProductListing(productList, pmList);
-		return productListing;
+		return productList;
 
 	}
 

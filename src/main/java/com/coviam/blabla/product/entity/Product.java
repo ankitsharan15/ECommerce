@@ -6,32 +6,44 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table (name = "Product")
+@Table(name = "Product")
 public class Product {
-	
-	@Id
-	@Column (name = "product_code")
-	private int productCode;
-	
-	@Column (name = "product_name")
-	private String productName;
-	 
-	@Column (name = "product_usp")
-	private String productUsp;
-	
-	@Column (name = "product_category")
-	private String productCategory;
-	
 
-	@Column (name = "product_desc")
+	@Id
+	@Column(name = "product_code")
+	private int productCode;
+
+	@Column(name = "product_name")
+	private String productName;
+
+	@Column(name = "product_usp")
+	private String productUsp;
+
+	@Column(name = "product_category")
+	private String productCategory;
+
+	@Column(name = "product_desc")
 	private String productDesc;
-	
-	@Column (name = "product_brand")
+
+	@Column(name = "product_brand")
 	private String productBrand;
-	
-	@Column (name = "product_image")
+
+	@Column(name = "product_image")
 	private String productImage;
 	
+	@Column(name = "best_price")
+	private long bestPrice;
+	
+	
+
+	public long getBestPrice() {
+		return bestPrice;
+	}
+
+	public void setBestPrice(long bestPrice) {
+		this.bestPrice = bestPrice;
+	}
+
 	public String getProductImage() {
 		return productImage;
 	}
@@ -92,7 +104,7 @@ public class Product {
 	public String toString() {
 		return "Product [productCode=" + productCode + ", productName=" + productName + ", productUsp=" + productUsp
 				+ ", productCategory=" + productCategory + ", productDesc=" + productDesc + ", productBrand="
-				+ productBrand + ", productImage=" + productImage + "]";
+				+ productBrand + ", productImage=" + productImage + ", bestPrice=" + bestPrice + "]";
 	}
-	
+
 }

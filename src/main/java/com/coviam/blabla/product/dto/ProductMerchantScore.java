@@ -4,12 +4,10 @@ import com.coviam.blabla.product.entity.ProductMerchant;
 
 public class ProductMerchantScore {
 
-private long productId;
-	
-	private long merchantId;
-	
+	private long productId;
+
 	private long stock;
-	
+
 	public ProductMerchantScore() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -18,9 +16,8 @@ private long productId;
 	public ProductMerchantScore(ProductMerchant productmerchant) {
 		super();
 		this.productId = productmerchant.getProductmerchantid().getProductCode();
-		this.merchantId = productmerchant.getProductmerchantid().getMerchantId();
 		this.stock = productmerchant.getStock();
-		
+
 	}
 
 	public long getProductId() {
@@ -31,19 +28,11 @@ private long productId;
 		this.productId = productId;
 	}
 
-	public long getMerchantId() {
-		return merchantId;
-	}
-
-	public void setMerchantId(long merchantId) {
-		this.merchantId = merchantId;
-	}
-
-	public long getNumOfOrders() {
+	public long getStock() {
 		return stock;
 	}
 
-	public void setNumOfOrders(long stock) {
+	public void setStock(long stock) {
 		this.stock = stock;
 	}
 
