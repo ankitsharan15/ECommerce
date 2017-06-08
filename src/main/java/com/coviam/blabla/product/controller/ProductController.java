@@ -19,6 +19,7 @@ import com.coviam.blabla.order.dto.ItemDetail;
 import com.coviam.blabla.order.dto.OrderAndItems;
 import com.coviam.blabla.order.dto.ProductQty;
 import com.coviam.blabla.order.entity.Order;
+import com.coviam.blabla.order.entity.OrderItem;
 import com.coviam.blabla.order.service.OrderService;
 import com.coviam.blabla.product.dto.CustomMerchant;
 import com.coviam.blabla.product.dto.ProductDetails;
@@ -152,11 +153,14 @@ public class ProductController {
 
 	@RequestMapping(value = "/orders/checkout", method = RequestMethod.POST)
 	@ResponseBody
-	public void saveOrder(@RequestBody OrderAndItems orderanditems) {
+	public boolean saveOrder(@RequestBody OrderAndItems orderanditems) {
 
 		Order savedOrder = orderservice.saveOrder(orderanditems);
 		long orderId = savedOrder.getOrderId();
-		orderservice.saveOrderItems(orderanditems, orderId);
+		List<OrderItem> savedOrderItems = orderservice.saveOrderItems(orderanditems, orderId);
+		orderservice.updateStockinProductMicroService(savedOrderItems);
+		orderservice.sendOrderConfirmationEmail(savedOrder.getEmailId(), savedOrderItems);
+		return true;
 	}
 
 	@RequestMapping(value = "/orders/history", method = RequestMethod.POST)

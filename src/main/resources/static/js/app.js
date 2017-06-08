@@ -135,9 +135,7 @@ myApp.controller('listController', function($scope,userRepository,$rootScope,pro
         		$rootScope.specificationDetails = data.specification;;
         		$rootScope.merchantDetails = data.customMerchant;
         		$rootScope.specDetails = data.specList;
-        		
-        		
-        		
+        		        		
             });
 
          $rootScope.go('/product');  
@@ -152,6 +150,7 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
           if(i!=-1){
               $rootScope.localCart.splice(i,1);
           }
+          localStorage.setItem('session', JSON.stringify($rootScope.localCart));
 		    }
 		     $scope.emailSubmit = function () {
 		      console.log('emailForCart',$('#email').val()); //email_id
@@ -165,10 +164,13 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 
 		     }
 		     }
+		     $scope.productString='[';
+		     $scope.product;
+		    // console.log('length',$rootScope.localCart);
 		     var currentDate = new Date();
 		     currentDate= currentDate; 
 			  $scope.orderData= { 
-					  "emailId": "ankitsharan15@gmail.com",
+					  "emailId": $rootScope.emailForOrderDetails,
 					  "date"   : $scope.currentDate,
 				      "productList": [{
 							"productId": 234,
@@ -183,7 +185,7 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 				      }]
 			  }
       var currentOrder = $scope.orderData;     
-	  $scope.saveOrder = function(){
+	  $scope.saveOrder = function(currentOrder){
 		  orderRepository.postByOrders(currentOrder);
 	  }     
 

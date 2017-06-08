@@ -25,11 +25,9 @@ myApp.factory('orderRepository',function ($http){
 	   };
 	});
 myApp.factory('orderDetails',function ($http,$q){
-	   return {
-		      
+	   return {		      
 		       getUserOrders:function(email){
 		    	   var deferred = $q.defer();
-
 		    	   var res;
 		           var url="/orders/history";
 		           $http.post(url,email)
