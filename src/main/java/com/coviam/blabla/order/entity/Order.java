@@ -22,11 +22,10 @@ public class Order {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ORDERID")
+	@Column(name="ORDERID", nullable = false, unique = true)
 	private long orderId;
 	@Column(name="EMAIL")
 	private String emailId;
-
 	@Column(name="DATE")
 	private Date date;
 	

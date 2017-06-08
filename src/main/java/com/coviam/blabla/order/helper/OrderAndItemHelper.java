@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.coviam.blabla.order.dto.ItemDetail;
 import com.coviam.blabla.order.dto.OrderAndItems;
+import com.coviam.blabla.order.dto.Product;
+import com.coviam.blabla.order.dto.ProductQty;
 import com.coviam.blabla.order.entity.Order;
 import com.coviam.blabla.order.entity.OrderItem;
 
@@ -28,6 +30,7 @@ public class OrderAndItemHelper {
 		orderitem.setProductId(itemdetail.getProductId());
 		orderitem.setMerchantId(itemdetail.getMerchantId());
 		orderitem.setQuantity(itemdetail.getQuantity());
+		orderitem.setPrice(itemdetail.getPrice());
 		orderitem.setRating(itemdetail.getRating());
 		orderitem.setReviews(itemdetail.getReviews());
 		orderitemlist.add(orderitem);
@@ -35,6 +38,34 @@ public class OrderAndItemHelper {
 		return orderitemlist;
 	}
 	
+	public static String createEmailText(List<OrderItem> orderitemlist){
+		
+		StringBuffer emailText = new StringBuffer();
+		emailText.append("The details of your order are:\n\n")
+				 .append("Order ID : ")
+				 .append(orderitemlist.get(0).getOrderId())
+				 .append("\n\n")
+				 .append("Products:\n\n");
+		for(OrderItem orderitem : orderitemlist){
+			emailText.append("Product ID : ")
+					 .append(orderitem.getProductId())
+					 .append("\n\n")
+					 .append("Quantity : ")
+					 .append(orderitem.getQuantity())
+					 .append("\n\n");
+		}
+		return emailText.toString();
+	}
+
+	public static ProductQty createProductQtyDto(OrderItem orderitem) {
+		ProductQty productqty = new ProductQty(orderitem);
+		return productqty;
+	}
+	
+	public static Product createProductQtyRatingDto(OrderItem orderitem){
+		Product product = new Product(orderitem);
+		return product;
+	}
 	
 	
 }

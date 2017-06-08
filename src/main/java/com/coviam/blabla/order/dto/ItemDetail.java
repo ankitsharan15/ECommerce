@@ -6,19 +6,15 @@ import com.coviam.blabla.order.entity.OrderItem;
 
 public class ItemDetail implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private int productId;
+	private String productName;
 	private int merchantId;
+	private String merchantName;
 	private int quantity;
+	private float price;
 	private float rating;
 	private String reviews;
-	private String productName;
-	private String merchantName;
 	private String imageUrl;
-	private float price;
 
 	public ItemDetail() {
 		super();
@@ -33,38 +29,6 @@ public class ItemDetail implements Serializable {
 		this.price = orderItem.getPrice();
 		this.rating = orderItem.getRating();
 		this.reviews = orderItem.getReviews();
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-
-	public String getMerchantName() {
-		return merchantName;
-	}
-
-	public void setMerchantName(String merchantName) {
-		this.merchantName = merchantName;
-	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-
-	public float getPrice() {
-		return price;
-	}
-
-	public void setPrice(float price) {
-		this.price = price;
 	}
 
 	public int getProductId() {
@@ -106,5 +70,39 @@ public class ItemDetail implements Serializable {
 	public void setReviews(String reviews) {
 		this.reviews = reviews;
 	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getMerchantName() {
+		return merchantName;
+	}
+
+	public void setMerchantName(String merchantName) {
+		this.merchantName = merchantName;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+	
+	
 
 }

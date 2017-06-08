@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.coviam.blabla.order.entity.Order;
 
-public class OrderAndItems implements Serializable{
+public class OrderAndItems implements Serializable {
 	
 	private String emailId;
 	
