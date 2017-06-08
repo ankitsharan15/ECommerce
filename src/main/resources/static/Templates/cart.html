@@ -6,7 +6,7 @@
     <div class="col s2 offset-s1 merchant left">Quantity</div>
 </div>
 <!-- Reusable code for Products in Cart -->
-<div class="row valign-wrapper" style="border-bottom:1px dashed;padding-bottom:10px" id="product1" ng-repeat="value in cartCollection track by $index">
+<div class="row valign-wrapper" style="border-bottom:1px dashed;padding-bottom:10px" id="product1" ng-repeat="value in localCart track by $index">
     <div class="col s6">
         <div class="col s12 l2 m4">
           <img src="http://ecx.images-amazon.com/images/I/41lXbF77NXL._AC_US160_FMwebp_QL70_.jpg" style="height:100px;width:80px">
@@ -23,7 +23,6 @@
     <div class="col s3 offset-s1">
       <div class="input-field col s12">
     <select class="browser-default">
-      <option value="" disabled selected>Choose your option</option>
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
@@ -36,7 +35,7 @@
          <div class="col s10 offset-s1 input-field">
              <input id="emailForCart" type="email" class="validate" placeholder="Email ID"  ng-enter="emailSubmit()" autofocus>
         </div>
-        <button class="btn waves-effect waves-light col s2 offset-s2" type="submit" ng-click="emailSubmit()" name="action">Submit
+        <button class="btn waves-effect waves-light col s2 offset-s4" type="submit" ng-click="emailSubmit()" name="action">Submit
           <i class="material-icons right">send</i>
          </button>
     </div>

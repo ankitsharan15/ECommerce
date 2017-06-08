@@ -2,13 +2,11 @@ var myApp = angular.module('myApp', ["ngRoute"]);
 
 myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {	
       $rootScope.cartCount = 0;
+      $rootScope.localCart = JSON.parse(localStorage.getItem('session'));
       $rootScope.cartCollection = [];
-      //cartcollection for localstorage
-      $rootScope.localCart=[];
       $rootScope.clickedProduct;
       //$rootScope.cart.set('1','Oppo')
       if($rootScope.cartCollection.size<=0){
-        $('.numberCircle').hide();
     }
   $('.modal').modal();
   $rootScope.go = function ( path ) {
@@ -122,17 +120,12 @@ myApp.controller('listController', function($scope,userRepository,$rootScope,pro
         });
       }
     $rootScope.addToCart = function(product) {
-        $rootScope.cartCollection.push(product)
-         $('.numberCircle').show();
-         console.log('cartitems',$rootScope.cartCollection);
-         $rootScope.localCart = JSON.parse(localStorage.getItem('session'));
-         console.log('localcart from storage',$rootScope.localcart)
          if($rootScope.localCart){
-        $rootScope.localCart.push(product) }
+         $rootScope.localCart.push(product) }
         else{
             $rootScope.localCart=[];
-            $rootScope.localCart.push(product) }
-        console.log('localcart after push',$rootScope.localcart)
+            $rootScope.localCart.push(product) 
+        }
         localStorage.setItem('session', JSON.stringify($rootScope.localCart));
     } 
     $scope.goToProduct=function(product){
@@ -153,9 +146,9 @@ myApp.controller('listController', function($scope,userRepository,$rootScope,pro
 myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 
 	 $rootScope.deleteFromCart = function(x) {
-          var i = $rootScope.cartCollection.indexOf(x);
+          var i = $rootScope.localCart.indexOf(x);
           if(i!=-1){
-              $rootScope.cartCollection.splice(i,1);
+              $rootScope.localCart.splice(i,1);
           }
 		    }
 		     $scope.emailSubmit = function () {

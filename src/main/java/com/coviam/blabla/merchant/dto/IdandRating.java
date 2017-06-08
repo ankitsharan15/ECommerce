@@ -7,6 +7,10 @@ public class IdandRating {
 	private double merchantRating;
 	private String merchantName;
 	
+	public IdandRating(){
+		
+	}
+	
 	public IdandRating(Merchant merchant) {
 		super();
 		this.merchantId = merchant.getMerchantId();

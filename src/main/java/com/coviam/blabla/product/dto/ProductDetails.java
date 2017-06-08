@@ -9,17 +9,17 @@ import com.coviam.blabla.product.entity.Specification;
 
 public class ProductDetails {
 
-	private List<Product> product;
-	private List<ProductSpecification> specification;
-	private List<ProductMerchant> productMerchant;
+	private Product product;
+	private List<CustomMerchant> customMerchant;
 	private List<Specification> specList;
+	private List<ProductSpecification> specification;
 
-	public ProductDetails(List<Product> product, List<ProductSpecification> specification,
-			List<ProductMerchant> productMerchant, List<Specification> specList) {
+	public ProductDetails(Product product, List<ProductSpecification> specification,
+			List<CustomMerchant> customMerchant, List<Specification> specList) {
 		super();
 		this.product = product;
 		this.specification = specification;
-		this.productMerchant = productMerchant;
+		this.customMerchant = customMerchant;
 		this.specList = specList;
 	}
 
@@ -35,20 +35,20 @@ public class ProductDetails {
 		this.specification = specification;
 	}
 
-	public List<Product> getProduct() {
+	public Product getProduct() {
 		return product;
 	}
 
-	public void setProduct(List<Product> product) {
+	public void setProduct(Product product) {
 		this.product = product;
 	}
 
-	public List<ProductMerchant> getProductMerchant() {
-		return productMerchant;
+	public List<CustomMerchant> getCustomMerchant() {
+		return customMerchant;
 	}
 
-	public void setProductMerchant(List<ProductMerchant> productMerchant) {
-		this.productMerchant = productMerchant;
+	public void setCustomMerchant(List<CustomMerchant> customMerchant) {
+		this.customMerchant = customMerchant;
 	}
 
 	public List<Specification> getSpecList() {
@@ -61,10 +61,8 @@ public class ProductDetails {
 
 	@Override
 	public String toString() {
-		return "ProductDetails [product=" + product + ", specification=" + specification + ", productMerchant="
-				+ productMerchant + ", specList=" + specList + "]";
+		return "ProductDetails [product=" + product + ", customMerchant=" + customMerchant + ", specList=" + specList
+				+ ", specification=" + specification + "]";
 	}
-
-	
 
 }
