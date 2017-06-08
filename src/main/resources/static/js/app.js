@@ -131,13 +131,15 @@ myApp.controller('listController', function($scope,userRepository,$rootScope,pro
     $scope.goToProduct=function(product){
         	var productId = product.productCode;
         	productRepository.getByProduct(productId).success(function(data) {
-        		$rootScope.clickedProduct = data;
+        		$rootScope.productDetails = data.product;
+        		$rootScope.specificationDetails = data.specification;;
+        		$rootScope.merchantDetails = data.customMerchant;
+        		$rootScope.specDetails = data.specList;
+        		
+        		
+        		
             });
-        	var productData = $rootScope.clickedProduct;
-        	$rootScope.productDetails =productData.product;
-        	$rootScope.specificationDetails =productData.specification;
-        	$rootScope.merchantDetails =productData.customMerchant;
-        	$rootScope.specDetails =productData.specList;
+
          $rootScope.go('/product');  
 
     }
