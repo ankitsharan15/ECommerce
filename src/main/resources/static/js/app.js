@@ -3,15 +3,14 @@ var myApp = angular.module('myApp', ["ngRoute"]);
 myApp.controller('myCtrl', function ($scope,$location,$rootScope) {	
       $rootScope.cartCount = 0;
       $rootScope.cartCollection = [];
+      //cartcollection for localstorage
+      $rootScope.localCart=[];
       $rootScope.clickedProduct;
       //$rootScope.cart.set('1','Oppo')
       if($rootScope.cartCollection.size<=0){
         $('.numberCircle').hide();
     }
   $('.modal').modal();
-    $('.modal').modal({
-      dismissible: false, 
-    })
   $rootScope.go = function ( path ) {
   $location.path( path );
   }
@@ -27,8 +26,6 @@ myApp.controller('myCtrl', function ($scope,$location,$rootScope) {
       }
       
 };
-
-    
 
 });
 
@@ -46,6 +43,18 @@ myApp.directive('ngEnter', function() {
         };
     });
 
+myApp.directive('a', function() {
+    return {
+        restrict: 'E',
+        link: function(scope, elem, attrs) {
+            if(attrs.href === '#email_modal'){
+                elem.on('click', function(e){
+                    e.preventDefault();
+                });
+            }
+        }
+   };
+}); 
 myApp.config(function($routeProvider) {
     $routeProvider
     .when("/home", {
@@ -98,11 +107,19 @@ myApp.controller('listController', function($scope,userRepository,$rootScope) {
         });
       }
     $rootScope.addToCart = function(product) {
-        console.log('product', product)
         $rootScope.cartCollection.push(product)
          $('.numberCircle').show();
-        console.log('cartitems',$rootScope.cartCollection)
-    };  
+         console.log('cartitems',$rootScope.cartCollection);
+         $rootScope.localCart = JSON.parse(localStorage.getItem('session'));
+         console.log('localcart from storage',$rootScope.localcart)
+         if($rootScope.localCart){
+        $rootScope.localCart.push(product) }
+        else{
+            $rootScope.localCart=[];
+            $rootScope.localCart.push(product) }
+        console.log('localcart after push',$rootScope.localcart)
+        localStorage.setItem('session', JSON.stringify($rootScope.localCart));
+    } 
     $scope.goToProduct=function(product){
         if (product){
          $rootScope.clickedProduct=product;

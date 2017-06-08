@@ -13,11 +13,9 @@
                         <div class="col s12 price">
                             &#8377; {{ product.bestPrice }}
                         </div>
-                        <div class="col s12 product_action valign-wrapper">
-                            <div class="col s6 valign" onclick="Materialize.toast('Product Saved', 4000,'rounded')">
-                                SAVE
-                            </div>
-                            <div class="col s6 valign" ng-click="addToCart(product)" onclick="Materialize.toast('Product Succesfully Added To Cart', 4000,'rounded')" style="border-left: 1px dotted #d4d5d9 ;">
+                        </div>
+                        <div class="col s12 product_action">
+                            <div ng-click="addToCart(product)" onclick="Materialize.toast('Product Succesfully Added To Cart', 4000,'rounded')" >
                                 ADD TO CART
                             </div>
                         </div>
@@ -33,4 +31,4 @@
                         </div>
                     </div>
                 </div>
-           </div>
+           
