@@ -5,18 +5,19 @@
          <div class="col s10 offset-s1 input-field">
              <input id="emailForCart" type="email" class="validate" placeholder="Email ID"  ng-enter="emailSubmit(1)" autofocus>
         </div>
-        <button class="btn waves-effect waves-light col s2 offset-s4" type="submit" ng-click="emailSubmit(1)" name="action">Submit
+        <button class="btn waves-effect waves-light col s2 offset-s5" type="submit" ng-click="emailSubmit(1)" name="action">Submit
           <i class="material-icons right">send</i>
          </button>
     </div>
 </div>
 <div class="row" style="border-bottom:1px dashed;padding-bottom:10px">
-    <div class="col s3 offset-s6 merchant left">Price</div>
-    <div class="col s2 offset-s1 merchant left">Quantity</div>
+    <div class="col s3 offset-s5 merchant left">Price</div>
+    <div class="col s2 merchant left">Rating</div>
+    <div class="col s2 merchant left">Review</div>
 </div>
 <!-- Reusable code for Products in Cart -->
 <div class="row valign-wrapper" style="border-bottom:1px dashed;padding-bottom:10px" id="product1" ng-repeat="value in localCart track by $index">
-    <div class="col s6">
+    <div class="col s5">
         <div class="col s12 l2 m4">
           <img src="{{value.productImage}}" style="height:100px;width:56px">
         </div>
@@ -29,13 +30,16 @@
     <div class="col s2 left price">
        {{ value.bestPrice }}
     </div>
-    <div class="col s3 offset-s1">
+    <div class="col s2 offset-s1">
       <div class="input-field col s12">
-    <select class="browser-default">
+    <select id="rating" class="browser-default">
       <option value="1">1</option>
       <option value="2">2</option>
       <option value="3">3</option>
     </select>
   </div>
+    </div>
+    <div class="col s2 left">
+        <input id="review" type="text"  placeholder="Review">
     </div>
 </div>

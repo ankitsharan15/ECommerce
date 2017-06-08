@@ -32,6 +32,14 @@ myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {
           alert('You have entered wrong email address');
       }
 };
+$('.carousel').carousel({
+    padding: 200    
+});
+autoplay()   
+function autoplay() {
+    $('.carousel').carousel('next');
+    setTimeout(autoplay, 4500);
+}
 });
 
 myApp.directive('ngEnter', function() {
@@ -89,8 +97,16 @@ myApp.config(function($routeProvider) {
     })
 });
 
-myApp.controller('homeController', function($scope,$rootScope) {
-	  $('.carousel.carousel-slider').carousel({fullWidth: true});           
+myApp.controller('homeController', function($scope,$rootScope,userRepository) {
+	  $('.carousel.carousel-slider').carousel({fullWidth: true});
+    userRepository.getByCategory('phone').success(function(data) {
+           $scope.phones = data;
+        });
+    userRepository.getByCategory('fashion').success(function(data) {
+           $scope.fashion= data;
+        });
+    console.log('phone and fashion',$scope.phones,$scope.fashion)
+    
            
 });
 
@@ -106,7 +122,6 @@ myApp.controller('productController', function($scope,$rootScope,userRepository)
 
 myApp.controller('listController', function($scope,userRepository,$rootScope,productRepository) {
     $rootScope.getViaCategory=function(x){
-        console.log('get via category');
          $scope.selectedCategory = x ;
          var product = $scope.selectedCategory;
           userRepository.getByCategory(product).success(function(response) {
@@ -140,12 +155,12 @@ myApp.controller('listController', function($scope,userRepository,$rootScope,pro
     });
 
 myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
+    $('#email_modal1').modal()
 	 $rootScope.deleteFromCart = function(x) {
           var i = $rootScope.localCart.indexOf(x);
           if(i!=-1){
               $rootScope.localCart.splice(i,1);
-          }
-             $('#email_modal1').modal()
+          }    
           localStorage.setItem('session', JSON.stringify($rootScope.localCart));
 		    }
 		     $scope.emailSubmit = function () {
@@ -158,6 +173,8 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 		          alert('You have entered wrong email address');
 
 		     }
+            console.log('rating',$("#rating").val(),'review',$("#review").val()); //rating & review
+                 
 		     }
 		     $scope.productString='[';
 		     $scope.product;
@@ -193,8 +210,7 @@ myApp.controller('orderController',function($scope,$rootScope){
 myApp.controller('rateController',function($scope){
     
     $scope.rate=function(){
-      console.log('rating',$("#review").val(),'parent',$(this).parents('div')); //rating
-      alert('Thankyou!!');
+
     }
    
 });
