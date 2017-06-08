@@ -105,7 +105,6 @@ myApp.controller('productController', function($scope,$rootScope,userRepository)
 });
 
 myApp.controller('listController', function($scope,userRepository,$rootScope,productRepository) {
-    $rootScope.clickedProduct="";
     $rootScope.getViaCategory=function(x){
         console.log('get via category');
          $scope.selectedCategory = x ;
