@@ -170,18 +170,18 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 		     var currentDate = new Date();
 		     currentDate= currentDate; 
 			  $scope.orderData= { 
-					  "emailId": $rootScope.emailForOrderDetails,
-					  "date"   : $scope.currentDate,
+					  "emailId": "ankitsharan15@gmail.com",
+					  "date"   : 1496922980583,
 				      "productList": [{
 							"productId": 234,
 							"productName":"iphone",
 							"merchantId": 11,
 							"merchantName":"sai",
-							"imageUrl":"http://ecx.images-amazon.com/images/I/814lO6nm9vL._SL1500_.jpg",
-							"price":20000,
 							"quantity": 1,
+							"price":20000.0,
 							"rating": 2.0,
-							"reviews": "Nice"
+							"reviews": "Nice",
+							"imageUrl":"http://ecx.images-amazon.com/images/I/814lO6nm9vL._SL1500_.jpg"
 				      }]
 			  }
       var currentOrder = $scope.orderData;     

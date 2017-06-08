@@ -153,14 +153,14 @@ public class ProductController {
 
 	@RequestMapping(value = "/orders/checkout", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean saveOrder(@RequestBody OrderAndItems orderanditems) {
+	public void saveOrder(@RequestBody OrderAndItems orderanditems) {
 
 		Order savedOrder = orderservice.saveOrder(orderanditems);
 		long orderId = savedOrder.getOrderId();
 		List<OrderItem> savedOrderItems = orderservice.saveOrderItems(orderanditems, orderId);
 		orderservice.updateStockinProductMicroService(savedOrderItems);
 		orderservice.sendOrderConfirmationEmail(savedOrder.getEmailId(), savedOrderItems);
-		return true;
+		
 	}
 
 	@RequestMapping(value = "/orders/history", method = RequestMethod.POST)
