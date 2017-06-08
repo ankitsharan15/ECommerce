@@ -23,11 +23,11 @@ public class OrderId implements Serializable {
 		return orderId;
 	}
 
-	public long getProductId() {
+	public int getProductId() {
 		return productId;
 	}
 
-	public long getMerchantId() {
+	public int getMerchantId() {
 		return merchantId;
 	}
 

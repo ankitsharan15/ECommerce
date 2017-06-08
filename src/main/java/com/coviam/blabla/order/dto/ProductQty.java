@@ -4,13 +4,17 @@ import java.io.Serializable;
 
 import com.coviam.blabla.order.entity.OrderItem;
 
-public class ProductQty implements Serializable{
+public class ProductQty implements Serializable {
 
 	private int productId;
-
+	
 	private int merchantId;
-
+	
 	private int numOfProducts;
+	
+
+	
+	
 
 	public ProductQty() {
 		super();
@@ -22,10 +26,10 @@ public class ProductQty implements Serializable{
 		this.productId = orderitem.getProductId();
 		this.merchantId = orderitem.getMerchantId();
 		this.numOfProducts = orderitem.getQuantity();
-
+		
 	}
 
-	public int getProductId() {
+	public long getProductId() {
 		return productId;
 	}
 
@@ -33,7 +37,7 @@ public class ProductQty implements Serializable{
 		this.productId = productId;
 	}
 
-	public int getMerchantId() {
+	public long getMerchantId() {
 		return merchantId;
 	}
 
@@ -49,4 +53,13 @@ public class ProductQty implements Serializable{
 		this.numOfProducts = numOfOrders;
 	}
 
+	@Override
+	public String toString() {
+		return "ProductQty [productId=" + productId + ", merchantId=" + merchantId + ", numOfProducts=" + numOfProducts
+				+ "]";
+	}
+
+	
+	
+	
 }
