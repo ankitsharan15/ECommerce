@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp', ["ngRoute"]);
 
-myApp.controller('myCtrl', function ($scope,$location,$rootScope) {	
+myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {	
       $rootScope.cartCount = 0;
       $rootScope.localCart = JSON.parse(localStorage.getItem('session'));
       $rootScope.cartCollection = [];
@@ -11,19 +11,34 @@ myApp.controller('myCtrl', function ($scope,$location,$rootScope) {
   $('.modal').modal();
   $rootScope.go = function ( path ) {
   $location.path( path );
+
   }
       $scope.emailSubmit = function () {
       console.log('email',$('#email').val()); //email_id
       if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email').val())){
-         $scope.go('/orders')  
-         $('#email_modal').modal('close'); 
+    	  $('#email_modal').modal('close'); 
+    	  var emailForOrderDetails = $('#email').val(); 
+    	  $rootScope.emailForOrderDetails="";
+    	  $rootScope.emailForOrderDetails = emailForOrderDetails;
+    	  $rootScope.orderdata;
+          orderDetails.getUserOrders(emailForOrderDetails).then(function(data){
+        	  $rootScope.orderdata = data;
+          });
+          var abc;
+          abc = $rootScope.orderdata;
+    	  console.log(abc);
+          $scope.go('/orders')  
+         
+         
       }
       else{
           $("#email").next("label").attr('data-error','Wrong');
           alert('You have entered wrong email address');
       }
       
+
 };
+
 
 });
 
@@ -137,33 +152,37 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 		      }
 		      else{
 		          alert('You have entered wrong email address');
-		      }
-		     }    
-	  $scope.testData= { 
-			  "emailId": "neelasha@gmail.com",
-			  "date"   : "1496595243861",
-		      "productList": [{
-					"productId": 234,
-					"merchantId": 11,
-					"quantity": 1,
-					"rating": 2.0,
-					"reviews": "Nice"
-		      },{
-					"productId": 235,
-					"merchantId": 12,
-					"quantity": 2,
-					"rating": 5.0,
-					"reviews": "Very Nice"
-		    	  
-		      }]
-	  }
-	  var test = $scope.testData;
-	  $rootScope.testPost = function(){
-		  orderRepository.postByOrders(test);
-	  }
 
+
+		     }
+		     }
+		     var currentDate = new Date();
+		     currentDate= currentDate; 
+			  $scope.orderData= { 
+					  "emailId": $rootScope.emailForOrderDetails,
+					  "date"   : $scope.currentDate,
+				      "productList": [{
+							"productId": 234,
+							"merchantId": 11,
+							"quantity": 1,
+							"rating": 2.0,
+							"reviews": "Nice"
+				      },{
+							"productId": 235,
+							"merchantId": 12,
+							"quantity": 2,
+							"rating": 5.0,
+							"reviews": "Very Nice"
+				    	  
+				      }]
+			  }
+      var currentOrder = $scope.orderData;     
+	  $scope.saveOrder = function(){
+		  orderRepository.postByOrders(currentOrder );
+	  }     
 
 });
 myApp.controller('orderController',function($scope){
+	$scope.orderProductlist = $rootScope.orderdata.productList;
     
 });
