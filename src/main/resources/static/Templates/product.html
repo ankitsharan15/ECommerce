@@ -21,42 +21,39 @@
   <div class="col s10" style="padding:0">
     <ul class="tabs">
       <li class="tab col s3 left"><a class="active" href="#description">Description</a></li>
-      <li class="tab col s3 left"><a  href="#specification">Features</a></li>
-     <li class="tab col s3 left"><a href="#review">Specification</a></li>
+      <li class="tab col s3 left"><a  href="#specification">Specification</a></li>
     </ul>
   </div>
   <div id="description" class="col s8 ">{{productDetails.productDesc}}</div>
   <div id="specification" class="col s8">
-          <div ng-repeat = " spec in specDetails">
-         <h6>{{spec.specId}}</h6>:<h6>{{spec.specName}}</h6>
+  <div class="row">
+       <div class="col s6" ng-repeat ="spec in specDetails">
+         <h6><u>{{spec.specName}}</u></h6>
         </div>
-  
+        <div  class="col s6" ng-repeat = " specification in specificationDetails">
+         <h6> {{specification.specValue}}</h6>
+        </div>
   </div>
- <div id="review" class="col s8 "> 
-       <div ng-repeat = " specification in specificationDetails">
-         <h6>{{specification.specValue}}</h6>
-        </div></div>
-</div>
-    <div class="row" ng-repeat="merchant in merchantDetails">
-      <div class="col s12 m5">
-        <div class="card-panel teal">
+  </div>
+
+    <div class="row" style="margin-top:20px" ng-repeat="merchant in merchantDetails">
+      <div class="col s12">
+        <div class="card-panel teal darken-1">
           <span class="white-text">
           <div class="row">
-             <div class="col s4">
+             <div class="col s8">
              <h4>{{merchant.score}}</h4>
              <h4>{{merchant.stock}}</h4>
              <h4>{{merchant.capacity}}</h4>
-             
              </div>
              <div class="col s4">
              <h5>{{merchant.price}}</h5>
              </div>
-             <div class="col s4">
-             <button ng-click="addToCart(clickedProduct)">Add To Cart</button>
+             <div class="row">
+             <button class="waves-effect light-blue darken-2 btn-large col s4 offset-s8" ng-click="addToCart(clickedProduct)">Add To Cart</button>
              </div>
          </div>
           </div>
-          
           
           </span>
         </div>
