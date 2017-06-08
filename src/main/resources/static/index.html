@@ -23,13 +23,12 @@
                    </div>
                   </div>
                 </li>
-                <li style="background:red;"><a href="#email_modal">My Orders</a></li>
+                <li><a class="waves-effect waves-light btn modal-action modal-open" href="#email_modal">My Orders</a></li>
                 <li><a href="#list" ng-init="Phone='phone'" ng-click="getViaCategory(Phone)">Phone</a></li>
                 <li><a href="#list" ng-init="Tablet='tablet'" ng-click="getViaCategory(Tablet)">Tablet</a></li>
                 <li><a href="#list" ng-init="Book='book'" ng-click="getViaCategory(Book)">Book</a></li>
                 <li><a href="#list" ng-init="Fashion='fashion'" ng-click="getViaCategory(Fashion)">Fashion</a></li>
                 <li><a href="#list" ng-init="Shoes='shoes'" ng-click="getViaCategory(Shoes)">Shoes</a></li>    
-                
              </ul>     
              <div class="row" style="padding-top:20px">
                 <a class="dropdown-button btn waves-effect waves-light btn-floating" href="#" data- activates='dropdown-nav'>
@@ -81,10 +80,6 @@
          <button class="btn waves-effect waves-light col s2 offset-s1" type="submit" ng-click="emailSubmit()" name="action">Submit
           <i class="material-icons right">send</i>
          </button>
-        <button class="btn waves-effect waves-light col s3 offset-s1 modal-action modal-close"  ng-click="go('/home')" name="action">Go To Home
-         </button> 
-        <button class="btn waves-effect waves-light col s2 offset-s2 modal-action modal-close"  ng-click="go('/cart')" name="action">Go To Cart
-         </button> 
     </div>
   </div> 
   <script type="text/javascript" src="js/app.js"></script>
