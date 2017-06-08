@@ -107,6 +107,7 @@ myApp.controller('productController', function($scope,$rootScope,userRepository)
 myApp.controller('listController', function($scope,userRepository,$rootScope,productRepository) {
     $rootScope.clickedProduct="";
     $rootScope.getViaCategory=function(x){
+        console.log('get via category');
          $scope.selectedCategory = x ;
          var product = $scope.selectedCategory;
           userRepository.getByCategory(product).success(function(response) {
@@ -145,13 +146,9 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
           if(i!=-1){
               $rootScope.localCart.splice(i,1);
           }
-<<<<<<< HEAD
-		  }
              $('#email_modal1').modal()
-=======
           localStorage.setItem('session', JSON.stringify($rootScope.localCart));
 		    }
->>>>>>> c611061565eec254c39eac7569d993f9fbd8fe80
 		     $scope.emailSubmit = function () {
 		      console.log('emailForCart',$('#email').val()); //email_id
 		      if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#emailForCart').val())){
