@@ -1,21 +1,24 @@
-package com.coviam.blabla.merchant.dto;
+package com.coviam.blabla.dto;
 
 import java.util.List;
 
 public class RatingList {
 	
-	List<IdandRating> idratinglist;
+	List<MerchantNameandRating> idratinglist;
 
-	public RatingList(List<IdandRating> idandRating) {
-		super();
-		idratinglist = idandRating;
+	public RatingList() {
 	}
+
+//	public RatingList(List<MerchantNameandRating> idandRating) {
+//		super();
+//		idratinglist = idandRating;
+//	}
 	
-	public List<IdandRating> getIdandRating() {
+	public List<MerchantNameandRating> getIdandRating() {
 		return idratinglist;
 	}
 
-	public void setIdandRating(List<IdandRating> idandRating) {
+	public void setIdandRating(List<MerchantNameandRating> idandRating) {
 		this.idratinglist = idandRating;
 	}
 

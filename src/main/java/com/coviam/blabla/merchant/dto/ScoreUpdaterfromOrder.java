@@ -1,6 +1,4 @@
-package com.coviam.blabla.merchant.dto;
-
-import com.coviam.blabla.merchant.entity.Score;
+package com.coviam.blabla.dto;
 
 public class ScoreUpdaterfromOrder {
 	private int productId;
@@ -8,14 +6,17 @@ public class ScoreUpdaterfromOrder {
 	private int numOfProd;
 	private double rating;
 	
+	public ScoreUpdaterfromOrder() {
+	}
 	
-	public ScoreUpdaterfromOrder(Score score,int numOfProd,Double rating) {
+	public ScoreUpdaterfromOrder(int productId, int merchantId, int numOfProd, double rating) {
 		super();
-		this.productId = score.getScoreId().getProductId();
-		this.merchantId = score.getScoreId().getMerchantId();
+		this.productId = productId;
+		this.merchantId = merchantId;
 		this.numOfProd = numOfProd;
 		this.rating = rating;
 	}
+
 	public int getProductId() {
 		return productId;
 	}
@@ -39,6 +40,12 @@ public class ScoreUpdaterfromOrder {
 	}
 	public void setRating(double rating) {
 		this.rating = rating;
+	}
+
+	@Override
+	public String toString() {
+		return "ScoreUpdaterfromOrder [productId=" + productId + ", merchantId=" + merchantId + ", numOfProd="
+				+ numOfProd + ", rating=" + rating + "]";
 	}
 	
 	

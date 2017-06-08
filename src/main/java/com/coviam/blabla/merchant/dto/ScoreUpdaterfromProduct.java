@@ -1,20 +1,23 @@
-package com.coviam.blabla.merchant.dto;
-
+package com.coviam.blabla.dto;
 
 public class ScoreUpdaterfromProduct {
 	private int merchantId;
 	private int numOfProdOfMerchant;
 	private int currentStock;
-	float price;
+	double price;
 	
-	public ScoreUpdaterfromProduct(int merchantId, int numOfProdOfMerchant, int currentStock, float price) {
-		super();
-		this.merchantId = merchantId;
-		this.numOfProdOfMerchant = numOfProdOfMerchant;
-		this.currentStock = currentStock;
-		this.price = price;
+	
+	public ScoreUpdaterfromProduct() {
 	}
-	
+
+//	public ScoreUpdaterfromProduct(int merchantId, int numOfProdOfMerchant, int currentStock, double price) {
+//		super();
+//		this.merchantId = merchantId;
+//		this.numOfProdOfMerchant = numOfProdOfMerchant;
+//		this.currentStock = currentStock;
+//		this.price = price;
+//	}
+//	
 	public int getMerchantId() {
 		return merchantId;
 	}
@@ -33,12 +36,13 @@ public class ScoreUpdaterfromProduct {
 	public void setCurrentStock(int currentStock) {
 		this.currentStock = currentStock;
 	}
-
-	public float getPrice() {
+	public Double getPrice() {
 		return price;
 	}
-
-	public void setPrice(float price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
+	
+	
+	
 }
