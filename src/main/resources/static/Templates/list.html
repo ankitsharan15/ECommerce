@@ -2,9 +2,8 @@
 
                     <div class="col s12 category">{{ selectedCategory }}</div>
                     <div class="col s3 center item-design" ng-repeat="product in Products">
-                        <div class="col s12">
-                            <img src="{{ product.productImage }}" ng-click="go('#product')" style="width:50%;">
-                        </div>
+                        <div class="col s12" id="productDiv" ng-click="goToProduct(product)">
+                            <img src="{{ product.productImage }}" style="width:50%; height:187px">
                         <div class="col s12 name">
                             {{ product.productName }}
                         </div>
@@ -34,3 +33,4 @@
                         </div>
                     </div>
                 </div>
+           </div>

@@ -1,50 +1,32 @@
-<button ng-click="getAllProducts()">click to get data</button>    
 <div class="product clear" ng-controller="productController">
-            <header>
-                <hgroup>
-                    <div class="row">
+                 <div class="waves-effect light-blue darken-2 btn-large col s2 offset-s10" onclick="Materialize.toast('Product Succesfully Added To Cart', 4000,'rounded')" ng-click="addToCart(clickedProduct)">ADD TO CART</div>  
                       <div class="col s3">
-                          <img src="{{Products.productImage}}" style="width:50%;height:50%;">
+                          <img class="minipic" src="{{clickedProduct.productImage}}" style="width:50%;height:50%;">
                      </div>
                      <div class="col s8">
-                         <h5>Brand Name   :{{ Products.productBrand }}</h5>
-                         <h5>Product Name :{{ Products.productName }}</h5>
-                         <h5>product Code :{{ Products.productCode }}</h5>
-                     </div>
-                     <div class="col s1">
-                        <button style="width:176px;" class="btn waves-effect waves-light orange" type="submit" name="action">Add to Cart
-                         <i class="mdi-content-send right"></i>
-                        </button>
-                     </div>
+                         <div class="row">
+                            <div class="col s3" style="font-weight:500;padding:0">Brand Name</div>
+                            <div class="col s6" style="opacity:0.4;padding:0">{{ clickedProduct.productBrand }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col s3" style="font-weight:500;padding:0">Product Name</div>
+                            <div class="col s3" style="opacity:0.4;padding:0">{{ clickedProduct.productName}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col s3" style="font-weight:500;padding:0">Product Code</div>
+                            <div class="col s3" style="opacity:0.4;padding:0">{{ clickedProduct.productCode }}</div>
+                        </div>
                     </div>
-                    
-                </hgroup>
-            </header>
     <div class="row">
-  <div class="col s10 offset-s1">
+  <div class="col s10" style="padding:0">
     <ul class="tabs">
-      <li class="tab col s3"><a class="active" href="#description">Description</a></li>
-      <li class="tab col s3"><a  href="#specification">Specification</a></li>
-     <li class="tab col s3"><a href="#review">Review</a></li>
+      <li class="tab col s3 left"><a class="active" href="#description">Description</a></li>
+      <li class="tab col s3 left"><a  href="#specification">Specification</a></li>
+     <li class="tab col s3 left"><a href="#review">Review</a></li>
     </ul>
   </div>
-  <div id="description" class="col s8 offset-s4">Description</div>
-  <div id="specification" class="col s8 offset-s4">Specification</div>
- <div id="review" class="col s12">Review</div>
+  <div id="description" class="col s8 ">{{clickedProduct.productDesc}}</div>
+  <div id="specification" class="col s8">Specification</div>
+ <div id="review" class="col s8 ">Review</div>
 </div>
-            <section>
-                <p>{{ Products.productUsp }}.</p>
-                <details>
-                    <summary>Product Features</summary>
-                        <ul>
-                            <li>{{ Products.productDesc }}</li>
-
-                        </ul>
-            </details>     
-            </section>
-    
-       
-   
-   
-   
-        </div>
+</div>
