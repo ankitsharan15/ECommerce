@@ -689,7 +689,9 @@ if (jQuery) {
         if (eventType === 'focus') {
           isFocused = true;
         }
-
+        if(options.closeIcon) { 
+      $modal.append('<button class="modal-close btn-flat" style="position:absolute;top:0;right:0;">X</button>');
+ }
         // Check html data attributes
         updateOptions();
 

@@ -4,21 +4,20 @@
     <div class="col s2 offset-s1 merchant left">Date</div>
 </div>
 <!-- Reusable code for Order History -->
-<div class="row valign-wrapper" style="border-bottom:1px dashed;padding-bottom:10px" id="product1">
+<div ng-repeat="order in orderProductlist" class="row valign-wrapper" style="border-bottom:1px dashed;padding-bottom:10px" id="product1">
     <div class="col s6">
         <div class="col s12 l2 m4">
-          <img src="http://ecx.images-amazon.com/images/I/41lXbF77NXL._AC_US160_FMwebp_QL70_.jpg" style="height:100px;width:80px">
-        </div>
+          <img src="{{orderProductlist.productImage }}">
         <div class="col s10">
-            <div class="name col s12" style="padding-left:5px">Name</div>
-            <div class="merchant col s12" style="padding-bottom:5px;padding-left:5px">Merchant</div>
+            <div class="name col s12" style="padding-left:5px">{{ orderProductlist.productName }}</div>
+            <div class="merchant col s12" style="padding-bottom:5px;padding-left:5px">{{ orderProductlist.productMerchant }}</div>
         </div>
     </div>
     <div class="col s2 left price">
-        Price
+        {{ orderProductlist.productPrice }}
     </div>
     <div class="col s3 offset-s1">
-       Date
+       {{ orderdata.emailId }}
   </div>
     </div>
 </div>

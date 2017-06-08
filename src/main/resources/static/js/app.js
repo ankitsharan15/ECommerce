@@ -1,32 +1,44 @@
 var myApp = angular.module('myApp', ["ngRoute"]);
 
-myApp.controller('myCtrl', function ($scope,$location,$rootScope) {	
+myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {	
       $rootScope.cartCount = 0;
-      $rootScope.cart=new Map();
-      $rootScope.cart.set('1','Oppo')
-      if($rootScope.cart.size<=0){
-        $('.numberCircle').hide();
+      $rootScope.localCart = JSON.parse(localStorage.getItem('session'));
+      $rootScope.cartCollection = [];
+      $rootScope.clickedProduct;
+      //$rootScope.cart.set('1','Oppo')
+      if($rootScope.cartCollection.size<=0){
     }
   $('.modal').modal();
-    $('.modal').modal({
-      dismissible: false, 
-    })
   $rootScope.go = function ( path ) {
-  $location.path( path );$scope.emailSubmit = function () {
+  $location.path( path );
+
+  }
+      $scope.emailSubmit = function () {
       console.log('email',$('#email').val()); //email_id
       if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email').val())){
-         $scope.go('/orders')  
-         $('#email_modal').modal('close'); 
+    	  $('#email_modal').modal('close'); 
+    	  var emailForOrderDetails = $('#email').val(); 
+    	  $rootScope.emailForOrderDetails="";
+    	  $rootScope.emailForOrderDetails = emailForOrderDetails;
+    	  $rootScope.orderdata;
+          orderDetails.getUserOrders(emailForOrderDetails).then(function(data){
+        	  $rootScope.orderdata = data;
+          });
+          var abc;
+          abc = $rootScope.orderdata;
+    	  console.log(abc);
+          $scope.go('/orders')  
+         
+         
       }
       else{
           $("#email").next("label").attr('data-error','Wrong');
           alert('You have entered wrong email address');
       }
       
-};
-    }; 
 
-    
+};
+
 
 });
 
@@ -44,6 +56,18 @@ myApp.directive('ngEnter', function() {
         };
     });
 
+myApp.directive('a', function() {
+    return {
+        restrict: 'E',
+        link: function(scope, elem, attrs) {
+            if(attrs.href === '#email_modal'){
+                elem.on('click', function(e){
+                    e.preventDefault();
+                });
+            }
+        }
+   };
+}); 
 myApp.config(function($routeProvider) {
     $routeProvider
     .when("/home", {
@@ -59,7 +83,10 @@ myApp.config(function($routeProvider) {
         controller: 'listController'
         
     })
-
+    .when("/orders", {
+        templateUrl : "Templates/orders.html",
+        controller: 'orderController'
+    })
     .when("/cart", {
         templateUrl : "Templates/cart.html",
         controller: 'cartController'
@@ -71,7 +98,7 @@ myApp.controller('homeController', function($scope,$rootScope) {
            
 });
 
-myApp.controller('productController', function($scope,userRepository) {
+myApp.controller('productController', function($scope,$rootScope,userRepository) {
     $('ul.tabs').tabs();
     $('ul.tabs').tabs('select_tab', 'tab_id');
     $scope.getAllProducts=function(){
@@ -82,29 +109,41 @@ myApp.controller('productController', function($scope,userRepository) {
 });
 
 myApp.controller('listController', function($scope,userRepository,$rootScope) {
-
+    $rootScope.clickedProduct="";
     $rootScope.getViaCategory=function(x){
-
          $scope.selectedCategory = x ;
          var product = $scope.selectedCategory;
           userRepository.getByCategory(product).success(function(response) {
            console.log('response'+response);
            $scope.Products = response;
+            
         });
       }
-    $rootScope.addToCart = function(productName) {
-        console.log('cart', productName)
-         $('.numberCircle').show();
-            $rootScope.cartCount++;
-    };   
-});
+    $rootScope.addToCart = function(product) {
+         if($rootScope.localCart){
+         $rootScope.localCart.push(product) }
+        else{
+            $rootScope.localCart=[];
+            $rootScope.localCart.push(product) 
+        }
+        localStorage.setItem('session', JSON.stringify($rootScope.localCart));
+    } 
+    $scope.goToProduct=function(product){
+        if (product){
+         $rootScope.clickedProduct=product;
+         $rootScope.go('/product');  
+        }
+    }
+    });
 
 myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
-	 $rootScope.deleteFromCart = function() {
-		    $rootScope.cart.delete('1'); //delete by key -> ProductID
-		    if($rootScope.cartCount>0){
-			   $rootScope.cartCount--;
-		    }}
+
+	 $rootScope.deleteFromCart = function(x) {
+          var i = $rootScope.localCart.indexOf(x);
+          if(i!=-1){
+              $rootScope.localCart.splice(i,1);
+          }
+		    }
 		     $scope.emailSubmit = function () {
 		      console.log('emailForCart',$('#email').val()); //email_id
 		      if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#emailForCart').val())){
@@ -113,29 +152,37 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 		      }
 		      else{
 		          alert('You have entered wrong email address');
-		      }
-		     }
-		      
-	  $scope.testData={
-               "emailId": "neelasha@gmail.com",
-				"date": 1496595243861,
-				"productList": {
-					"productId": 234,
-					"merchantId": 11,
-					"quantity": 1,
-					"rating": 2.0,
-					"reviews": "Nice"
-				}
-			}
-	  var test = $scope.testData;
-	  $rootScope.testPost = function(){
-		  orderRepository.postByOrders(test).success(function(){
-				 console.log("successfully sent"); 
-			  });  
-	  }
 
+
+		     }
+		     }
+		     var currentDate = new Date();
+		     currentDate= currentDate; 
+			  $scope.orderData= { 
+					  "emailId": $rootScope.emailForOrderDetails,
+					  "date"   : $scope.currentDate,
+				      "productList": [{
+							"productId": 234,
+							"merchantId": 11,
+							"quantity": 1,
+							"rating": 2.0,
+							"reviews": "Nice"
+				      },{
+							"productId": 235,
+							"merchantId": 12,
+							"quantity": 2,
+							"rating": 5.0,
+							"reviews": "Very Nice"
+				    	  
+				      }]
+			  }
+      var currentOrder = $scope.orderData;     
+	  $scope.saveOrder = function(){
+		  orderRepository.postByOrders(currentOrder );
+	  }     
 
 });
 myApp.controller('orderController',function($scope){
+	$scope.orderProductlist = $rootScope.orderdata.productList;
     
 });

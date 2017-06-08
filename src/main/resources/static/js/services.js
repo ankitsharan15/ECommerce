@@ -12,9 +12,29 @@ myApp.factory('orderRepository',function ($http){
 	   return {
 		      postByOrders:function(order){
 	           var url="/orders/checkout";
-
-	           return $http.post(url,order);
+	           $http.post(url,order)
 	       }
 	   };
 	});
+myApp.factory('orderDetails',function ($http,$q){
+	   return {
+		      
+		       getUserOrders:function(email){
+		    	   var deferred = $q.defer();
 
+		    	   var res;
+		           var url="/orders/history";
+		           $http.post(url,email)
+		           .success(function(results) { 		        	  
+		        	             deferred.resolve(
+		        	            	 JSON.stringify(results)
+		        	                );
+		        	          }).error(function(msg, code) {
+		        	             deferred.reject(msg);
+		        	             $log.error(msg, code);
+		        	          });
+		        	        return deferred.promise;
+
+	       }
+	   };
+	});

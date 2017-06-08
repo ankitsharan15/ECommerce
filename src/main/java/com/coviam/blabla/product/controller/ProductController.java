@@ -41,8 +41,6 @@ public class ProductController {
 
 	@Autowired
 	MerchantServiceInterface msi;
-	
-	
 
 	@RequestMapping(value = "/")
 	public String returnAllProducts() {
@@ -64,7 +62,7 @@ public class ProductController {
 		return productQty;
 	}
 
-	@RequestMapping(value = "/getproductmerchant", method = RequestMethod.POST,produces = "application/json")
+	@RequestMapping(value = "/getproductmerchant", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public List<OrderAndItems> getProductMerchant(@RequestBody ArrayList<OrderAndItems> productMerchantDto) {
 
@@ -103,11 +101,12 @@ public class ProductController {
 		for (ProductSpecification productSpec : prodSpec) {
 			id.add(productSpec.getProdSpecId().getSpec_id());
 		}
-		CustomMerchant customMerchant ;
+		CustomMerchant customMerchant;
 		List<Specification> specList = ps.getSpecsById(id);
 		List<CustomMerchant> customMerchantList = new ArrayList<CustomMerchant>();
-		for(ProductMerchant productMerchant : productMerchantList){
-			customMerchant = new CustomMerchant(productMerchant,ps.getMerchant(productMerchant.getProductmerchantid().getMerchantId()).getMerchantName());
+		for (ProductMerchant productMerchant : productMerchantList) {
+			customMerchant = new CustomMerchant(productMerchant,
+					ps.getMerchant(productMerchant.getProductmerchantid().getMerchantId()).getMerchantName());
 			customMerchantList.add(customMerchant);
 		}
 		ProductDetails productDetails = new ProductDetails(productList, prodSpec, customMerchantList, specList);
@@ -129,8 +128,9 @@ public class ProductController {
 		CustomMerchant customMerchant;
 		List<Specification> specList = ps.getSpecsById(id);
 		List<CustomMerchant> customMerchantList = new ArrayList<CustomMerchant>();
-		for(ProductMerchant productMerchant : productMerchantList){
-			customMerchant = new CustomMerchant(productMerchant,ps.getMerchant(productMerchant.getProductmerchantid().getMerchantId()).getMerchantName());
+		for (ProductMerchant productMerchant : productMerchantList) {
+			customMerchant = new CustomMerchant(productMerchant,
+					ps.getMerchant(productMerchant.getProductmerchantid().getMerchantId()).getMerchantName());
 			customMerchantList.add(customMerchant);
 		}
 		ProductDetails productDetails = new ProductDetails(productList, prodSpec, customMerchantList, specList);
@@ -152,12 +152,11 @@ public class ProductController {
 
 	@RequestMapping(value = "/orders/checkout", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean saveOrder(@RequestBody OrderAndItems orderanditems) {
+	public void saveOrder(@RequestBody OrderAndItems orderanditems) {
 
 		Order savedOrder = orderservice.saveOrder(orderanditems);
 		long orderId = savedOrder.getOrderId();
 		orderservice.saveOrderItems(orderanditems, orderId);
-		return true;
 	}
 
 	@RequestMapping(value = "/orders/history", method = RequestMethod.POST)
