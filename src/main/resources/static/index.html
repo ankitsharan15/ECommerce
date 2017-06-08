@@ -60,7 +60,7 @@
                 </div>
                 <div class="col l2 s3 m3 valign-wrapper left" style="padding-left:65px">
                     <img id="cart" src='./images/cart.png' ng-click="go('/cart')" style="height:55px;width:50px">
-                    <div class="numberCircle" >{{cartCollection.length}}</div>               
+                    <div class="numberCircle" >{{localCart.length}}</div>               
                 </div>
                 <div class="col s11 offset-s1">
                    <div ng-view></div>
@@ -77,7 +77,7 @@
              <input id="email" type="email" class="validate" placeholder="Email ID"  ng-enter="emailSubmit()" autofocus>
              <label for="email" data-error="wrong"></label>
         </div>
-         <button class="btn waves-effect waves-light col s2 offset-s1" type="submit" ng-click="emailSubmit()" name="action">Submit
+         <button class="btn waves-effect waves-light col s2 offset-s4" type="submit" ng-click="emailSubmit()" name="action">Submit
           <i class="material-icons right">send</i>
          </button>
     </div>
