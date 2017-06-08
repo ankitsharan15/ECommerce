@@ -110,7 +110,7 @@ myApp.controller('productController', function($scope,$rootScope,userRepository)
       }
 });
 
-myApp.controller('listController', function($scope,userRepository,$rootScope) {
+myApp.controller('listController', function($scope,userRepository,$rootScope,productRepository) {
     $rootScope.clickedProduct="";
     $rootScope.getViaCategory=function(x){
          $scope.selectedCategory = x ;
@@ -136,10 +136,17 @@ myApp.controller('listController', function($scope,userRepository,$rootScope) {
         localStorage.setItem('session', JSON.stringify($rootScope.localCart));
     } 
     $scope.goToProduct=function(product){
-        if (product){
-         $rootScope.clickedProduct=product;
+        	var productId = product.productCode;
+        	productRepository.getByProduct(productId).success(function(data) {
+        		$rootScope.clickedProduct = data;
+            });
+        	var productData = $rootScope.clickedProduct;
+        	$rootScope.productDetails =productData.product;
+        	$rootScope.specificationDetails =productData.specification;
+        	$rootScope.merchantDetails =productData.customMerchant;
+        	$rootScope.specDetails =productData.specList;
          $rootScope.go('/product');  
-        }
+
     }
     });
 
@@ -166,26 +173,23 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 		     var currentDate = new Date();
 		     currentDate= currentDate; 
 			  $scope.orderData= { 
-					  "emailId": $rootScope.emailForOrderDetails,
+					  "emailId": "ankitsharan15@gmail.com",
 					  "date"   : $scope.currentDate,
 				      "productList": [{
 							"productId": 234,
+							"productName":"iphone",
 							"merchantId": 11,
+							"merchantName":"sai",
+							"imageUrl":"http://ecx.images-amazon.com/images/I/814lO6nm9vL._SL1500_.jpg",
+							"price":20000,
 							"quantity": 1,
 							"rating": 2.0,
 							"reviews": "Nice"
-				      },{
-							"productId": 235,
-							"merchantId": 12,
-							"quantity": 2,
-							"rating": 5.0,
-							"reviews": "Very Nice"
-				    	  
 				      }]
 			  }
       var currentOrder = $scope.orderData;     
 	  $scope.saveOrder = function(){
-		  orderRepository.postByOrders(currentOrder );
+		  orderRepository.postByOrders(currentOrder);
 	  }     
 
 });
