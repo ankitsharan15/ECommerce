@@ -1,5 +1,5 @@
 <div ng-controller="cartController" class="category col s8" style="margin-top:0px;margin-bottom:30px">Shopping Cart</div>
-<a ng-click="saveOrder()" class="waves-effect light-blue darken-2 btn-large col s2 offset-s2" href="#email_modal">CHECKOUT</a>
+<a ng-click="saveOrder()" class="waves-effect light-blue darken-2 btn-large col s2 offset-s2" href="#email_modal1">CHECKOUT</a>
 <div class="row" style="border-bottom:1px dashed;padding-bottom:10px">
     <div class="col s3 offset-s6 merchant left">Price</div>
     <div class="col s2 offset-s1 merchant left">Quantity</div>
@@ -29,12 +29,12 @@
   </div>
     </div>
 </div>
-<div id="email_modal" class="modal">
+<div id="email_modal1" class="modal">
         <div class="row center" style="padding-top:35px">
          <div class="col s10 offset-s1 input-field">
-             <input id="emailForCart" type="email" class="validate" placeholder="Email ID"  ng-enter="emailSubmit()" autofocus>
+             <input id="emailForCart" type="email" class="validate" placeholder="Email ID" ng-enter="emailSubmitCart()" autofocus>
         </div>
-        <button class="btn waves-effect waves-light col s2 offset-s4" type="submit" ng-click="emailSubmit()" name="action">Submit
+        <button class="btn waves-effect waves-light col s2 offset-s4" type="submit"  ng-click="emailSubmitCart()" name="action">Submit
           <i class="material-icons right">send</i>
          </button>
     </div>

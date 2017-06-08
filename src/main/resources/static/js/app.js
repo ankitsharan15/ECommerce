@@ -14,7 +14,6 @@ myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {
 
   }
       $scope.emailSubmit = function () {
-      console.log('email',$('#email').val()); //email_id
       if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email').val())){
     	  $('#email_modal').modal('close'); 
     	  var emailForOrderDetails = $('#email').val(); 
@@ -32,7 +31,6 @@ myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {
          
       }
       else{
-          $("#email").next("label").attr('data-error','Wrong');
           alert('You have entered wrong email address');
       }
       
@@ -60,7 +58,7 @@ myApp.directive('a', function() {
     return {
         restrict: 'E',
         link: function(scope, elem, attrs) {
-            if(attrs.href === '#email_modal'){
+            if(attrs.href === '#email_modal'||attrs.href === '#email_modal1'){
                 elem.on('click', function(e){
                     e.preventDefault();
                 });
@@ -144,7 +142,9 @@ myApp.controller('listController', function($scope,userRepository,$rootScope,pro
     });
 
 myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
-
+	$scope.currentDate = new Date();
+	
+ $('#email_modal1').modal();
 	 $rootScope.deleteFromCart = function(x) {
           var i = $rootScope.localCart.indexOf(x);
           if(i!=-1){
@@ -152,45 +152,50 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
           }
           localStorage.setItem('session', JSON.stringify($rootScope.localCart));
 		    }
-		     $scope.emailSubmit = function () {
-		      console.log('emailForCart',$('#email').val()); //email_id
+		     $scope.emailSubmitCart = function () {
+		    	 $scope.orderData= { 
+		   			  "emailId":$('#emailForCart').val(),
+		   			  "date"   : $scope.currentDate,
+		   		      "productList": [{
+		   					"productId": 544,
+		   					"productName":"iphone",
+		   					"merchantId": 4,
+		   					"merchantName":"sai",
+		   					"quantity": 1,
+		   					"price":20001.0,
+		   					"rating": 2.0,
+		   					"reviews": "Nice",
+		   					"imageUrl":"http://ecx.images-amazon.com/images/I/814lO6nm9vL._SL1500_.jpg"
+		   		      }]
+		   	  }
+		    	 console.log('under email submit function');
+		      console.log('emailForCart',$('#emailForCart').val()); //email_id
 		      if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#emailForCart').val())){
-		         $rootScope.go('/orders')  
-		         $('#email_modal').modal('close'); 
+			         var currentOrder = $scope.orderData; 
+			         console.log(currentOrder);
+			         orderRepository.postByOrders(currentOrder);
+		         $rootScope.go('/orders');
+		         $('#email_modal1').modal('close');
+
 		      }
 		      else{
 		          alert('You have entered wrong email address');
-
+		     }
 
 		     }
-		     }
-		     $scope.productString='[';
-		     $scope.product;
-		    // console.log('length',$rootScope.localCart);
-		     var currentDate = new Date();
-		     currentDate= currentDate; 
-			  $scope.orderData= { 
-					  "emailId": "ankitsharan15@gmail.com",
-					  "date"   : 1496922980583,
-				      "productList": [{
-							"productId": 234,
-							"productName":"iphone",
-							"merchantId": 11,
-							"merchantName":"sai",
-							"quantity": 1,
-							"price":20000.0,
-							"rating": 2.0,
-							"reviews": "Nice",
-							"imageUrl":"http://ecx.images-amazon.com/images/I/814lO6nm9vL._SL1500_.jpg"
-				      }]
-			  }
-      var currentOrder = $scope.orderData;     
-	  $scope.saveOrder = function(currentOrder){
-		  orderRepository.postByOrders(currentOrder);
-	  }     
+             var emailSend = $rootScope.emailForOrderDetails;
+		     
+			  
+     // var currentOrder = $scope.orderData;    
+			  
+	 /* $scope.saveOrder = function(){
+		  if ($scope.flag == 1){
+		   orderRepository.postByOrders(currentOrder);
+		  }
+	  }   */  
 
 });
-myApp.controller('orderController',function($scope){
-	$scope.orderProductlist = $rootScope.orderdata.productList;
+myApp.controller('orderController',function($scope,$rootScope){
+	
     
 });

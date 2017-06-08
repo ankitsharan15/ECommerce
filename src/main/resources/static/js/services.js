@@ -20,7 +20,7 @@ myApp.factory('orderRepository',function ($http){
 	   return {
 		      postByOrders:function(order){
 	           var url="/orders/checkout";
-	           $http.post(url,order)
+	           return $http.post(url,order)
 	       }
 	   };
 	});

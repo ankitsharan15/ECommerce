@@ -38,22 +38,29 @@ public class OrderAndItemHelper {
 		return orderitemlist;
 	}
 	
-	public static String createEmailText(List<OrderItem> orderitemlist){
+	public static String createEmailText(long orderId, List<ItemDetail> orderitemlist){
 		
 		StringBuffer emailText = new StringBuffer();
 		emailText.append("The details of your order are:\n\n")
 				 .append("Order ID : ")
-				 .append(orderitemlist.get(0).getOrderId())
+				 .append(orderId)
 				 .append("\n\n")
 				 .append("Products:\n\n");
-		for(OrderItem orderitem : orderitemlist){
-			emailText.append("Product ID : ")
-					 .append(orderitem.getProductId())
-					 .append("\n\n")
-					 .append("Quantity : ")
+		
+		for(ItemDetail orderitem : orderitemlist){
+			emailText.append("Product  :    ")
+					 .append(orderitem.getProductName())
+					 .append("     Seller   :    ")
+					 .append(orderitem.getMerchantName())
+					 .append("     Price    :    ")
+					 .append(orderitem.getPrice())
+					 .append("     Quantity :    ")
 					 .append(orderitem.getQuantity())
 					 .append("\n\n");
+					 
 		}
+		emailText.append("\n\n\nRegards\n")
+		 		 .append("Team BlaBla");
 		return emailText.toString();
 	}
 

@@ -23,7 +23,7 @@ public interface OrderService {
 
 	public List<OrderAndItems> fetchOrderHistory(String email);
 	
-	public boolean sendOrderConfirmationEmail(String email, List<OrderItem> savedOrderItems);
+	public boolean sendOrderConfirmationEmail(long orderId, OrderAndItems orderanditems);
 
 	public List<ProductQty> updateStockinProductMicroService(List<OrderItem> savedOrderItems);
 	

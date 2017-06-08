@@ -8,11 +8,6 @@ import com.coviam.blabla.order.entity.Order;
 
 public class OrderAndItems implements Serializable {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	private String emailId;
 	
 	private Date date;
