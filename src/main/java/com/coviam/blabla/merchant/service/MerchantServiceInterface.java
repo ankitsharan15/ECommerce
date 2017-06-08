@@ -7,6 +7,6 @@ import com.coviam.blabla.merchant.entity.ScoreId;
 
 public interface MerchantServiceInterface {
 	void updateMerchantRating(RatingList ratinglist);
-	Iterable<Merchant> getMerchantDetails(List<Long> merchantId);
+	Iterable<Merchant> getMerchantDetails(List<Integer> merchantId);
 	List<Double> getScores(List<ScoreId> scoreId);
 	}

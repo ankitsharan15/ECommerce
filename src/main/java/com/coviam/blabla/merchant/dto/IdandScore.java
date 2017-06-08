@@ -10,6 +10,11 @@ public IdandScore(Score score) {
 		this.scoreid = score.getScoreId();
 		Score = score.getCalcScore();
 	}
+
+	public IdandScore(){
+		
+	}
+
 	public ScoreId getScoreid() {
 		return scoreid;
 	}
@@ -22,4 +27,10 @@ public IdandScore(Score score) {
 	public void setScore(double score) {
 		Score = score;
 	}
+
+	@Override
+	public String toString() {
+		return "IdandScore [scoreid=" + scoreid + ", Score=" + Score + "]";
+	}
+	
 }

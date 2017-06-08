@@ -3,7 +3,7 @@ package com.coviam.blabla.merchant.dto;
 import com.coviam.blabla.merchant.entity.Merchant;
 
 public class IdandRating {
-	private long merchantId;
+	private int merchantId;
 	private double merchantRating;
 	private String merchantName;
 	
@@ -17,10 +17,10 @@ public class IdandRating {
 		this.merchantRating = merchant.getMerchantRating();
 		this.merchantName=merchant.getMerchantName();
 	}
-	public long getMerchantId() {
+	public int getMerchantId() {
 		return merchantId;
 	}
-	public void setMerchantId(long merchantId) {
+	public void setMerchantId(int merchantId) {
 		this.merchantId = merchantId;
 	}
 	public double getMerchantRating() {

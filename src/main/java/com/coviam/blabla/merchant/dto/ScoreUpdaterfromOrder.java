@@ -3,8 +3,8 @@ package com.coviam.blabla.merchant.dto;
 import com.coviam.blabla.merchant.entity.Score;
 
 public class ScoreUpdaterfromOrder {
-	private long productId;
-	private long merchantId;
+	private int productId;
+	private int merchantId;
 	private int numOfProd;
 	private double rating;
 	
@@ -16,16 +16,16 @@ public class ScoreUpdaterfromOrder {
 		this.numOfProd = numOfProd;
 		this.rating = rating;
 	}
-	public long getProductId() {
+	public int getProductId() {
 		return productId;
 	}
-	public void setProductId(long productId) {
+	public void setProductId(int productId) {
 		this.productId = productId;
 	}
-	public long getMerchantId() {
+	public int getMerchantId() {
 		return merchantId;
 	}
-	public void setMerchantId(long merchantId) {
+	public void setMerchantId(int merchantId) {
 		this.merchantId = merchantId;
 	}
 	public int getNumOfProd() {

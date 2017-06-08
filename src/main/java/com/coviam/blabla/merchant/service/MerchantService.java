@@ -22,7 +22,7 @@ public class MerchantService implements MerchantServiceInterface{
 	private ScoreRepository scorerepository;
 	
 	@Override
-	public Iterable<Merchant> getMerchantDetails(List<Long> merchantId) {
+	public Iterable<Merchant> getMerchantDetails(List<Integer> merchantId) {
 		return merchantrepository.findAll(merchantId);
 	}
 	
@@ -42,7 +42,7 @@ public class MerchantService implements MerchantServiceInterface{
 		List<IdandRating> idratinglist = ratinglist.getIdandRating();
  		for(IdandRating idandrating : idratinglist)
 		{
- 			long merchantId=idandrating.getMerchantId();
+ 			int merchantId=idandrating.getMerchantId();
  			double newRating=idandrating.getMerchantRating();
  			Merchant merchant = merchantrepository.findOne(merchantId);
  			double currentRating=merchant.getMerchantRating();

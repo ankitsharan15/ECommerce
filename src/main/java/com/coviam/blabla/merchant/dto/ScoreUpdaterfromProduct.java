@@ -1,25 +1,24 @@
 package com.coviam.blabla.merchant.dto;
 
-import java.util.List;
 
 public class ScoreUpdaterfromProduct {
-	private long merchantId;
+	private int merchantId;
 	private int numOfProdOfMerchant;
 	private int currentStock;
-	List<Double> priceList;
+	float price;
 	
-	public ScoreUpdaterfromProduct(long merchantId, int numOfProdOfMerchant, int currentStock, List<Double> priceList) {
+	public ScoreUpdaterfromProduct(int merchantId, int numOfProdOfMerchant, int currentStock, float price) {
 		super();
 		this.merchantId = merchantId;
 		this.numOfProdOfMerchant = numOfProdOfMerchant;
 		this.currentStock = currentStock;
-		this.priceList = priceList;
+		this.price = price;
 	}
 	
-	public long getMerchantId() {
+	public int getMerchantId() {
 		return merchantId;
 	}
-	public void setMerchantId(long merchantId) {
+	public void setMerchantId(int merchantId) {
 		this.merchantId = merchantId;
 	}
 	public int getNumOfProdOfMerchant() {
@@ -34,13 +33,12 @@ public class ScoreUpdaterfromProduct {
 	public void setCurrentStock(int currentStock) {
 		this.currentStock = currentStock;
 	}
-	public List<Double> getPriceList() {
-		return priceList;
+
+	public float getPrice() {
+		return price;
 	}
-	public void setPriceList(List<Double> priceList) {
-		this.priceList = priceList;
+
+	public void setPrice(float price) {
+		this.price = price;
 	}
-	
-	
-	
 }

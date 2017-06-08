@@ -27,9 +27,9 @@ public class ScoreCalculator implements iScoreCalculator{
 					List<ScoreUpdaterfromProduct> scoreUpdaterListfromProduct){
 			List<Double> calcScoreList=new ArrayList<Double>();
 			for(ScoreUpdaterfromOrder scoreUpdater : scoreUpdaterListfromOrder){
-				long merchantId=scoreUpdater.getMerchantId();
+				int merchantId=scoreUpdater.getMerchantId();
 				int numOfProdSold=scoreUpdater.getNumOfProd();
-				long productId=scoreUpdater.getProductId();
+				int productId=scoreUpdater.getProductId();
 				double prodRating=scoreUpdater.getRating();
 				ScoreId scoreId = new ScoreId();
 				scoreId.setMerchantId(merchantId);
