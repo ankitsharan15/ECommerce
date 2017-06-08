@@ -11,7 +11,6 @@ myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {
   $('.modal').modal();
   $rootScope.go = function ( path ) {
   $location.path( path );
-
   }
       $scope.emailSubmit = function () {
       console.log('email',$('#email').val()); //email_id
@@ -24,22 +23,15 @@ myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {
           orderDetails.getUserOrders(emailForOrderDetails).then(function(data){
         	  $rootScope.orderdata = data;
           });
+          $rootScope.go('/orders');
           var abc;
-          abc = $rootScope.orderdata;
-    	  console.log(abc);
-          $scope.go('/orders')  
-         
-         
+          abc = $rootScope.orderdata;         
       }
       else{
           $("#email").next("label").attr('data-error','Wrong');
           alert('You have entered wrong email address');
       }
-      
-
 };
-
-
 });
 
 myApp.directive('ngEnter', function() {
@@ -60,7 +52,7 @@ myApp.directive('a', function() {
     return {
         restrict: 'E',
         link: function(scope, elem, attrs) {
-            if(attrs.href === '#email_modal'){
+            if(attrs.href === '#email_modal'||'#email_modal1'){
                 elem.on('click', function(e){
                     e.preventDefault();
                 });
@@ -90,7 +82,11 @@ myApp.config(function($routeProvider) {
     .when("/cart", {
         templateUrl : "Templates/cart.html",
         controller: 'cartController'
-    });
+    })
+    .when("/rate",{
+        templateUrl : "Templates/rate.html",
+        controller: 'rateController'
+    })
 });
 
 myApp.controller('homeController', function($scope,$rootScope) {
@@ -137,22 +133,21 @@ myApp.controller('listController', function($scope,userRepository,$rootScope) {
     });
 
 myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
-
 	 $rootScope.deleteFromCart = function(x) {
           var i = $rootScope.localCart.indexOf(x);
           if(i!=-1){
               $rootScope.localCart.splice(i,1);
           }
-		    }
+		  }
+             $('#email_modal1').modal()
 		     $scope.emailSubmit = function () {
 		      console.log('emailForCart',$('#email').val()); //email_id
 		      if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#emailForCart').val())){
-		         $rootScope.go('/orders')  
-		         $('#email_modal').modal('close'); 
+		         $rootScope.go('/rate')  ;
+		         $('#email_modal1').modal('close'); 
 		      }
 		      else{
 		          alert('You have entered wrong email address');
-
 
 		     }
 		     }
@@ -178,11 +173,21 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 			  }
       var currentOrder = $scope.orderData;     
 	  $scope.saveOrder = function(){
+          $('#email_modal1').modal('open');
+       
 		  orderRepository.postByOrders(currentOrder );
 	  }     
 
 });
-myApp.controller('orderController',function($scope){
-	$scope.orderProductlist = $rootScope.orderdata.productList;
+myApp.controller('orderController',function($scope,$rootScope){
+	//$scope.orderProductlist = $rootScope.orderdata.productList;  
+});
+
+myApp.controller('rateController',function($scope){
     
+    $scope.rate=function(){
+      console.log('rating',$("#review").val(),'parent',$(this).parents('div')); //rating
+      alert('Thankyou!!');
+    }
+   
 });

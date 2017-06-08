@@ -29,7 +29,8 @@
                 <li><a href="#list" ng-init="Book='book'" ng-click="getViaCategory(Book)">Book</a></li>
                 <li><a href="#list" ng-init="Fashion='fashion'" ng-click="getViaCategory(Fashion)">Fashion</a></li>
                 <li><a href="#list" ng-init="Shoes='shoes'" ng-click="getViaCategory(Shoes)">Shoes</a></li>    
-             </ul>     
+             </ul>
+             
              <div class="row" style="padding-top:20px">
                 <a class="dropdown-button btn waves-effect waves-light btn-floating" href="#" data- activates='dropdown-nav'>
                     <i class="material-icons">menu</i>
@@ -66,12 +67,7 @@
                    <div ng-view></div>
                 </div>            
         </div>
-      </div>
-    </div>
-   <footer>
-       Copy Right 
-   </footer>
-   <div id="email_modal" class="modal">
+           <div id="email_modal" class="modal">
         <div class="row center" style="padding-top:35px">
          <div class="col s10 offset-s1 input-field">
              <input id="email" type="email" class="validate" placeholder="Email ID"  ng-enter="emailSubmit()" autofocus>
@@ -82,6 +78,14 @@
          </button>
     </div>
   </div> 
+      </div>
+        
+    </div>
+    
+   <footer>
+       Copy Right 
+   </footer>
+   
   <script type="text/javascript" src="js/app.js"></script>
   <script type="text/javascript" src= "js/services.js"></script> 
  </body>
