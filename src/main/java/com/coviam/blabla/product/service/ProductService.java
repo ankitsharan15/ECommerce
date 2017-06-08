@@ -3,7 +3,8 @@ package com.coviam.blabla.product.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.client.RestTemplate;
+import com.coviam.blabla.merchant.dto.IdandRating;
 import com.coviam.blabla.product.dao.ProductMerchantRepository;
 import com.coviam.blabla.product.dao.ProductRepository;
 import com.coviam.blabla.product.dao.ProductSpecificationRepository;
@@ -29,6 +30,10 @@ public class ProductService implements ProductServiceInterface{
 	@Autowired
 	SpecificationRepository sr;
 	
+	@Autowired
+	RestTemplate restTemplate;
+	
+	
 	@Override
 	public List<Product> getAllProducts() {
 		// TODO Auto-generated method stub
@@ -48,7 +53,7 @@ public class ProductService implements ProductServiceInterface{
 	}
 	
 	@Override
-	public List<ProductMerchant> getProductDetails(int productCode, int merchantId) {
+	public List<ProductMerchant> getProductsDetails(int productCode, int merchantId) {
 		// TODO Auto-generated method stub
 		ProductMerchantId pmid = new ProductMerchantId(productCode, merchantId);
 		List<ProductMerchant> productmerchantlist = pmr.findByProductmerchantid(pmid);
@@ -94,6 +99,35 @@ public class ProductService implements ProductServiceInterface{
 		pr.save(p);
 		p = new Product(8, "OnePlus 3T", "64GB, 4GB RAM", "phone", "Best Budget phone rated by India Times", "OnePlus", "http://ecx.images-amazon.com/images/I/81%2B4WXlorFL._SL1500_.jpg", 32000);
 		pr.save(p);
+		p = new Product(3,"HP Tablet 7","64GB, 7-inch","tablet","Powerful performance,Sleek Design","HP","http://ecx.images-amazon.com/images/I/419C%2B6y8xqL.jpg",15000);
+		pr.save(p);
+	}
+
+	@Override
+	public void saveProductMerchant(ProductMerchant pm) {
+		// TODO Auto-generated method stub
+		pmr.save(pm);
+	}
+
+	@Override
+	public ProductMerchant getProductDetails(int productCode, int merchantId) {
+		// TODO Auto-generated method stub
+		ProductMerchantId pmid = new ProductMerchantId(productCode, merchantId);
+		return pmr.findOne(pmid);
+	}
+
+	@Override
+	public Product getAProduct(int productCode) {
+		// TODO Auto-generated method stub
+		return pr.findOne(productCode);
+		}
+
+	@Override
+	public IdandRating getMerchant(int merchantId) {
+		// TODO Auto-generated method stub
+		final String uri = "http://172.16.20.34:8080/getmerchant";
+		IdandRating merchant = restTemplate.postForObject(uri, merchantId, IdandRating.class);
+		return merchant;
 	}
 
 	

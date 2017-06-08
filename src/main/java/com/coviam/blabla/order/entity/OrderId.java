@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class OrderId implements Serializable {
 	 
 	private long orderId;
-	private long productId;
-	private long merchantId;
+	private int productId;
+	private int merchantId;
 	
 	public OrderId(){
 		
 	}
 	
-	public OrderId(long orderId, long productId, long merchantId) {
+	public OrderId(long orderId, int productId, int merchantId) {
 		super();
 		this.orderId = orderId;
 		this.productId = productId;
@@ -23,11 +23,11 @@ public class OrderId implements Serializable {
 		return orderId;
 	}
 
-	public long getProductId() {
+	public int getProductId() {
 		return productId;
 	}
 
-	public long getMerchantId() {
+	public int getMerchantId() {
 		return merchantId;
 	}
 

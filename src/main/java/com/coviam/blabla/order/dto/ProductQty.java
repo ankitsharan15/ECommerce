@@ -1,12 +1,14 @@
 package com.coviam.blabla.order.dto;
 
+import java.io.Serializable;
+
 import com.coviam.blabla.order.entity.OrderItem;
 
-public class ProductQty {
+public class ProductQty implements Serializable {
 
-	private long productId;
+	private int productId;
 	
-	private long merchantId;
+	private int merchantId;
 	
 	private int numOfProducts;
 	
@@ -31,7 +33,7 @@ public class ProductQty {
 		return productId;
 	}
 
-	public void setProductId(long productId) {
+	public void setProductId(int productId) {
 		this.productId = productId;
 	}
 
@@ -39,7 +41,7 @@ public class ProductQty {
 		return merchantId;
 	}
 
-	public void setMerchantId(long merchantId) {
+	public void setMerchantId(int merchantId) {
 		this.merchantId = merchantId;
 	}
 
@@ -49,6 +51,12 @@ public class ProductQty {
 
 	public void setNumOfOrders(int numOfOrders) {
 		this.numOfProducts = numOfOrders;
+	}
+
+	@Override
+	public String toString() {
+		return "ProductQty [productId=" + productId + ", merchantId=" + merchantId + ", numOfProducts=" + numOfProducts
+				+ "]";
 	}
 
 	

@@ -1,20 +1,20 @@
 <div class="product clear" ng-controller="productController">
                  <div class="waves-effect light-blue darken-2 btn-large col s2 offset-s10" onclick="Materialize.toast('Product Succesfully Added To Cart', 4000,'rounded')" ng-click="addToCart(clickedProduct)">ADD TO CART</div>  
                       <div class="col s3">
-                          <img src="{{clickedProduct.productImage}}" style="width:50%;height:50%;">
+                          <img src="{{productDetails.productImage}}" style="width:50%;height:50%;">
                      </div>
                      <div class="col s8">
                          <div class="row">
                             <div class="col s3" style="font-weight:500;padding:0">Brand Name</div>
-                            <div class="col s6" style="opacity:0.4;padding:0">{{ clickedProduct.productBrand }}</div>
+                            <div class="col s6" style="opacity:0.4;padding:0">{{ productDetails.productBrand }}</div>
                         </div>
                         <div class="row">
                             <div class="col s3" style="font-weight:500;padding:0">Product Name</div>
-                            <div class="col s3" style="opacity:0.4;padding:0">{{ clickedProduct.productName}}</div>
+                            <div class="col s3" style="opacity:0.4;padding:0">{{ productDetails.productName}}</div>
                         </div>
                         <div class="row">
                             <div class="col s3" style="font-weight:500;padding:0">Product Code</div>
-                            <div class="col s3" style="opacity:0.4;padding:0">{{ clickedProduct.productCode }}</div>
+                            <div class="col s3" style="opacity:0.4;padding:0">{{ productDetails.productCode }}</div>
                         </div>
                     </div>
     <div class="row">
@@ -22,11 +22,41 @@
     <ul class="tabs">
       <li class="tab col s3 left"><a class="active" href="#description">Description</a></li>
       <li class="tab col s3 left"><a  href="#specification">Specification</a></li>
-     <li class="tab col s3 left"><a href="#review">Review</a></li>
     </ul>
   </div>
-  <div id="description" class="col s8 ">{{clickedProduct.productDesc}}</div>
-  <div id="specification" class="col s8">Specification</div>
- <div id="review" class="col s8 ">Review</div>
-</div>
+  <div id="description" class="col s8 ">{{productDetails.productDesc}}</div>
+  <div id="specification" class="col s8">
+  <div class="row">
+       <div class="col s6" ng-repeat ="spec in specDetails">
+         <h6><u>{{spec.specName}}</u></h6>
+        </div>
+        <div  class="col s6" ng-repeat = " specification in specificationDetails">
+         <h6> {{specification.specValue}}</h6>
+        </div>
+  </div>
+  </div>
+
+    <div class="row" style="margin-top:20px" ng-repeat="merchant in merchantDetails">
+      <div class="col s12">
+        <div class="card-panel teal darken-1">
+          <span class="white-text">
+          <div class="row">
+             <div class="col s8">
+             <h4>{{merchant.score}}</h4>
+             <h4>{{merchant.stock}}</h4>
+             <h4>{{merchant.capacity}}</h4>
+             </div>
+             <div class="col s4">
+             <h5>{{merchant.price}}</h5>
+             </div>
+             <div class="row">
+             <button class="waves-effect light-blue darken-2 btn-large col s4 offset-s8" ng-click="addToCart(clickedProduct)">Add To Cart</button>
+             </div>
+         </div>
+          </div>
+          
+          </span>
+        </div>
+      </div>
+    </div>
 </div>

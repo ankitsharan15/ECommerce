@@ -16,12 +16,14 @@ public class OrderItem {
 	private long orderId;
 	@Id
 	@Column(name="PRODUCTID")
-	private long productId;
+	private int productId;
 	@Id
 	@Column(name="MERCHANTID")
-	private long merchantId;
+	private int merchantId;
 	@Column(name="QUANTITY")
 	private int quantity;
+	@Column(name="PRICE")
+	private float price;
 	@Column(name="RATING")
 	private float rating;
 	@Column(name="REVIEWS")
@@ -32,16 +34,16 @@ public class OrderItem {
 	public void setOrderId(long orderId) {
 		this.orderId = orderId;
 	}
-	public long getProductId() {
+	public int getProductId() {
 		return productId;
 	}
-	public void setProductId(long productId) {
+	public void setProductId(int productId) {
 		this.productId = productId;
 	}
-	public long getMerchantId() {
+	public int getMerchantId() {
 		return merchantId;
 	}
-	public void setMerchantId(long merchantId) {
+	public void setMerchantId(int merchantId) {
 		this.merchantId = merchantId;
 	}
 	public int getQuantity() {
@@ -61,6 +63,12 @@ public class OrderItem {
 	}
 	public void setReviews(String reviews) {
 		this.reviews = reviews;
+	}
+	public float getPrice() {
+		return price;
+	}
+	public void setPrice(float price) {
+		this.price = price;
 	}
 	
 	
