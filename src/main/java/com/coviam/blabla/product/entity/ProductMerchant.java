@@ -20,12 +20,6 @@ public class ProductMerchant implements Serializable {
 	@Embedded
 	private ProductMerchantId productmerchantid;
 	
-//	@Column(name = "product_code")
-//	int productCode;
-//
-//	@Column(name = "merchant_id")
-//	int merchantId;
-
 	@Column(name = "price")
 	float price;
 
