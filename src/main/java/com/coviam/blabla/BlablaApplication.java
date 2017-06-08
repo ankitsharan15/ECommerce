@@ -5,8 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
-import com.coviam.blabla.product.dto.CustomMerchant;
-
 @SpringBootApplication
 public class BlablaApplication {
 
@@ -18,4 +16,6 @@ public class BlablaApplication {
 	public RestTemplate restTemplate(){
 		return new RestTemplate();
 	}
+	
+	
 }
