@@ -12,7 +12,7 @@ import com.coviam.blabla.product.dao.ProductMerchantRepository;
 import com.coviam.blabla.product.dao.ProductRepository;
 import com.coviam.blabla.product.dao.ProductSpecificationRepository;
 import com.coviam.blabla.product.dao.SpecificationRepository;
-import com.coviam.blabla.product.dto.ProductSearch;
+import com.coviam.blabla.search.dto.ProductSearch;
 import com.coviam.blabla.product.entity.Product;
 import com.coviam.blabla.product.entity.ProductMerchant;
 import com.coviam.blabla.product.entity.ProductMerchantId;

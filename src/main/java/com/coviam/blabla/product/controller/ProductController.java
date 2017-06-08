@@ -1,6 +1,7 @@
 package com.coviam.blabla.product.controller;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,12 @@ import com.coviam.blabla.order.dto.ItemDetail;
 import com.coviam.blabla.order.dto.OrderAndItems;
 import com.coviam.blabla.order.dto.ProductQty;
 import com.coviam.blabla.order.entity.Order;
+import com.coviam.blabla.order.entity.OrderItem;
 import com.coviam.blabla.order.service.OrderService;
 import com.coviam.blabla.product.dto.CustomMerchant;
 import com.coviam.blabla.product.dto.ProductDetails;
-import com.coviam.blabla.product.dto.ProductSearch;
+import com.coviam.blabla.search.dto.ProductSearch;
+import com.coviam.blabla.service.SearchService;
 import com.coviam.blabla.product.entity.Product;
 import com.coviam.blabla.product.entity.ProductMerchant;
 import com.coviam.blabla.product.entity.ProductSpecification;
@@ -41,6 +44,9 @@ public class ProductController {
 	@Autowired
 	MerchantServiceInterface merchantService;
 
+	@Autowired
+	SearchService searchservice;
+	
 	@RequestMapping(value = "/")
 	public String returnAllProducts() {
 		return ("index.html");
@@ -178,20 +184,34 @@ public class ProductController {
 	@RequestMapping(value = "/orders/checkout", method = RequestMethod.POST)
 	@ResponseBody
 	public void saveOrder(@RequestBody OrderAndItems orderanditems) {
-
+	
 		Order savedOrder = orderservice.saveOrder(orderanditems);
 		long orderId = savedOrder.getOrderId();
-		orderservice.saveOrderItems(orderanditems, orderId);
-	}
+		List<OrderItem> savedOrderItems = orderservice.saveOrderItems(orderanditems, orderId);
+		orderservice.updateStockinProductMicroService(savedOrderItems);
+		orderservice.sendOrderConfirmationEmail(orderId, orderanditems);
+		
+		}
+
+
 
 	@RequestMapping(value = "/orders/history", method = RequestMethod.POST)
 	@ResponseBody
-	public List<OrderAndItems> fetchOrderHistory(@RequestBody String email) {
+	public List<OrderAndItems> fetchOrderHistory(@RequestBody String email){
 		List<OrderAndItems> orderHistory = orderservice.fetchOrderHistory(email);
-		if (orderHistory.size() == 0)
+		if(orderHistory.size() == 0)
 			return null;
 		return orderHistory;
 	}
+	
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ProductSearch> searchProduct(@RequestBody String productName){
+		List<ProductSearch> productsearchedlist = searchservice.getProductByName(productName);
+		return productsearchedlist;
+	}
+	
+
 
 	@RequestMapping(value = "/getProductByName/{productName}")
 	@ResponseBody

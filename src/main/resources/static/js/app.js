@@ -14,7 +14,6 @@ myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {
 
   }
       $scope.emailSubmit = function () {
-      console.log('email',$('#email').val()); //email_id
       if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email').val())){
     	  $('#email_modal').modal('close'); 
     	  var emailForOrderDetails = $('#email').val(); 
@@ -32,7 +31,6 @@ myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {
          
       }
       else{
-          $("#email").next("label").attr('data-error','Wrong');
           alert('You have entered wrong email address');
       }
       
@@ -60,7 +58,7 @@ myApp.directive('a', function() {
     return {
         restrict: 'E',
         link: function(scope, elem, attrs) {
-            if(attrs.href === '#email_modal'){
+            if(attrs.href === '#email_modal'||attrs.href === '#email_modal1'){
                 elem.on('click', function(e){
                     e.preventDefault();
                 });
@@ -108,7 +106,7 @@ myApp.controller('productController', function($scope,$rootScope,userRepository)
       }
 });
 
-myApp.controller('listController', function($scope,userRepository,$rootScope) {
+myApp.controller('listController', function($scope,userRepository,$rootScope,productRepository) {
     $rootScope.clickedProduct="";
     $rootScope.getViaCategory=function(x){
          $scope.selectedCategory = x ;
@@ -129,60 +127,75 @@ myApp.controller('listController', function($scope,userRepository,$rootScope) {
         localStorage.setItem('session', JSON.stringify($rootScope.localCart));
     } 
     $scope.goToProduct=function(product){
-        if (product){
-         $rootScope.clickedProduct=product;
+        	var productId = product.productCode;
+        	productRepository.getByProduct(productId).success(function(data) {
+        		$rootScope.productDetails = data.product;
+        		$rootScope.specificationDetails = data.specification;;
+        		$rootScope.merchantDetails = data.customMerchant;
+        		$rootScope.specDetails = data.specList;
+        		        		
+            });
+
          $rootScope.go('/product');  
-        }
+
     }
     });
 
 myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
-
+	$scope.currentDate = new Date();
+	
+ $('#email_modal1').modal();
 	 $rootScope.deleteFromCart = function(x) {
           var i = $rootScope.localCart.indexOf(x);
           if(i!=-1){
               $rootScope.localCart.splice(i,1);
           }
+          localStorage.setItem('session', JSON.stringify($rootScope.localCart));
 		    }
-		     $scope.emailSubmit = function () {
-		      console.log('emailForCart',$('#email').val()); //email_id
+		     $scope.emailSubmitCart = function () {
+		    	 $scope.orderData= { 
+		   			  "emailId":$('#emailForCart').val(),
+		   			  "date"   : $scope.currentDate,
+		   		      "productList": [{
+		   					"productId": 544,
+		   					"productName":"iphone",
+		   					"merchantId": 4,
+		   					"merchantName":"sai",
+		   					"quantity": 1,
+		   					"price":20001.0,
+		   					"rating": 2.0,
+		   					"reviews": "Nice",
+		   					"imageUrl":"http://ecx.images-amazon.com/images/I/814lO6nm9vL._SL1500_.jpg"
+		   		      }]
+		   	  }
+		    	 console.log('under email submit function');
+		      console.log('emailForCart',$('#emailForCart').val()); //email_id
 		      if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#emailForCart').val())){
-		         $rootScope.go('/orders')  
-		         $('#email_modal').modal('close'); 
+			         var currentOrder = $scope.orderData; 
+			         console.log(currentOrder);
+			         orderRepository.postByOrders(currentOrder);
+		         $rootScope.go('/orders');
+		         $('#email_modal1').modal('close');
+
 		      }
 		      else{
 		          alert('You have entered wrong email address');
-
+		     }
 
 		     }
-		     }
-		     var currentDate = new Date();
-		     currentDate= currentDate; 
-			  $scope.orderData= { 
-					  "emailId": $rootScope.emailForOrderDetails,
-					  "date"   : $scope.currentDate,
-				      "productList": [{
-							"productId": 234,
-							"merchantId": 11,
-							"quantity": 1,
-							"rating": 2.0,
-							"reviews": "Nice"
-				      },{
-							"productId": 235,
-							"merchantId": 12,
-							"quantity": 2,
-							"rating": 5.0,
-							"reviews": "Very Nice"
-				    	  
-				      }]
-			  }
-      var currentOrder = $scope.orderData;     
-	  $scope.saveOrder = function(){
-		  orderRepository.postByOrders(currentOrder );
-	  }     
+             var emailSend = $rootScope.emailForOrderDetails;
+		     
+			  
+     // var currentOrder = $scope.orderData;    
+			  
+	 /* $scope.saveOrder = function(){
+		  if ($scope.flag == 1){
+		   orderRepository.postByOrders(currentOrder);
+		  }
+	  }   */  
 
 });
-myApp.controller('orderController',function($scope){
-	$scope.orderProductlist = $rootScope.orderdata.productList;
+myApp.controller('orderController',function($scope,$rootScope){
+	
     
 });

@@ -3,9 +3,8 @@ package com.coviam.blabla.product.service;
 import java.util.List;
 
 import com.coviam.blabla.merchant.dto.IdandRating;
-import com.coviam.blabla.merchant.dto.IdandScore;
 import com.coviam.blabla.merchant.entity.ScoreId;
-import com.coviam.blabla.product.dto.ProductSearch;
+import com.coviam.blabla.search.dto.ProductSearch;
 import com.coviam.blabla.product.entity.Product;
 import com.coviam.blabla.product.entity.ProductMerchant;
 import com.coviam.blabla.product.entity.ProductSpecification;
