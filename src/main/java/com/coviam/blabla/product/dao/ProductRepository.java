@@ -10,4 +10,5 @@ public interface ProductRepository extends CrudRepository<Product, Integer>{
 
 	public List<Product> findByProductCategory(String category);
 	public List<Product> findByProductCode(int productCode);
+	public List<Product> findByProductNameContainingIgnoreCase(String productName);
 }

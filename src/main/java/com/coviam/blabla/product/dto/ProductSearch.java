@@ -1,4 +1,4 @@
-package com.coviam.blabla.search.dto;
+package com.coviam.blabla.product.dto;
 
 public class ProductSearch {
 
@@ -7,14 +7,6 @@ public class ProductSearch {
 	private String productImage;
 	private float price;
 
-	public ProductSearch(int productCode, String productName, String productImage, float price) {
-		super();
-		this.productCode = productCode;
-		this.productName = productName;
-		this.productImage = productImage;
-		this.price = price;
-	}
-	
 	public int getProductCode() {
 		return productCode;
 	}
@@ -44,6 +36,14 @@ public class ProductSearch {
 	}
 
 	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public ProductSearch(int productCode, String productName, String productImage, float price) {
+		super();
+		this.productCode = productCode;
+		this.productName = productName;
+		this.productImage = productImage;
 		this.price = price;
 	}
 

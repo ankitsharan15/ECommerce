@@ -1,4 +1,4 @@
-package com.coviam.blabla.merchant.entity;
+package com.coviam.blabla.entity;
 
 import java.io.Serializable;
 
@@ -13,10 +13,37 @@ import javax.persistence.Table;
 public class Merchant implements Serializable{
 	@Id
 	@Column(name="merchant_id")
-	private long merchantId;
-	
+	private int merchantId;
+	@Column(name="merchant_rating")
+	double merchantRating;
+	@Column(name="merchant_name")
+	String merchantName;
+	@Column(name="merchant_logo")
+	String merchantLogo;
+	@Column(name="merchant_city")
+	String merchantCity;
+	@Column(name="merchant_country")
+	String merchantCountry;
+	@Column(name="rating_counter")
+	int ratingCounter;
 	public int getRatingCounter() {
 		return ratingCounter;
+	}
+
+	public Merchant(){
+		
+	}
+	
+	public Merchant(int merchantId, double merchantRating, String merchantName, String merchantLogo,
+			String merchantCity, String merchantCountry, int ratingCounter) {
+		super();
+		this.merchantId = merchantId;
+		this.merchantRating = merchantRating;
+		this.merchantName = merchantName;
+		this.merchantLogo = merchantLogo;
+		this.merchantCity = merchantCity;
+		this.merchantCountry = merchantCountry;
+		this.ratingCounter = ratingCounter;
 	}
 
 	@Override
@@ -30,11 +57,11 @@ public class Merchant implements Serializable{
 		this.ratingCounter = ratingCounter;
 	}
 
-	public long getMerchantId() {
+	public int getMerchantId() {
 		return merchantId;
 	}
 
-	public void setMerchantId(long merchantId) {
+	public void setMerchantId(int merchantId) {
 		this.merchantId = merchantId;
 	}
 	public double getMerchantRating() {
@@ -67,17 +94,6 @@ public class Merchant implements Serializable{
 	public void setMerchantCountry(String merchantCountry) {
 		this.merchantCountry = merchantCountry;
 	}
-	@Column(name="merchant_rating")
-	double merchantRating;
-	@Column(name="merchant_name")
-	String merchantName;
-	@Column(name="merchant_logo")
-	String merchantLogo;
-	@Column(name="merchant_city")
-	String merchantCity;
-	@Column(name="merchant_country")
-	String merchantCountry;
-	@Column(name="rating_counter")
-	int ratingCounter;
+	
 
 }

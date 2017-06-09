@@ -24,20 +24,32 @@ public class ProductMerchant implements Serializable {
 	float price;
 
 	@Column(name = "stock")
-	long stock;
+	int stock;
 
 	@Column(name = "score")
-	long score;
+	double score;
 
 	@Column(name = "capacity")
-	long capacity;
-	
+	int capacity;
 
-	public long getCapacity() {
+	public ProductMerchant(){
+		
+	}
+
+	public ProductMerchant(ProductMerchantId productmerchantid, float price, int stock, long score, int capacity) {
+		super();
+		this.productmerchantid = productmerchantid;
+		this.price = price;
+		this.stock = stock;
+		this.score = score;
+		this.capacity = capacity;
+	}
+
+	public int getCapacity() {
 		return capacity;
 	}
 
-	public void setCapacity(long capacity) {
+	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
 
@@ -49,19 +61,19 @@ public class ProductMerchant implements Serializable {
 		this.price = price;
 	}
 
-	public long getStock() {
+	public int getStock() {
 		return stock;
 	}
 
-	public void setStock(long stock) {
+	public void setStock(int stock) {
 		this.stock = stock;
 	}
 
-	public long getScore() {
+	public double getScore() {
 		return score;
 	}
 
-	public void setScore(long score) {
+	public void setScore(double score) {
 		this.score = score;
 	}
 
