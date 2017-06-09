@@ -29,7 +29,8 @@
                 <li><a href="#list" ng-init="Book='book'" ng-click="getViaCategory(Book)">Book</a></li>
                 <li><a href="#list" ng-init="Fashion='fashion'" ng-click="getViaCategory(Fashion)">Fashion</a></li>
                 <li><a href="#list" ng-init="Shoes='shoes'" ng-click="getViaCategory(Shoes)">Shoes</a></li>    
-             </ul>     
+             </ul>
+             
              <div class="row" style="padding-top:20px">
                 <a class="dropdown-button btn waves-effect waves-light btn-floating" href="#" data- activates='dropdown-nav'>
                     <i class="material-icons">menu</i>
@@ -42,11 +43,11 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="#">Phone</a></li>
-                    <li><a href="#">Book</a></li>
-                    <li><a href="#">Fashion</a></li>
-                    <li><a href="#">Shoes</a></li>
-                    <li><a href="#email_modal">My Orders</a></li>
+                    <li><a href="#list" ng-init="Phone='phone'" ng-click="getViaCategory(Phone)">Phone</a></li>
+                    <li><a href="#list" ng-init="Tablet='tablet'" ng-click="getViaCategory(Tablet)">Book</a></li>
+                    <li><a href="#list" ng-init="Book='book'" ng-click="getViaCategory(Book)">Fashion</a></li>
+                    <li><a href="#list" ng-init="Fashion='fashion'" ng-click="getViaCategory(Fashion)">Shoes</a></li>
+                    <li><href="#list" ng-init="Shoes='shoes'" ng-click="getViaCategory(Shoes)">My Orders</a></li>
                </ul>
              </div>           
        </div>
@@ -66,12 +67,7 @@
                    <div ng-view></div>
                 </div>            
         </div>
-      </div>
-    </div>
-   <footer>
-       Copy Right 
-   </footer>
-   <div id="email_modal" class="modal">
+           <div id="email_modal" class="modal">
         <div class="row center" style="padding-top:35px">
          <div class="col s10 offset-s1 input-field">
              <input id="email" type="email" class="validate" placeholder="Email ID"  ng-enter="emailSubmit()" autofocus>
@@ -82,6 +78,14 @@
          </button>
     </div>
   </div> 
+      </div>
+        
+    </div>
+    
+   <footer>
+       Copy Right 
+   </footer>
+   
   <script type="text/javascript" src="js/app.js"></script>
   <script type="text/javascript" src= "js/services.js"></script> 
  </body>

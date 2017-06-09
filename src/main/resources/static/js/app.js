@@ -1,17 +1,15 @@
 var myApp = angular.module('myApp', ["ngRoute"]);
 
+<<<<<<< HEAD
 myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails,searchRepository) {	
       $rootScope.cartCount = 0;
+=======
+myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {	
+>>>>>>> 7a3ab36bde49735b2b3499036f206014cb804c0c
       $rootScope.localCart = JSON.parse(localStorage.getItem('session'));
-      $rootScope.cartCollection = [];
-      $rootScope.clickedProduct;
-      //$rootScope.cart.set('1','Oppo')
-      if($rootScope.cartCollection.size<=0){
-    }
   $('.modal').modal();
   $rootScope.go = function ( path ) {
   $location.path( path );
-
   }
   $scope.searchProducts = function(){
 	  var seachText = $('#search').val();
@@ -30,21 +28,20 @@ myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails,se
           orderDetails.getUserOrders(emailForOrderDetails).then(function(data){
         	  $rootScope.orderdata = data;
           });
-          var abc;
-          abc = $rootScope.orderdata;
-    	  console.log(abc);
-          $scope.go('/orders')  
-         
-         
+          $rootScope.go('/orders');    
       }
       else{
-          alert('You have entered wrong email address');
+          Materialize.toast('Wrong Email ID', 4000,'rounded')
       }
-      
-
 };
-
-
+$('.carousel').carousel({
+    padding: 200    
+});
+autoplay()   
+function autoplay() {
+    $('.carousel').carousel('next');
+    setTimeout(autoplay, 4500);
+}
 });
 
 myApp.directive('ngEnter', function() {
@@ -65,7 +62,7 @@ myApp.directive('a', function() {
     return {
         restrict: 'E',
         link: function(scope, elem, attrs) {
-            if(attrs.href === '#email_modal'||attrs.href === '#email_modal1'){
+            if(attrs.href === '#email_modal'||'#email_modal1'){
                 elem.on('click', function(e){
                     e.preventDefault();
                 });
@@ -95,11 +92,23 @@ myApp.config(function($routeProvider) {
     .when("/cart", {
         templateUrl : "Templates/cart.html",
         controller: 'cartController'
-    });
+    })
+    .when("/rate",{
+        templateUrl : "Templates/rate.html",
+        controller: 'rateController'
+    })
 });
 
-myApp.controller('homeController', function($scope,$rootScope) {
-	  $('.carousel.carousel-slider').carousel({fullWidth: true});           
+myApp.controller('homeController', function($scope,$rootScope,userRepository) {
+	  $('.carousel.carousel-slider').carousel({fullWidth: true});
+    userRepository.getByCategory('phone').success(function(data) {
+           $scope.phones = data;
+        });
+    userRepository.getByCategory('fashion').success(function(data) {
+           $scope.fashion= data;
+        });
+   // console.log('phone and fashion',$scope.phones,$scope.fashion)
+    
            
 });
 
@@ -108,24 +117,30 @@ myApp.controller('productController', function($scope,$rootScope,userRepository)
     $('ul.tabs').tabs('select_tab', 'tab_id');
     $scope.getAllProducts=function(){
           userRepository.getByCategory().success(function(data) {
+
            $rootScope.Products = data.product;
+
         });
       }
 });
 
 myApp.controller('listController', function($scope,userRepository,$rootScope,productRepository) {
-    $rootScope.clickedProduct="";
     $rootScope.getViaCategory=function(x){
          $scope.selectedCategory = x ;
          var product = $scope.selectedCategory;
           userRepository.getByCategory(product).success(function(response) {
-           console.log('response'+response);
+          //console.log('response'+response);
            $scope.Products = response;
             
         });
       }
-    $rootScope.addToCart = function(product) {
+    $rootScope.addToCart = function(product,merchant,index) {
+        //console.log('merchant',merchant,'index',index);
+        //console.log('merchant product merchant',merchant[index].productMerchant.price);
+        //console.log('merchant product merchant id',merchant.productMerchant[0].productmerchantid);
          if($rootScope.localCart){
+       /*  var prodMerchant='{\"productId\":\"'+product.productCode+'\",\"productName\":\"'+product.productName+'\",\"merchantId\":\"'+merchant.productMerchant.productmerchantid.merchantId+'\",\"imageUrl\":\"'+product.productImage+'\"}'
+        // console.log('prodMerchant',prodMerchant); */
          $rootScope.localCart.push(product) }
         else{
             $rootScope.localCart=[];
@@ -150,13 +165,12 @@ myApp.controller('listController', function($scope,userRepository,$rootScope,pro
 
 myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 	$scope.currentDate = new Date();
-	
  $('#email_modal1').modal();
 	 $rootScope.deleteFromCart = function(x) {
           var i = $rootScope.localCart.indexOf(x);
           if(i!=-1){
               $rootScope.localCart.splice(i,1);
-          }
+          }    
           localStorage.setItem('session', JSON.stringify($rootScope.localCart));
 		    }
 		     $scope.emailSubmitCart = function () {
@@ -175,34 +189,34 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 		   					"imageUrl":"http://ecx.images-amazon.com/images/I/814lO6nm9vL._SL1500_.jpg"
 		   		      }]
 		   	  }
-		    	 console.log('under email submit function');
-		      console.log('emailForCart',$('#emailForCart').val()); //email_id
+		    	// console.log('under email submit function');
+		     // console.log('emailForCart',$('#emailForCart').val()); //email_id
 		      if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#emailForCart').val())){
+
 			         var currentOrder = $scope.orderData; 
-			         console.log(currentOrder);
+			          //console.log(currentOrder);
 			         orderRepository.postByOrders(currentOrder);
-		         $rootScope.go('/orders');
-		         $('#email_modal1').modal('close');
+		             $rootScope.go('/rate');
+		             $('#email_modal1').modal('close');
 
 		      }
 		      else{
-		          alert('You have entered wrong email address');
+		          Materialize.toast('Wrong Email ID', 4000,'rounded')
 		     }
+                //console.log('order quantity',$('#quantity').val(),'rating',$('#rating').val(),'review',$('#review').val())
 
 		     }
-             var emailSend = $rootScope.emailForOrderDetails;
-		     
-			  
-     // var currentOrder = $scope.orderData;    
-			  
-	 /* $scope.saveOrder = function(){
-		  if ($scope.flag == 1){
-		   orderRepository.postByOrders(currentOrder);
+             var emailSend = $rootScope.emailForOrderDetails;		  
+	  $scope.saveOrder = function(){
+		  if ($('#review').val()==""){
+           $('#review').val("OK");
 		  }
-	  }   */  
+	  }   
 
 });
 myApp.controller('orderController',function($scope,$rootScope){
-	
-    
+    $scope.rate=function(){
+          
+    }
+   
 });

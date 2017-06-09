@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.coviam.blabla.merchant.dao.MerchantRepository;
 import com.coviam.blabla.merchant.dao.ScoreRepository;
+import com.coviam.blabla.merchant.dto.IdandScore;
 import com.coviam.blabla.merchant.dto.ScoreUpdaterfromOrder;
 import com.coviam.blabla.merchant.dto.ScoreUpdaterfromProduct;
 import com.coviam.blabla.merchant.entity.Merchant;
@@ -22,26 +24,76 @@ public class ScoreCalculator implements iScoreCalculator{
 		private ScoreRepository scoreRepository;
 		@Autowired
 		private MerchantRepository merchantRepository;
-				
-		public Iterable<Double> generateScore(List<ScoreUpdaterfromOrder> scoreUpdaterListfromOrder,
-					List<ScoreUpdaterfromProduct> scoreUpdaterListfromProduct){
-			List<Double> calcScoreList=new ArrayList<Double>();
+		@Autowired
+		RestTemplate restTemplate;
+		
+//		@Override
+//		public List<IdandScore> generateScore(List<ScoreUpdaterfromOrder> scoreUpdaterListfromOrder){
+//			List<IdandScore> calcIdScoreList=new ArrayList<IdandScore>();
+//			for(ScoreUpdaterfromOrder scoreUpdater : scoreUpdaterListfromOrder){
+//				int merchantId=scoreUpdater.getMerchantId();
+//				int productId=scoreUpdater.getProductId();
+//				ScoreId scoreId = new ScoreId(merchantId,productId);
+//				Score score= scoreRepository.findOne(scoreId);
+//				int numProd=score.getNumOfProd();
+//				int numProdSold=score.getNumProdSold();
+//				int stock=score.getCurrentStock();
+//				Merchant merchant=merchantRepository.findOne(merchantId);
+//				double merchantRating=merchant.getMerchantRating();
+//				double priceRating=score.getPriceRating();
+//				double calcScore;
+//				double prodRating=score.getCustomerRating();
+//				calcScore = ((weights[0]*numProd)/10)+((weights[1]*numProdSold)/10)+((weights[2]*stock)/100)+(weights[3]*merchantRating)+((weights[4]*priceRating)/100)+(weights[5]*prodRating);
+//				IdandScore idandscore=new IdandScore();
+//				idandscore.setScoreid(scoreId);
+//				idandscore.setScore(calcScore);		
+//				calcIdScoreList.add(idandscore);
+//				score.setCalcScore(calcScore);
+//				scoreRepository.save(score);
+//				}
+//			return calcIdScoreList;
+//			}
+		
+//		@Override
+//		public void setUpdatesFromProduct(ScoreId scoreId, Score score){
+//			final String uri="http://172.16.20.36:8080/getUpdatesfromProduct";
+//			ScoreUpdaterfromProduct scoreUpdaterProduct = restTemplate.postForObject(uri, scoreId, ScoreUpdaterfromProduct.class);
+//					int currentStock=scoreUpdaterProduct.getCurrentStock();
+//					int numOfProdOfMerchant=scoreUpdaterProduct.getNumOfProdOfMerchant();
+//					score.setCurrentStock(currentStock);
+//					score.setNumOfProd(numOfProdOfMerchant);
+//					}
+		
+		@Override
+		public void setUpdatesFromOrder(List<ScoreUpdaterfromOrder> scoreUpdaterListfromOrder){
 			for(ScoreUpdaterfromOrder scoreUpdater : scoreUpdaterListfromOrder){
-				long merchantId=scoreUpdater.getMerchantId();
+				int merchantId=scoreUpdater.getMerchantId();
 				int numOfProdSold=scoreUpdater.getNumOfProd();
-				long productId=scoreUpdater.getProductId();
+				int productId=scoreUpdater.getProductId();
 				double prodRating=scoreUpdater.getRating();
-				ScoreId scoreId = new ScoreId();
+				ScoreId scoreId = new ScoreId(merchantId,productId);
 				scoreId.setMerchantId(merchantId);
 				scoreId.setProductId(productId);
-				Score score= scoreRepository.findOne(scoreId);
+				Score score = scoreRepository.findOne(scoreId);
 				score.setNumOfProd(numOfProdSold+score.getNumProdSold());
 				double currRating=score.getCustomerRating();
 				int counterCurrRating=score.getCounterCustomerRating();
 				prodRating=((currRating*counterCurrRating)+prodRating)/(counterCurrRating+1);
 				score.setCustomerRating(prodRating);	
-				ScoreCalculator scoreCalculator=new ScoreCalculator();
-				scoreCalculator.updatesFromProduct(scoreId,score,scoreUpdaterListfromProduct);
+				final String uri="http://172.16.20.36:8080/getUpdatesfromProduct";
+				ScoreUpdaterfromProduct scoreUpdaterProduct = restTemplate.postForObject(uri, scoreId, ScoreUpdaterfromProduct.class);
+						int currentStock=scoreUpdaterProduct.getCurrentStock();
+						int numOfProdOfMerchant=scoreUpdaterProduct.getNumOfProdOfMerchant();
+						score.setCurrentStock(currentStock);
+						score.setNumOfProd(numOfProdOfMerchant);
+				scoreRepository.save(score);
+				}
+			List<IdandScore> calcIdScoreList=new ArrayList<IdandScore>();
+			for(ScoreUpdaterfromOrder scoreUpdater : scoreUpdaterListfromOrder){
+				int merchantId=scoreUpdater.getMerchantId();
+				int productId=scoreUpdater.getProductId();
+				ScoreId scoreId = new ScoreId(merchantId,productId);
+				Score score= scoreRepository.findOne(scoreId);
 				int numProd=score.getNumOfProd();
 				int numProdSold=score.getNumProdSold();
 				int stock=score.getCurrentStock();
@@ -49,22 +101,82 @@ public class ScoreCalculator implements iScoreCalculator{
 				double merchantRating=merchant.getMerchantRating();
 				double priceRating=score.getPriceRating();
 				double calcScore;
-				calcScore = ((weights[0]*numProd)/10)+((weights[1]*numProdSold)/10)+((weights[2]*stock)/10)+(weights[3]*merchantRating)+((weights[4]*priceRating)/100)+(weights[5]*prodRating);
-				calcScoreList.add(calcScore);
+				double prodRating=score.getCustomerRating();
+				calcScore = ((weights[0]*numProd)/10)+((weights[1]*numProdSold)/10)+((weights[2]*stock)/100)+(weights[3]*merchantRating)+((weights[4]*priceRating)/100)+(weights[5]*prodRating);
+				IdandScore idandscore=new IdandScore();
+				idandscore.setScoreid(scoreId);
+				idandscore.setScore(calcScore);		
+				calcIdScoreList.add(idandscore);
 				score.setCalcScore(calcScore);
 				scoreRepository.save(score);
 				}
-			return calcScoreList;
-			}
+			final String uri="http://172.16.20.36:8080/setscoretoproduct";
+			Boolean bool= restTemplate.postForObject(uri, calcIdScoreList, Boolean.class);
+			System.out.println(bool);
+		}
+		@Override
+		public Iterable<Score> getScoreDetails() {
+			return scoreRepository.findAll();
+		}
 		
-		public void updatesFromProduct(ScoreId scoreId, Score score, List<ScoreUpdaterfromProduct> scoreUpdaterListfromProduct){
-			//send ScoreID to product and fetch the list from there
-				for(ScoreUpdaterfromProduct scoreUpdater: scoreUpdaterListfromProduct){
-					int currentStock=scoreUpdater.getCurrentStock();
-					int numOfProdOfMerchant=scoreUpdater.getNumOfProdOfMerchant();
-					score.setCurrentStock(currentStock);
-					score.setNumOfProd(numOfProdOfMerchant);
-					scoreRepository.save(score);
-				}
-		}		
+//		public List<ScoreUpdaterfromOrder> testCase(){
+//		System.out.println("Reached 0");
+//		ScoreUpdaterfromOrder obj=new ScoreUpdaterfromOrder();
+//		List<ScoreUpdaterfromOrder> scoreUpdaterListfromOrder=new ArrayList<ScoreUpdaterfromOrder>();
+//		obj.setProductId(1);
+//		obj.setMerchantId(1);
+//		obj.setNumOfProd(23);
+//		obj.setRating(3.4);
+//		scoreUpdaterListfromOrder.add(obj);
+//		System.out.println("Reached 1");
+//		for(ScoreUpdaterfromOrder scoreUpdater : scoreUpdaterListfromOrder){
+//			int merchantId=scoreUpdater.getMerchantId();
+//			int numOfProdSold=scoreUpdater.getNumOfProd();
+//			int productId=scoreUpdater.getProductId();
+//			double prodRating=scoreUpdater.getRating();
+//			ScoreId scoreId = new ScoreId(merchantId,productId);
+//			scoreId.setMerchantId(merchantId);
+//			scoreId.setProductId(productId);
+//			Score score = scoreRepository.findOne(scoreId);
+//			score.setNumOfProd(numOfProdSold+score.getNumProdSold());
+//			double currRating=score.getCustomerRating();
+//			int counterCurrRating=score.getCounterCustomerRating();
+//			prodRating=((currRating*counterCurrRating)+prodRating)/(counterCurrRating+1);
+//			score.setCustomerRating(prodRating);	
+//			final String uri="http://172.16.20.36:8080/getUpdatesfromProduct";
+//			ScoreUpdaterfromProduct scoreUpdaterProduct = restTemplate.postForObject(uri, scoreId, ScoreUpdaterfromProduct.class);
+//					int currentStock=scoreUpdaterProduct.getCurrentStock();
+//					int numOfProdOfMerchant=scoreUpdaterProduct.getNumOfProdOfMerchant();
+//					score.setCurrentStock(currentStock);
+//					score.setNumOfProd(numOfProdOfMerchant);
+//			scoreRepository.save(score);
+//			}
+//		List<IdandScore> calcIdScoreList=new ArrayList<IdandScore>();
+//		for(ScoreUpdaterfromOrder scoreUpdater : scoreUpdaterListfromOrder){
+//			int merchantId=scoreUpdater.getMerchantId();
+//			int productId=scoreUpdater.getProductId();
+//			ScoreId scoreId = new ScoreId(merchantId,productId);
+//			Score score= scoreRepository.findOne(scoreId);
+//			int numProd=score.getNumOfProd();
+//			int numProdSold=score.getNumProdSold();
+//			int stock=score.getCurrentStock();
+//			Merchant merchant=merchantRepository.findOne(merchantId);
+//			double merchantRating=merchant.getMerchantRating();
+//			double priceRating=score.getPriceRating();
+//			double calcScore;
+//			double prodRating=score.getCustomerRating();
+//			calcScore = ((weights[0]*numProd)/10)+((weights[1]*numProdSold)/10)+((weights[2]*stock)/100)+(weights[3]*merchantRating)+((weights[4]*priceRating)/100)+(weights[5]*prodRating);
+//			IdandScore idandscore=new IdandScore();
+//			idandscore.setScoreid(scoreId);
+//			idandscore.setScore(calcScore);		
+//			calcIdScoreList.add(idandscore);
+//			score.setCalcScore(calcScore);
+//			scoreRepository.save(score);
+//			}
+//		final String uri="http://172.16.20.36:8080/setscoretoproduct";
+//		Boolean bool= restTemplate.postForObject(uri, calcIdScoreList, Boolean.class);
+//		System.out.println(bool);
+//		return scoreUpdaterListfromOrder;
+//		}
+		
 }

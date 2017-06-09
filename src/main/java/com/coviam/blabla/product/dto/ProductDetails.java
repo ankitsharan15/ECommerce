@@ -3,7 +3,6 @@ package com.coviam.blabla.product.dto;
 import java.util.List;
 
 import com.coviam.blabla.product.entity.Product;
-import com.coviam.blabla.product.entity.ProductMerchant;
 import com.coviam.blabla.product.entity.ProductSpecification;
 import com.coviam.blabla.product.entity.Specification;
 
