@@ -14,9 +14,10 @@
 </div>
 <div class="col s12">
                     <div class="col s12 category">Phones</div>
-                    <div class="col s12 category_description"> Smartphones You Love </div>
+                    <div class="col s12 category_description" > Smartphones You Love </div>
                     <div class="col s3 center" ng-repeat="product in phones track by $index">
-                        <div class="col s12" ng-click="goToProduct('product')">
+                        <div class="clickable" ng-click="goToProduct(product)">
+                        <div class="col s12" >
                             <img src="{{product.productImage}}" style="height:118px;width:90px">
                         </div>
                         <div class="col s12 name">
@@ -38,10 +39,12 @@
                         </div>
                     </div>
                 </div>
+    </div>
 <div class="col s12">
     <div class="col s12 category">Fashion Apparels</div>
                     <div class="col s12 category_description"> Top Picked Items Just for you </div>
                     <div class="col s3 center" ng-repeat="product in fashion track by $index">
+                        <div class="clickable" ng-click="goToProduct(product)">
                         <div class="col s12">
                             <img src="{{product.productImage}}" style="height:100px;width:120px">
                         </div>
@@ -64,3 +67,4 @@
                         </div>
                     </div>
                 </div>
+    </div>

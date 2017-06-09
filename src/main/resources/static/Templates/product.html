@@ -1,5 +1,5 @@
 <div class="product clear" ng-controller="productController">
-                 <div class="waves-effect light-blue darken-2 btn-large col s2 offset-s10" onclick="Materialize.toast('Product Succesfully Added To Cart', 4000,'rounded')" ng-click="addToCart(productDetails,merchantDetails,0)">ADD TO CART</div>  
+                 <div class="waves-effect light-blue darken-2 btn-large col s2 offset-s10" onclick="Materialize.toast('Product Succesfully Added To Cart', 4000,'rounded')" ng-click="addToCart(productDetails,merchantDetails)">ADD TO CART</div>  
                       <div class="col s3">
                           <img src="{{productDetails.productImage}}" style="width:50%;height:50%;">
                      </div>
@@ -44,6 +44,7 @@
              <div class="col s8">
              <h4>{{merchant.merchantName}}</h4>
              <h4>{{merchant.productMerchant.productmerchantid.merchantId}}</h4>
+
              </div>
              <div class="row">
              <button class="waves-effect light-blue darken-2 btn-large col s4 offset-s8" ng-click="addToCart(product,merchant)">Add To Cart</button>
@@ -54,4 +55,5 @@
       </div>
       
     </div>
+        <h4>{{merchantDetails[0].productMerchant.productmerchantid.merchantId}}</h4>
 </div>
