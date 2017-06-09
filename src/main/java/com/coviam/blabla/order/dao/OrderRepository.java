@@ -8,6 +8,6 @@ import com.coviam.blabla.order.entity.Order;
 
 public interface OrderRepository extends CrudRepository<Order, Long> {
 
-	List<Order> findByEmailId(String email);
+	List<Order> findByEmailIdContaining(String email);
 
 }

@@ -4,9 +4,9 @@ import com.coviam.blabla.order.entity.OrderItem;
 
 public class Product {
 
-	private long productId;
+	private int productId;
 	
-	private long merchantId;
+	private int merchantId;
 	
 	private int numOfProducts;
 	
@@ -27,19 +27,19 @@ public class Product {
 		this.rating = orderitem.getRating();
 	}
 
-	public long getProductId() {
+	public int getProductId() {
 		return productId;
 	}
 
-	public void setProductId(long productId) {
+	public void setProductId(int productId) {
 		this.productId = productId;
 	}
 
-	public long getMerchantId() {
+	public int getMerchantId() {
 		return merchantId;
 	}
 
-	public void setMerchantId(long merchantId) {
+	public void setMerchantId(int merchantId) {
 		this.merchantId = merchantId;
 	}
 
