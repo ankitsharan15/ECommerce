@@ -1,41 +1,31 @@
 <div ng-controller="homeController" class="carousel carousel-slider center" data-indicators="true">
     <div class="carousel-item red white-text">
-        <img src='./images/phone.jpg' style='height:400px' />
+        <img src='./images/phone.jpg' style='height:700px' />
     </div>
     <div class="carousel-item amber white-text">
-       <img src='./images/book.jpg' style='height:400px' />
+       <img src='./images/book.jpg' style='height:700px' />
     </div>
     <div class="carousel-item green white-text">
-        <img src='./images/clothes.jpg' style='height:400px' />
+        <img src='./images/clothes.jpg' style='height:700px' />
     </div>
     <div class="carousel-item blue white-text" >
-        <img src='./images/shoes.jpg' style='height:400px' />
+      <img src='./images/shoes.jpg' style='height:700px' />
     </div>
 </div>
 <div class="col s12">
                     <div class="col s12 category">Phones</div>
                     <div class="col s12 category_description"> Smartphones You Love </div>
-                    <div class="col s3 center">
-                        <div class="col s12">
-                            <img src="http://ecx.images-amazon.com/images/I/41lXbF77NXL._AC_US160_FMwebp_QL70_.jpg" style="height:100px;width:120px">
+                    <div class="col s3 center" ng-repeat="product in phones track by $index">
+                        <div class="col s12" ng-click="goToProduct('product')">
+                            <img src="{{product.productImage}}" style="height:118px;width:90px">
                         </div>
                         <div class="col s12 name">
-                            Oppo F3(Gold)
-                        </div>
-                        <div class="col s12 merchant">
-                            By Oppo
+                            {{ product.productName }}
                         </div>
                         <div class="col s12 price">
-                            &#8377; 17,000
+                             &#8377; {{ product.bestPrice }} Onwards.
                         </div>
-                        <div class="col s12 product_action valign-wrapper">
-                            <div class="col s6 valign" onclick="Materialize.toast('Product Saved', 4000,'rounded')">
-                                SAVE
-                            </div>
-                            <div class="col s6 valign" ng-click="addToCart()" onclick="Materialize.toast('Product Succesfully Added To Cart', 4000,'rounded')" style="border-left: 1px dotted #d4d5d9 ;">
-                                ADD TO CART
-                            </div>
-                        </div>
+                       
                         <div class="col s12 valign-wrapper">
                             <div id="email_modal" class="modal">
                                 <div class="col s10 offset-s1 valign" style="padding-top: 40px">
@@ -48,6 +38,29 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+<div class="col s12">
+    <div class="col s12 category">Fashion Apparels</div>
+                    <div class="col s12 category_description"> Top Picked Items Just for you </div>
+                    <div class="col s3 center" ng-repeat="product in fashion track by $index">
+                        <div class="col s12">
+                            <img src="{{product.productImage}}" style="height:100px;width:120px">
+                        </div>
+                        <div class="col s12 name">
+                            {{ product.productName }}
+                        </div>
+                        <div class="col s12 price">
+                             &#8377; {{ product.bestPrice }} Onwards.
+                        </div>
+                       
+                        <div class="col s12 valign-wrapper">
+                            <div id="email_modal" class="modal">
+                                <div class="col s10 offset-s1 valign" style="padding-top: 40px">
+                                    <input type="text" class="validate" placeholder="Email Id">
+                                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                                  <i class="material-icons right">send</i>
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>

@@ -1,31 +1,32 @@
 package com.coviam.blabla.merchant.dto;
 
-import com.coviam.blabla.merchant.entity.Score;
-
 public class ScoreUpdaterfromOrder {
-	private long productId;
-	private long merchantId;
+	private int productId;
+	private int merchantId;
 	private int numOfProd;
 	private double rating;
 	
+	public ScoreUpdaterfromOrder() {
+	}
 	
-	public ScoreUpdaterfromOrder(Score score,int numOfProd,Double rating) {
+	public ScoreUpdaterfromOrder(int productId, int merchantId, int numOfProd, double rating) {
 		super();
-		this.productId = score.getScoreId().getProductId();
-		this.merchantId = score.getScoreId().getMerchantId();
+		this.productId = productId;
+		this.merchantId = merchantId;
 		this.numOfProd = numOfProd;
 		this.rating = rating;
 	}
-	public long getProductId() {
+
+	public int getProductId() {
 		return productId;
 	}
-	public void setProductId(long productId) {
+	public void setProductId(int productId) {
 		this.productId = productId;
 	}
-	public long getMerchantId() {
+	public int getMerchantId() {
 		return merchantId;
 	}
-	public void setMerchantId(long merchantId) {
+	public void setMerchantId(int merchantId) {
 		this.merchantId = merchantId;
 	}
 	public int getNumOfProd() {
@@ -39,6 +40,12 @@ public class ScoreUpdaterfromOrder {
 	}
 	public void setRating(double rating) {
 		this.rating = rating;
+	}
+
+	@Override
+	public String toString() {
+		return "ScoreUpdaterfromOrder [productId=" + productId + ", merchantId=" + merchantId + ", numOfProd="
+				+ numOfProd + ", rating=" + rating + "]";
 	}
 	
 	

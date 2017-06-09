@@ -5,11 +5,15 @@ import com.coviam.blabla.merchant.entity.Score;
 public class IdandScore {
 	private ScoreId scoreid;
 	private double Score;
-public IdandScore(Score score) {
-		super();
-		this.scoreid = score.getScoreId();
-		Score = score.getCalcScore();
+	
+public IdandScore() {
+	// TODO Auto-generated constructor stub
 	}
+//public IdandScore(Score score) {
+//		super();
+//		this.scoreid = score.getScoreId();
+//		Score = score.getCalcScore();
+//	}
 	public ScoreId getScoreid() {
 		return scoreid;
 	}

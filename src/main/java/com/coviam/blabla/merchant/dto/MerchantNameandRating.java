@@ -2,16 +2,14 @@ package com.coviam.blabla.merchant.dto;
 
 import com.coviam.blabla.merchant.entity.Merchant;
 
-public class IdandRating {
+public class MerchantNameandRating{
 	private int merchantId;
 	private double merchantRating;
 	private String merchantName;
 	
-	public IdandRating(){
-		
+	public MerchantNameandRating() {
 	}
-	
-	public IdandRating(Merchant merchant) {
+	public MerchantNameandRating(Merchant merchant) {
 		super();
 		this.merchantId = merchant.getMerchantId();
 		this.merchantRating = merchant.getMerchantRating();

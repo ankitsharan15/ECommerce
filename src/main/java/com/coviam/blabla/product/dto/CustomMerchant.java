@@ -6,6 +6,10 @@ import com.coviam.blabla.product.entity.ProductMerchant;
 
 public class CustomMerchant implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ProductMerchant productMerchant;
 	private String merchantName;
 	public ProductMerchant getProductMerchant() {
