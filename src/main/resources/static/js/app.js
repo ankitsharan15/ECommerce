@@ -1,23 +1,21 @@
-var myApp = angular.module('myApp', ["ngRoute"]);
-myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails,userRepository) {	
+var app = angular.module('app', ["ngRoute"]);
+app.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails,productsRepository,productRepository) {	
      
-      $rootScope.localCart = JSON.parse(localStorage.getItem('session'));
+  $rootScope.localCart = JSON.parse(localStorage.getItem('session'));
   $('.modal').modal();
   $rootScope.go = function ( path ) {
   $location.path( path );
   }
   $scope.searchProducts = function(){
-	  var seachText = $('#search').val();
-	  console.log(seachText);
+	  var seachText = $('#search').val();;
 	  searchRepository.search(seachText).then(function(data){
 		  $rootScope.Products = data;
       });
   }
-  $rootScope.getViaCategory=function(x){
-         $rootScope.selectedCategory = x ;
+  $rootScope.getViaCategory=function(categorisedData){
+         $rootScope.selectedCategory = categorisedData ;
          var product = $rootScope.selectedCategory;
-          userRepository.getByCategory(product).success(function(response) {
-          console.log('response'+x+'data'+response);
+          productsRepository.getByCategory(product).success(function(response) {
            $scope.Products = response;   
         });
       $rootScope.go('/list')
@@ -38,6 +36,20 @@ myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails,us
           Materialize.toast('Wrong Email ID', 4000,'rounded')
       }
 };
+    $rootScope.goToProduct=function(product){
+            console.log('product in gotoproduct',product);
+        	var productId = product.productCode;
+        	productRepository.getByProduct(productId).success(function(data) {
+        		$rootScope.productDetails = data.product;
+        		$rootScope.specificationDetails = data.specification;
+        		$rootScope.merchantDetails = data.customMerchant;
+        		$rootScope.specDetails = data.specList;
+        		        		
+            });
+
+         $rootScope.go('/product'); 
+
+    }
 $('.carousel').carousel({
     padding: 200    
 });
@@ -48,7 +60,7 @@ function autoplay() {
 }
 });
 
-myApp.directive('ngEnter', function() {
+app.directive('ngEnter', function() {
         return function(scope, element, attrs) {
             element.bind("keydown keypress", function(event) {
                 if(event.which === 13) {
@@ -62,7 +74,7 @@ myApp.directive('ngEnter', function() {
         };
     });
 
-myApp.directive('a', function() {
+app.directive('a', function() {
     return {
         restrict: 'E',
         link: function(scope, elem, attrs) {
@@ -74,7 +86,7 @@ myApp.directive('a', function() {
         }
    };
 }); 
-myApp.config(function($routeProvider) {
+app.config(function($routeProvider) {
     $routeProvider
     .when("/home", {
         templateUrl : "Templates/home.html",
@@ -103,12 +115,12 @@ myApp.config(function($routeProvider) {
     })
 });
 
-myApp.controller('homeController', function($scope,$rootScope,userRepository) {
+qpp.controller('homeController', function($scope,$rootScope,productsRepository) {
 	  $('.carousel.carousel-slider').carousel({fullWidth: true});
-    userRepository.getByCategory('phone').success(function(data) {
+    productsRepository.getByCategory('phone').success(function(data) {
            $scope.phones = data;
         });
-    userRepository.getByCategory('fashion').success(function(data) {
+    productsRepository.getByCategory('fashion').success(function(data) {
            $scope.fashion= data;
         });
    // console.log('phone and fashion',$scope.phones,$scope.fashion)
@@ -116,11 +128,11 @@ myApp.controller('homeController', function($scope,$rootScope,userRepository) {
            
 });
 
-myApp.controller('productController', function($scope,$rootScope,userRepository) {
+qpp.controller('productController', function($scope,$rootScope,productsRepository) {
     $('ul.tabs').tabs();
     $('ul.tabs').tabs('select_tab', 'tab_id');
     $scope.getAllProducts=function(){
-          userRepository.getByCategory().success(function(data) {
+          productsRepository.getByCategory().success(function(data) {
 
            $rootScope.Products = data.product;
 
@@ -128,8 +140,11 @@ myApp.controller('productController', function($scope,$rootScope,userRepository)
       }
 });
 
-myApp.controller('listController', function($scope,userRepository,$rootScope,productRepository) {
-    $rootScope.addToCart = function(product,merchant,index) {
+qpp.controller('listController', function($scope,productsRepository,$rootScope,productRepository) {
+    $rootScope.addToCart = function(product,merchantDetails,index) {
+        for(var merhantIndex=0;merchantIndex<merchantDetails.length;merchantDetails++){
+            
+        }
         //console.log('merchant',merchant,'index',index);
         //console.log('merchant product merchant',merchant[index].productMerchant.price);
         //console.log('merchant product merchant id',merchant.productMerchant[0].productmerchantid);
@@ -143,22 +158,10 @@ myApp.controller('listController', function($scope,userRepository,$rootScope,pro
         }
         localStorage.setItem('session', JSON.stringify($rootScope.localCart));
     } 
-    $rootScope.goToProduct=function(product){
-        	var productId = product.productCode;
-        	productRepository.getByProduct(productId).success(function(data) {
-        		$rootScope.productDetails = data.product;
-        		$rootScope.specificationDetails = data.specification;;
-        		$rootScope.merchantDetails = data.customMerchant;
-        		$rootScope.specDetails = data.specList;
-        		        		
-            });
-
-         $rootScope.go('/product');  
-
-    }
+    
     });
 
-myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
+qpp.controller('cartController', function($scope,$rootScope,orderRepository) {
 	$scope.currentDate = new Date();
  $('#email_modal1').modal();
 	 $rootScope.deleteFromCart = function(x) {
@@ -184,6 +187,8 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 		   					"imageUrl":"http://ecx.images-amazon.com/images/I/814lO6nm9vL._SL1500_.jpg"
 		   		      }]
 		   	  }
+
+                 
 		    	// console.log('under email submit function');
 		     // console.log('emailForCart',$('#emailForCart').val()); //email_id
 		      if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#emailForCart').val())){
@@ -209,7 +214,7 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
 	  }   
 
 });
-myApp.controller('orderController',function($scope,$rootScope){
+qpp.controller('orderController',function($scope,$rootScope){
     $scope.rate=function(){
           
     }

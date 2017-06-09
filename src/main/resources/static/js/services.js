@@ -1,6 +1,6 @@
-//services for api  call
-var myApp = angular.module('myApp');
-myApp.factory('userRepository',function ($http){
+//services for all api  calls
+var app = angular.module('app');
+app.factory('userRepository',function ($http){
    return {
         getByCategory:function(product){
            var url="/category/"+product;
@@ -8,7 +8,7 @@ myApp.factory('userRepository',function ($http){
        }
    };
 });
-myApp.factory('productRepository',function ($http){
+app.factory('productRepository',function ($http){
 	   return {
 	        getByProduct:function(productId){
 	           var url="/product/"+productId;
@@ -16,7 +16,7 @@ myApp.factory('productRepository',function ($http){
 	       }
 	   };
 	});
-myApp.factory('orderRepository',function ($http){
+app.factory('orderRepository',function ($http){
 	   return {
 		      postByOrders:function(order){
 	           var url="/orders/checkout";
@@ -24,7 +24,7 @@ myApp.factory('orderRepository',function ($http){
 	       }
 	   };
 	});
-myApp.factory('orderDetails',function ($http,$q,$log){
+app.factory('orderDetails',function ($http,$q,$log){
 	   return {		      
 		       getUserOrders:function(email){
 		    	   var deferred = $q.defer();
@@ -44,7 +44,7 @@ myApp.factory('orderDetails',function ($http,$q,$log){
 	       }
 	   };
 });
-myApp.factory('searchRepository',function ($http,$q,$log){
+app.factory('searchRepository',function ($http,$q,$log){
 	   return {
 		      search:function(searchQuery){
 		       var deferred = $q.defer();
@@ -62,7 +62,7 @@ myApp.factory('searchRepository',function ($http,$q,$log){
 	       }
 	   }
 });	   
-myApp.factory('merchantRepository',function ($http){
+app.factory('merchantRepository',function ($http){
 	   return {
 		      merchantRating:function(rating){
 			           var url="/merchant";
