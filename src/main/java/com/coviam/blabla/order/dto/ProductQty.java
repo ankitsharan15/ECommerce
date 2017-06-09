@@ -12,14 +12,10 @@ public class ProductQty implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int productId;
-	
-	private int merchantId;
-	
-	private int numOfProducts;
-	
 
-	
-	
+	private int merchantId;
+
+	private int numOfProducts;
 
 	public ProductQty() {
 		super();
@@ -31,7 +27,7 @@ public class ProductQty implements Serializable {
 		this.productId = orderitem.getProductId();
 		this.merchantId = orderitem.getMerchantId();
 		this.numOfProducts = orderitem.getQuantity();
-		
+
 	}
 
 	public long getProductId() {
@@ -64,7 +60,4 @@ public class ProductQty implements Serializable {
 				+ "]";
 	}
 
-	
-	
-	
 }

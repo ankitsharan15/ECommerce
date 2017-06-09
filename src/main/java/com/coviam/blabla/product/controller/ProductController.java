@@ -1,7 +1,7 @@
 package com.coviam.blabla.product.controller;
 
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -171,8 +171,8 @@ public class ProductController {
 
 	@RequestMapping("/merchant")
 	@ResponseBody
-	public List<Merchant> Merchantindex() {
-		return (List<Merchant>) merchantService.getMerchantDetails(null);
+	public void Merchantindex() {
+		// return (List<Merchant>) msi.getMerchantDetails(null);
 	}
 
 	@RequestMapping("/update")
@@ -184,7 +184,6 @@ public class ProductController {
 	@RequestMapping(value = "/orders/checkout", method = RequestMethod.POST)
 	@ResponseBody
 	public void saveOrder(@RequestBody OrderAndItems orderanditems) {
-
 		Order savedOrder = orderservice.saveOrder(orderanditems);
 		long orderId = savedOrder.getOrderId();
 		List<OrderItem> savedOrderItems = orderservice.saveOrderItems(orderanditems, orderId);

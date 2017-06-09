@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -16,9 +17,8 @@ import com.coviam.blabla.order.dto.ProductQty;
 import com.coviam.blabla.order.entity.Order;
 import com.coviam.blabla.order.entity.OrderItem;
 import com.coviam.blabla.order.helper.OrderAndItemHelper;
-import org.springframework.context.annotation.PropertySource;
 
-@PropertySource("classpath:application.properties")
+
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -30,6 +30,12 @@ public class OrderServiceImpl implements OrderService {
 	private EmailService emailservice;
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Value("${merchantUri}")
+	String merchantUri;
+	
+	@Value("${productUri}")
+	String productUri;
 
 	@Override
 	@Transactional
@@ -73,9 +79,9 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderAndItems> fetchOrderHistory(String email) {
 		List<OrderAndItems> orderanditemslist = new ArrayList<OrderAndItems>();
 		// Fetch orders
-		List<Order> orderHistory = orderrepository.findByEmailId(email);
+		List<Order> orderHistory = orderrepository.findByEmailIdContaining(email);
 		// Fetch order items
-
+System.out.println(orderHistory.toString());
 		for (Order order : orderHistory) {
 
 			List<ItemDetail> itemdetail = new ArrayList<ItemDetail>();
@@ -97,7 +103,8 @@ public class OrderServiceImpl implements OrderService {
 	public boolean sendOrderConfirmationEmail(long orderId, OrderAndItems orderanditems) {
 		
 		String emailtext = OrderAndItemHelper.createEmailText(orderId, orderanditems.getProductList());
-		emailservice.sendSimpleMessage(orderanditems.getEmailId(), "Order confirmation", emailtext);
+		String subject = "Order confirmation for Order ID " + orderId;
+		emailservice.sendSimpleMessage(orderanditems.getEmailId(), subject, emailtext);
 
 		return true;
 	}
@@ -105,14 +112,14 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<ProductQty> updateStockinProductMicroService(List<OrderItem> savedOrderItems) {
 
-		final String uri = "http://172.16.20.36:8080/updateStock";
+		//final String uri = "http://172.16.20.36:8080/updateStock";
+		final String uri = productUri + "updateStock";
 
 		List<ProductQty> productqtylist = new ArrayList<ProductQty>();
 		for (OrderItem orderitem : savedOrderItems) {
 			ProductQty productqty = OrderAndItemHelper.createProductQtyDto(orderitem);
 			productqtylist.add(productqty);
 		}
-
 		ProductQty[] result = restTemplate.postForObject(uri, productqtylist, ProductQty[].class);
 		return productqtylist;
 	}
@@ -120,7 +127,10 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<Product> updateProductRatingQuantityinMerchantMicroService(List<OrderItem> savedOrderItems) {
 
-		final String uri = "http://172.16.20.34:8080/updateScorefromOrder";
+
+		//final String uri = "http://172.16.20.34:8080/updatescorefromorder";
+		final String uri = merchantUri + "updatescorefromorder";
+
 		List<Product> productlist = new ArrayList<Product>();
 		for (OrderItem orderitem : savedOrderItems) {
 			Product product = OrderAndItemHelper.createProductQtyRatingDto(orderitem);
@@ -136,7 +146,8 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderAndItems> getProductAndMerchantDetalsfromProductMicroService(
 			List<OrderAndItems> orderanditemshistory) {
 
-		final String uri = "http://172.16.20.36:8080/getproductmerchant";
+		//final String uri = "http://172.16.20.36:8080/getproductmerchant";
+		final String uri = productUri + "getproductmerchant";
 
 		OrderAndItems[] result = restTemplate.postForObject(uri, orderanditemshistory, OrderAndItems[].class);
 

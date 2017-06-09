@@ -6,23 +6,34 @@ import javax.persistence.Embeddable;
 
 @SuppressWarnings("serial")
 @Embeddable
-public class ScoreId implements Serializable{
-	@Column(name="merchant_id")
+public class ScoreId implements Serializable {
+	@Column(name = "merchant_id")
 	int merchantId;
-	@Column(name="product_id")
+	@Column(name = "product_id")
 	int productId;
+
+	public ScoreId(int merchantId, int productId) {
+		super();
+		this.merchantId = merchantId;
+		this.productId = productId;
+	}
+
 	public ScoreId() {
 		super();
-		}
+	}
+
 	public int getMerchantId() {
 		return merchantId;
 	}
+
 	public void setMerchantId(int merchantId) {
 		this.merchantId = merchantId;
 	}
+
 	public int getProductId() {
 		return productId;
 	}
+
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
