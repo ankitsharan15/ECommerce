@@ -1,17 +1,19 @@
-package com.coviam.blabla.merchant.service;
+package com.coviam.blabla.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.coviam.blabla.merchant.dao.MerchantRepository;
-import com.coviam.blabla.merchant.dao.ScoreRepository;
-import com.coviam.blabla.merchant.dto.MerchantNameandRating;
-import com.coviam.blabla.merchant.dto.RatingList;
-import com.coviam.blabla.merchant.entity.Merchant;
-import com.coviam.blabla.merchant.entity.Score;
-import com.coviam.blabla.merchant.entity.ScoreId;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.coviam.blabla.dao.MerchantRepository;
+import com.coviam.blabla.dao.ScoreRepository;
+import com.coviam.blabla.dto.MerchantNameandRating;
+import com.coviam.blabla.dto.RatingList;
+import com.coviam.blabla.entity.Merchant;
+import com.coviam.blabla.entity.Score;
+import com.coviam.blabla.entity.ScoreId;
 
 @Service
 public class MerchantService implements MerchantServiceInterface {
@@ -44,6 +46,7 @@ public class MerchantService implements MerchantServiceInterface {
 		return scoreList;
 	}
 
+	@Transactional
 	@Override
 	public void updateMerchantRating(RatingList ratinglist) {
 		List<MerchantNameandRating> idratinglist = ratinglist.getIdandRating();

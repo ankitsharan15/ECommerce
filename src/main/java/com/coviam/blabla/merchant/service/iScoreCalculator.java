@@ -1,13 +1,13 @@
-package com.coviam.blabla.merchant.service;
+package com.coviam.blabla.service;
 
 import java.util.List;
 
-import com.coviam.blabla.merchant.dto.ScoreUpdaterfromOrder;
-import com.coviam.blabla.merchant.entity.Score;
+import com.coviam.blabla.dto.ScoreUpdaterfromOrder;
+import com.coviam.blabla.entity.Score;
 public interface iScoreCalculator {
 	public Iterable<Score> getScoreDetails();
-//	public void setUpdatesFromProduct(ScoreId scoreId, Score score);
 	public void setUpdatesFromOrder(List<ScoreUpdaterfromOrder> scoreUpdaterListfromOrder);
-//	List<IdandScore> generateScore(List<ScoreUpdaterfromOrder> scoreUpdaterListfromOrder);
-//	public List<ScoreUpdaterfromOrder> testCase();
+	//List<IdandScore> generateScore(List<ScoreUpdaterfromOrder> scoreUpdaterListfromOrder);
+	//public List<ScoreUpdaterfromOrder> testCase();
+	//void setUpdatesFromProduct(ScoreId scoreId, Score score);
 }

@@ -1,4 +1,4 @@
-package com.coviam.blabla.merchant.dto;
+package com.coviam.blabla.dto;
 
 public class ScoreUpdaterfromProduct {
 	private int merchantId;
@@ -10,14 +10,14 @@ public class ScoreUpdaterfromProduct {
 	public ScoreUpdaterfromProduct() {
 	}
 
-	public ScoreUpdaterfromProduct(int merchantId, int numOfProdOfMerchant, int currentStock, double price) {
-		super();
-		this.merchantId = merchantId;
-		this.numOfProdOfMerchant = numOfProdOfMerchant;
-		this.currentStock = currentStock;
-		this.price = price;
-	}
-	
+//	public ScoreUpdaterfromProduct(int merchantId, int numOfProdOfMerchant, int currentStock, double price) {
+//		super();
+//		this.merchantId = merchantId;
+//		this.numOfProdOfMerchant = numOfProdOfMerchant;
+//		this.currentStock = currentStock;
+//		this.price = price;
+//	}
+//	
 	public int getMerchantId() {
 		return merchantId;
 	}

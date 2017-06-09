@@ -1,4 +1,4 @@
-package com.coviam.blabla.merchant.dto;
+package com.coviam.blabla.dto;
 
 public class ScoreUpdaterfromOrder {
 	private int productId;

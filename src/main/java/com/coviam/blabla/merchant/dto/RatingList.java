@@ -1,4 +1,4 @@
-package com.coviam.blabla.merchant.dto;
+package com.coviam.blabla.dto;
 
 import java.util.List;
 
