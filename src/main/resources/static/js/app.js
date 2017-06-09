@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp', ["ngRoute"]);
-myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {	
+myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails,searchRepository) {	
 
       $rootScope.localCart = JSON.parse(localStorage.getItem('session'));
   $('.modal').modal();
