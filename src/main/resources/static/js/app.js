@@ -1,11 +1,6 @@
 var myApp = angular.module('myApp', ["ngRoute"]);
-
-<<<<<<< HEAD
-myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails,searchRepository) {	
-      $rootScope.cartCount = 0;
-=======
 myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {	
->>>>>>> 7a3ab36bde49735b2b3499036f206014cb804c0c
+
       $rootScope.localCart = JSON.parse(localStorage.getItem('session'));
   $('.modal').modal();
   $rootScope.go = function ( path ) {

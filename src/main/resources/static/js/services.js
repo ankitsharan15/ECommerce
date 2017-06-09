@@ -65,9 +65,9 @@ myApp.factory('searchRepository',function ($http,$q,$log){
 myApp.factory('merchantRepository',function ($http){
 	   return {
 		      merchantRating:function(rating){
-			      postByOrders:function(rating){
 			           var url="/merchant";
 			           return $http.post(url,rating);
+			      
 	       }
 	   }
 });
