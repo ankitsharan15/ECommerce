@@ -3,6 +3,7 @@ package com.coviam.blabla.product.service;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -37,6 +38,9 @@ public class ProductService implements ProductServiceInterface {
 	@Autowired
 	RestTemplate restTemplate;
 
+	@Value("${merchantUri}")
+    String merchantUri;
+	
 	@Override
 	public List<Product> getAllProducts() {
 		// TODO Auto-generated method stub
@@ -115,7 +119,7 @@ public class ProductService implements ProductServiceInterface {
 	@Override
 	public IdandRating getMerchant(int merchantId) {
 		// TODO Auto-generated method stub
-		final String uri = "http://172.16.20.34:8080/getmerchant";
+		final String uri = merchantUri+"getmerchant";
 		IdandRating merchant = restTemplate.postForObject(uri, merchantId, IdandRating.class);
 		return merchant;
 	}

@@ -8,7 +8,7 @@
 <div class="row valign-wrapper" style="border-bottom:1px dashed;padding-bottom:10px" id="product1" ng-repeat="value in localCart track by $index">
     <div class="col s6">
         <div class="col s12 l2 m4">
-          <img src="http://ecx.images-amazon.com/images/I/41lXbF77NXL._AC_US160_FMwebp_QL70_.jpg" style="height:100px;width:80px">
+          <img src="{{value.productImage}}" style="height:100px;width:80px">
         </div>
         <div class="col s10">
             <div class="name col s12" style="padding-left:5px">{{ value.productName }}</div>

@@ -121,10 +121,10 @@ public class OrderServiceImpl implements OrderService {
 	public List<Product> updateProductRatingQuantityinMerchantMicroService(List<OrderItem> savedOrderItems) {
 
 		final String uri = "http://172.16.20.34:8080/updateScorefromOrder";
-
 		List<Product> productlist = new ArrayList<Product>();
 		for (OrderItem orderitem : savedOrderItems) {
 			Product product = OrderAndItemHelper.createProductQtyRatingDto(orderitem);
+			System.out.println("--/n----"+product.getNumOfOrders());
 			productlist.add(product);
 		}
 
