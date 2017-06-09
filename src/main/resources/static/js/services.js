@@ -19,12 +19,12 @@ myApp.factory('productRepository',function ($http){
 myApp.factory('orderRepository',function ($http){
 	   return {
 		      postByOrders:function(order){
-	           var url="orders/checkout";
-	           $http.post(url,order)
+	           var url="/orders/checkout";
+	           return $http.post(url,order)
 	       }
 	   };
 	});
-myApp.factory('orderDetails',function ($http,$q){
+myApp.factory('orderDetails',function ($http,$q,$log){
 	   return {		      
 		       getUserOrders:function(email){
 		    	   var deferred = $q.defer();

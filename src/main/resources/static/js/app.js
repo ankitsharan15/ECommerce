@@ -1,19 +1,12 @@
 var myApp = angular.module('myApp', ["ngRoute"]);
 
 myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {	
-      $rootScope.cartCount = 0;
       $rootScope.localCart = JSON.parse(localStorage.getItem('session'));
-      $rootScope.cartCollection = [];
-      $rootScope.clickedProduct;
-      //$rootScope.cart.set('1','Oppo')
-      if($rootScope.cartCollection.size<=0){
-    }
   $('.modal').modal();
   $rootScope.go = function ( path ) {
   $location.path( path );
   }
       $scope.emailSubmit = function () {
-      console.log('email',$('#email').val()); //email_id
       if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email').val())){
     	  $('#email_modal').modal('close'); 
     	  var emailForOrderDetails = $('#email').val(); 
@@ -23,13 +16,10 @@ myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {
           orderDetails.getUserOrders(emailForOrderDetails).then(function(data){
         	  $rootScope.orderdata = data;
           });
-          $rootScope.go('/orders');
-          var abc;
-          abc = $rootScope.orderdata;         
+          $rootScope.go('/orders');    
       }
       else{
-          $("#email").next("label").attr('data-error','Wrong');
-          alert('You have entered wrong email address');
+          Materialize.toast('Wrong Email ID', 4000,'rounded')
       }
 };
 $('.carousel').carousel({
@@ -105,7 +95,7 @@ myApp.controller('homeController', function($scope,$rootScope,userRepository) {
     userRepository.getByCategory('fashion').success(function(data) {
            $scope.fashion= data;
         });
-    console.log('phone and fashion',$scope.phones,$scope.fashion)
+   // console.log('phone and fashion',$scope.phones,$scope.fashion)
     
            
 });
@@ -116,6 +106,8 @@ myApp.controller('productController', function($scope,$rootScope,userRepository)
     $scope.getAllProducts=function(){
           userRepository.getByCategory().success(function(data) {
            $scope.Products = data.product;
+           
+           
         });
       }
 });
@@ -125,13 +117,18 @@ myApp.controller('listController', function($scope,userRepository,$rootScope,pro
          $scope.selectedCategory = x ;
          var product = $scope.selectedCategory;
           userRepository.getByCategory(product).success(function(response) {
-           console.log('response'+response);
+          //console.log('response'+response);
            $scope.Products = response;
             
         });
       }
-    $rootScope.addToCart = function(product) {
+    $rootScope.addToCart = function(product,merchant,index) {
+        //console.log('merchant',merchant,'index',index);
+        //console.log('merchant product merchant',merchant[index].productMerchant.price);
+        //console.log('merchant product merchant id',merchant.productMerchant[0].productmerchantid);
          if($rootScope.localCart){
+       /*  var prodMerchant='{\"productId\":\"'+product.productCode+'\",\"productName\":\"'+product.productName+'\",\"merchantId\":\"'+merchant.productMerchant.productmerchantid.merchantId+'\",\"imageUrl\":\"'+product.productImage+'\"}'
+        // console.log('prodMerchant',prodMerchant); */
          $rootScope.localCart.push(product) }
         else{
             $rootScope.localCart=[];
@@ -155,7 +152,8 @@ myApp.controller('listController', function($scope,userRepository,$rootScope,pro
     });
 
 myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
-    $('#email_modal1').modal()
+	$scope.currentDate = new Date();
+ $('#email_modal1').modal();
 	 $rootScope.deleteFromCart = function(x) {
           var i = $rootScope.localCart.indexOf(x);
           if(i!=-1){
@@ -163,54 +161,50 @@ myApp.controller('cartController', function($scope,$rootScope,orderRepository) {
           }    
           localStorage.setItem('session', JSON.stringify($rootScope.localCart));
 		    }
-		     $scope.emailSubmit = function () {
-		      console.log('emailForCart',$('#email').val()); //email_id
+		     $scope.emailSubmitCart = function () {
+		    	 $scope.orderData= { 
+		   			  "emailId":$('#emailForCart').val(),
+		   			  "date"   : $scope.currentDate,
+		   		      "productList": [{
+		   					"productId": 544,
+		   					"productName":"iphone",
+		   					"merchantId": 4,
+		   					"merchantName":"sai",
+		   					"quantity": 1,
+		   					"price":20001.0,
+		   					"rating": 2.0,
+		   					"reviews": "Nice",
+		   					"imageUrl":"http://ecx.images-amazon.com/images/I/814lO6nm9vL._SL1500_.jpg"
+		   		      }]
+		   	  }
+		    	// console.log('under email submit function');
+		     // console.log('emailForCart',$('#emailForCart').val()); //email_id
 		      if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#emailForCart').val())){
-		         $rootScope.go('/rate')  ;
-		         $('#email_modal1').modal('close'); 
+
+			         var currentOrder = $scope.orderData; 
+			          //console.log(currentOrder);
+			         orderRepository.postByOrders(currentOrder);
+		             $rootScope.go('/rate');
+		             $('#email_modal1').modal('close');
+
 		      }
 		      else{
-		          alert('You have entered wrong email address');
+		          Materialize.toast('Wrong Email ID', 4000,'rounded')
+		     }
+                //console.log('order quantity',$('#quantity').val(),'rating',$('#rating').val(),'review',$('#review').val())
 
 		     }
-            console.log('rating',$("#rating").val(),'review',$("#review").val()); //rating & review
-                 
-		     }
-		     $scope.productString='[';
-		     $scope.product;
-		    // console.log('length',$rootScope.localCart);
-		     var currentDate = new Date();
-		     currentDate= currentDate; 
-			  $scope.orderData= { 
-					  "emailId": $rootScope.emailForOrderDetails,
-					  "date"   : $scope.currentDate,
-				      "productList": [{
-							"productId": 234,
-							"productName":"iphone",
-							"merchantId": 11,
-							"merchantName":"sai",
-							"imageUrl":"http://ecx.images-amazon.com/images/I/814lO6nm9vL._SL1500_.jpg",
-							"price":20000,
-							"quantity": 1,
-							"rating": 2.0,
-							"reviews": "Nice"
-				      }]
-			  }
-      var currentOrder = $scope.orderData;     
+             var emailSend = $rootScope.emailForOrderDetails;		  
 	  $scope.saveOrder = function(){
-          $('#email_modal1').modal('open');
-		  orderRepository.postByOrders(currentOrder );
-	  }     
+		  if ($('#review').val()==""){
+           $('#review').val("OK");
+		  }
+	  }   
 
 });
 myApp.controller('orderController',function($scope,$rootScope){
-	//$scope.orderProductlist = $rootScope.orderdata.productList;  
-});
-
-myApp.controller('rateController',function($scope){
-    
     $scope.rate=function(){
-
+          
     }
    
 });

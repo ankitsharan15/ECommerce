@@ -3,34 +3,45 @@
 <div id="email_modal1" class="modal">
         <div class="row center" style="padding-top:35px">
          <div class="col s10 offset-s1 input-field">
-             <input id="emailForCart" type="email" class="validate" placeholder="Email ID"  ng-enter="emailSubmit(1)" autofocus>
+             <input id="emailForCart" type="email" class="validate" placeholder="Email ID"  ng-enter="emailSubmitCart()" autofocus>
         </div>
-        <button class="btn waves-effect waves-light col s2 offset-s5" type="submit" ng-click="emailSubmit(1)" name="action">Submit
+        <button class="btn waves-effect waves-light col s2 offset-s5" type="submit" ng-click="emailSubmitCart()" name="action">Submit
           <i class="material-icons right">send</i>
          </button>
     </div>
 </div>
+
 <div class="row" style="border-bottom:1px dashed;padding-bottom:10px">
-    <div class="col s3 offset-s5 merchant left">Price</div>
-    <div class="col s2 merchant left">Rating</div>
-    <div class="col s2 merchant left">Review</div>
+    <div class="col s2 offset-s4 merchant left" style="margin:0px,padding:0px">Price</div>
+    <div class="col s2 merchant left" style="margin:0px,padding:0px">Quantity</div>
+    <div class="col s2 merchant left" style="margin:0px,padding:0px">Rating</div>
+    <div class="col s2 merchant left" style="margin:0px,padding:0px">Review</div>
 </div>
 <!-- Reusable code for Products in Cart -->
 <div class="row valign-wrapper" style="border-bottom:1px dashed;padding-bottom:10px" id="product1" ng-repeat="value in localCart track by $index">
-    <div class="col s5">
+    <div class="col s4">
         <div class="col s12 l2 m4">
           <img src="{{value.productImage}}" style="height:100px;width:56px">
         </div>
         <div class="col s10" style="padding-left:10px">
-            <div class="name col s12" style="padding-left:5px">{{ value.productName }}</div>
-            <div class="merchant col s12" style="padding-bottom:5px;padding-left:5px">By null</div>
-            <a ng-click="deleteFromCart(value)" class="col l2 s12" style="padding-left:5px;;margin:0">Delete</a>
+            <div class="name col s12" style="padding-left:15px">{{ value.productName }}</div>
+           <!-- <div class="merchant col s12" style="padding-bottom:5px;padding-left:5px">By null</div> -->
+            <a ng-click="deleteFromCart(value)" class="col l2 s12" style="padding-left:15px;;margin:0">Delete</a>
         </div>
     </div>
     <div class="col s2 left price">
        {{ value.bestPrice }}
     </div>
-    <div class="col s2 offset-s1">
+     <div class="col s2">
+      <div class="input-field col s12">
+    <select id="Quantity" class="browser-default">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+  </div>
+    </div>
+    <div class="col s2">
       <div class="input-field col s12">
     <select id="rating" class="browser-default">
       <option value="1">1</option>
@@ -41,5 +52,4 @@
     </div>
     <div class="col s2 left">
         <input id="review" type="text"  placeholder="Review">
-    </div>
 </div>

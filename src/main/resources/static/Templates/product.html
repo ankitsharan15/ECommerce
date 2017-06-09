@@ -1,5 +1,5 @@
 <div class="product clear" ng-controller="productController">
-                 <div class="waves-effect light-blue darken-2 btn-large col s2 offset-s10" onclick="Materialize.toast('Product Succesfully Added To Cart', 4000,'rounded')" ng-click="addToCart(productDetails)">ADD TO CART</div>  
+                 <div class="waves-effect light-blue darken-2 btn-large col s2 offset-s10" onclick="Materialize.toast('Product Succesfully Added To Cart', 4000,'rounded')" ng-click="addToCart(productDetails,merchantDetails,0)">ADD TO CART</div>  
                       <div class="col s3">
                           <img src="{{productDetails.productImage}}" style="width:50%;height:50%;">
                      </div>
@@ -36,21 +36,17 @@
   </div>
   </div>
 
-    <div class="row" style="margin-top:20px" ng-repeat="merchant in merchantDetails">
+    <div class="row" style="margin-top:20px" ng-repeat="merchant in merchantDetails track by $index">
       <div class="col s12">
         <div class="card-panel teal darken-1">
           <span class="white-text">
           <div class="row">
              <div class="col s8">
-             <h4>{{merchant.score}}</h4>
-             <h4>{{merchant.stock}}</h4>
-             <h4>{{merchant.capacity}}</h4>
-             </div>
-             <div class="col s4">
-             <h5>{{merchant.price}}</h5>
+             <h4>{{merchant.merchantName}}</h4>
+      <!--       <h4>{{merchant[$index].productMerchant.price)}}</h4>  -->
              </div>
              <div class="row">
-             <button class="waves-effect light-blue darken-2 btn-large col s4 offset-s8" ng-click="addToCart(clickedProduct)">Add To Cart</button>
+             <button class="waves-effect light-blue darken-2 btn-large col s4 offset-s8" ng-click="addToCart(product,merchant)">Add To Cart</button>
              </div>
          </div>
           </div>

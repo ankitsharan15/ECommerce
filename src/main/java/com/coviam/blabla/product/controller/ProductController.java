@@ -1,6 +1,7 @@
 package com.coviam.blabla.product.controller;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.coviam.blabla.merchant.dto.IdandRating;
 import com.coviam.blabla.merchant.dto.RatingList;
 import com.coviam.blabla.merchant.entity.Merchant;
 import com.coviam.blabla.merchant.service.MerchantServiceInterface;
@@ -23,8 +22,10 @@ import com.coviam.blabla.order.entity.OrderItem;
 import com.coviam.blabla.order.service.OrderService;
 import com.coviam.blabla.product.dto.CustomMerchant;
 import com.coviam.blabla.product.dto.ProductDetails;
-import com.coviam.blabla.product.dto.ProductMerchantDTO;
 import com.coviam.blabla.product.dto.ProductMerchantList;
+import com.coviam.blabla.product.dto.Test;
+import com.coviam.blabla.search.dto.ProductSearch;
+import com.coviam.blabla.service.SearchService;
 import com.coviam.blabla.product.entity.Product;
 import com.coviam.blabla.product.entity.ProductMerchant;
 import com.coviam.blabla.product.entity.ProductSpecification;
@@ -42,6 +43,10 @@ public class ProductController {
 
 	@Autowired
 	MerchantServiceInterface msi;
+	
+	@Autowired
+	SearchService searchservice;
+	
 
 	@RequestMapping(value = "/")
 	public String returnAllProducts() {
@@ -153,23 +158,34 @@ public class ProductController {
 
 	@RequestMapping(value = "/orders/checkout", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean saveOrder(@RequestBody OrderAndItems orderanditems) {
-
+	public void saveOrder(@RequestBody OrderAndItems orderanditems) {
+	
 		Order savedOrder = orderservice.saveOrder(orderanditems);
 		long orderId = savedOrder.getOrderId();
 		List<OrderItem> savedOrderItems = orderservice.saveOrderItems(orderanditems, orderId);
 		orderservice.updateStockinProductMicroService(savedOrderItems);
-		orderservice.sendOrderConfirmationEmail(savedOrder.getEmailId(), savedOrderItems);
-		return true;
-	}
+		orderservice.sendOrderConfirmationEmail(orderId, orderanditems);
+		
+		}
+
+
 
 	@RequestMapping(value = "/orders/history", method = RequestMethod.POST)
 	@ResponseBody
-	public List<OrderAndItems> fetchOrderHistory(@RequestBody String email) {
+	public List<OrderAndItems> fetchOrderHistory(@RequestBody String email){
 		List<OrderAndItems> orderHistory = orderservice.fetchOrderHistory(email);
-		if (orderHistory.size() == 0)
+		if(orderHistory.size() == 0)
 			return null;
 		return orderHistory;
 	}
+	
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ProductSearch> searchProduct(@RequestBody String productName){
+		List<ProductSearch> productsearchedlist = searchservice.getProductByName(productName);
+		return productsearchedlist;
+	}
+	
+
 
 }

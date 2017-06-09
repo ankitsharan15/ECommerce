@@ -93,10 +93,12 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public boolean sendOrderConfirmationEmail(String email, List<OrderItem> savedOrderItems) {
 
-		String emailtext = OrderAndItemHelper.createEmailText(savedOrderItems);
-		emailservice.sendSimpleMessage(email, "Order confirmation", emailtext);
+	public boolean sendOrderConfirmationEmail(long orderId, OrderAndItems orderanditems) {
+		
+		String emailtext = OrderAndItemHelper.createEmailText(orderId, orderanditems.getProductList());
+		emailservice.sendSimpleMessage(orderanditems.getEmailId(), "Order confirmation", emailtext);
+
 		return true;
 	}
 
