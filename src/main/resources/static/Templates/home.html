@@ -16,7 +16,7 @@
                     <div class="col s12 category">Phones</div>
                     <div class="col s12 category_description"> Smartphones You Love </div>
                     <div class="col s3 center" ng-repeat="product in phones track by $index">
-                        <div class="col s12">
+                        <div class="col s12" ng-click="goToProduct('product')">
                             <img src="{{product.productImage}}" style="height:118px;width:90px">
                         </div>
                         <div class="col s12 name">

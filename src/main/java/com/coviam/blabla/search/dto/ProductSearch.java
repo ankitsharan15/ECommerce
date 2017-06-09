@@ -15,6 +15,10 @@ public class ProductSearch {
 		this.price = price;
 	}
 	
+	public ProductSearch(){
+		
+	}
+	
 	public int getProductCode() {
 		return productCode;
 	}
