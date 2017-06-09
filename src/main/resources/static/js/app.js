@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp', ["ngRoute"]);
 
-myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {	
+myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails,searchRepository) {	
       $rootScope.cartCount = 0;
       $rootScope.localCart = JSON.parse(localStorage.getItem('session'));
       $rootScope.cartCollection = [];
@@ -12,6 +12,13 @@ myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {
   $rootScope.go = function ( path ) {
   $location.path( path );
 
+  }
+  $scope.searchProducts = function(){
+	  var seachText = $('#search').val();
+	  console.log(seachText);
+	  searchRepository.search(seachText).then(function(data){
+		  $rootScope.Products = data;
+      });
   }
       $scope.emailSubmit = function () {
       if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email').val())){
@@ -101,7 +108,7 @@ myApp.controller('productController', function($scope,$rootScope,userRepository)
     $('ul.tabs').tabs('select_tab', 'tab_id');
     $scope.getAllProducts=function(){
           userRepository.getByCategory().success(function(data) {
-           $scope.Products = data.product;
+           $rootScope.Products = data.product;
         });
       }
 });

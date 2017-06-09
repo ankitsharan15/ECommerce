@@ -146,8 +146,8 @@ public class ProductController {
 
 	@RequestMapping("/merchant")
 	@ResponseBody
-	public List<Merchant> Merchantindex() {
-		return (List<Merchant>) msi.getMerchantDetails(null);
+	public void Merchantindex() {
+		//return (List<Merchant>) msi.getMerchantDetails(null);
 	}
 
 	@RequestMapping("/update")

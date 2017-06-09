@@ -24,7 +24,7 @@
                   </div>
                 </li>
                 <li><a class="waves-effect waves-light btn modal-action modal-open" href="#email_modal">My Orders</a></li>
-                <li><a href="#list" ng-init="Phone='phone'" ng-click="getViaCategory(Phone)">Phone</a></li>
+                <li ng-click="getViaCategory(Phone)"><a href="#list" ng-init="Phone='phone'" >Phone</a></li>
                 <li><a href="#list" ng-init="Tablet='tablet'" ng-click="getViaCategory(Tablet)">Tablet</a></li>
                 <li><a href="#list" ng-init="Book='book'" ng-click="getViaCategory(Book)">Book</a></li>
                 <li><a href="#list" ng-init="Fashion='fashion'" ng-click="getViaCategory(Fashion)">Fashion</a></li>
@@ -55,7 +55,7 @@
                 <div class="col s9 offset-s1">
                     <div class="input-field">
                         <i class="material-icons prefix">search</i>
-                        <input id="icon_prefix" type="text" class="validate" placeholder="Search.." >
+                        <input type="text" id ="search" class="validate" placeholder="Search.." ng-enter="searchProducts()" >
                     </div>
                 </div>
                 <div class="col l2 s3 m3 valign-wrapper left" style="padding-left:65px">
