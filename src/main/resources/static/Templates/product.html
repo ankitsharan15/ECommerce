@@ -43,14 +43,13 @@
           <div class="row">
              <div class="col s8">
              <h4>{{merchant.merchantName}}</h4>
-      <!--       <h4>{{merchant[$index].productMerchant.price)}}</h4>  -->
+                <h4>{{merchant[$index].productMerchant.price)}}</h4> 
+                 {{console.log('merchant',$index)}}
              </div>
              <div class="row">
              <button class="waves-effect light-blue darken-2 btn-large col s4 offset-s8" ng-click="addToCart(product,merchant)">Add To Cart</button>
              </div>
          </div>
-          </div>
-          
           </span>
         </div>
       </div>

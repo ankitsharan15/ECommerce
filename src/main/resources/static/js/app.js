@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp', ["ngRoute"]);
-myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {	
-
+myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails,userRepository) {	
+     
       $rootScope.localCart = JSON.parse(localStorage.getItem('session'));
   $('.modal').modal();
   $rootScope.go = function ( path ) {
@@ -13,6 +13,15 @@ myApp.controller('myCtrl', function ($scope,$location,$rootScope,orderDetails) {
 		  $rootScope.Products = data;
       });
   }
+  $rootScope.getViaCategory=function(x){
+         $rootScope.selectedCategory = x ;
+         var product = $rootScope.selectedCategory;
+          userRepository.getByCategory(product).success(function(response) {
+          console.log('response'+x+'data'+response);
+           $scope.Products = response;   
+        });
+      $rootScope.go('/list')
+      }
       $scope.emailSubmit = function () {
       if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test($('#email').val())){
     	  $('#email_modal').modal('close'); 
@@ -120,15 +129,6 @@ myApp.controller('productController', function($scope,$rootScope,userRepository)
 });
 
 myApp.controller('listController', function($scope,userRepository,$rootScope,productRepository) {
-    $rootScope.getViaCategory=function(x){
-         $scope.selectedCategory = x ;
-         var product = $scope.selectedCategory;
-          userRepository.getByCategory(product).success(function(response) {
-          //console.log('response'+response);
-           $scope.Products = response;
-            
-        });
-      }
     $rootScope.addToCart = function(product,merchant,index) {
         //console.log('merchant',merchant,'index',index);
         //console.log('merchant product merchant',merchant[index].productMerchant.price);
@@ -143,7 +143,7 @@ myApp.controller('listController', function($scope,userRepository,$rootScope,pro
         }
         localStorage.setItem('session', JSON.stringify($rootScope.localCart));
     } 
-    $scope.goToProduct=function(product){
+    $rootScope.goToProduct=function(product){
         	var productId = product.productCode;
         	productRepository.getByProduct(productId).success(function(data) {
         		$rootScope.productDetails = data.product;
