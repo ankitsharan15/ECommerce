@@ -1,7 +1,7 @@
 package com.coviam.blabla.product.controller;
 
 import java.util.ArrayList;
-
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -159,11 +159,11 @@ public class ProductController {
 	@ResponseBody
 
 	public boolean saveOrder(@RequestBody OrderAndItems orderanditems){
-		
 		Order savedOrder = orderservice.saveOrder(orderanditems);
 		long orderId = savedOrder.getOrderId();
 		List<OrderItem> savedOrderItems = orderservice.saveOrderItems(orderanditems, orderId);
 		orderservice.updateStockinProductMicroService(savedOrderItems);
+		orderservice.updateProductRatingQuantityinMerchantMicroService(savedOrderItems);
 		orderservice.sendOrderConfirmationEmail(orderId, orderanditems);
 		return true;
 		}
