@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class OrderId implements Serializable {
 	 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private long orderId;
 	private int productId;
 	private int merchantId;

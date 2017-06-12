@@ -18,7 +18,6 @@ import com.coviam.blabla.order.entity.Order;
 import com.coviam.blabla.order.entity.OrderItem;
 import com.coviam.blabla.order.helper.OrderAndItemHelper;
 
-
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -30,10 +29,10 @@ public class OrderServiceImpl implements OrderService {
 	private EmailService emailservice;
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
 	@Value("${merchantUri}")
 	String merchantUri;
-	
+
 	@Value("${productUri}")
 	String productUri;
 
@@ -81,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
 		// Fetch orders
 		List<Order> orderHistory = orderrepository.findByEmailIdContaining(email);
 		// Fetch order items
-System.out.println(orderHistory.toString());
+		System.out.println(orderHistory.toString());
 		for (Order order : orderHistory) {
 
 			List<ItemDetail> itemdetail = new ArrayList<ItemDetail>();
@@ -101,7 +100,7 @@ System.out.println(orderHistory.toString());
 	@Override
 
 	public boolean sendOrderConfirmationEmail(long orderId, OrderAndItems orderanditems) {
-		
+
 		String emailtext = OrderAndItemHelper.createEmailText(orderId, orderanditems.getProductList());
 		String subject = "Order confirmation for Order ID " + orderId;
 		emailservice.sendSimpleMessage(orderanditems.getEmailId(), subject, emailtext);
@@ -112,7 +111,7 @@ System.out.println(orderHistory.toString());
 	@Override
 	public List<ProductQty> updateStockinProductMicroService(List<OrderItem> savedOrderItems) {
 
-		//final String uri = "http://172.16.20.36:8080/updateStock";
+		// final String uri = "http://172.16.20.36:8080/updateStock";
 		final String uri = productUri + "updateStock";
 
 		List<ProductQty> productqtylist = new ArrayList<ProductQty>();
@@ -120,14 +119,14 @@ System.out.println(orderHistory.toString());
 			ProductQty productqty = OrderAndItemHelper.createProductQtyDto(orderitem);
 			productqtylist.add(productqty);
 		}
-		ProductQty[] result = restTemplate.postForObject(uri, productqtylist, ProductQty[].class);
+		restTemplate.postForObject(uri, productqtylist, ProductQty[].class);
 		return productqtylist;
 	}
 
 	@Override
 	public List<Product> updateProductRatingQuantityinMerchantMicroService(List<OrderItem> savedOrderItems) {
 
-		//final String uri = "http://172.16.20.34:8080/updatescorefromorder";
+		// final String uri = "http://172.16.20.34:8080/updatescorefromorder";
 		final String uri = merchantUri + "updatescorefromorder";
 
 		List<Product> productlist = new ArrayList<Product>();
@@ -135,8 +134,7 @@ System.out.println(orderHistory.toString());
 			Product product = OrderAndItemHelper.createProductQtyRatingDto(orderitem);
 			productlist.add(product);
 		}
-
-		Product[] result = restTemplate.postForObject(uri, productlist, Product[].class);
+		restTemplate.postForObject(uri, productlist, Product[].class);
 		return productlist;
 	}
 
@@ -144,7 +142,7 @@ System.out.println(orderHistory.toString());
 	public List<OrderAndItems> getProductAndMerchantDetalsfromProductMicroService(
 			List<OrderAndItems> orderanditemshistory) {
 
-		//final String uri = "http://172.16.20.36:8080/getproductmerchant";
+		// final String uri = "http://172.16.20.36:8080/getproductmerchant";
 		final String uri = productUri + "getproductmerchant";
 
 		OrderAndItems[] result = restTemplate.postForObject(uri, orderanditemshistory, OrderAndItems[].class);

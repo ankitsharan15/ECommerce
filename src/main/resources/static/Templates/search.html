@@ -1,3 +1,24 @@
-<div ng-controller="searchController" class="category col s8" style="margin-top:0px;margin-bottom:30px">Search
-{{searchData}}
-</div>
+<div class="col s12"  ng-controller="listController">
+                    <div class="col s12 category">{{seachText.toUpperCase()}}</div>
+                    <div class="col s3 center item-design" ng-repeat="product in searchData track by $index">
+                        <div class="col s12" id="productDiv" ng-click="goToProduct(product)">
+                            <img src="{{ product.productImage }}" style="width:50%; height:187px">
+                        <div class="col s12 name">
+                            {{ product.productName }}
+                        </div>
+                        <div class="col s12 price">
+                            &#8377; {{ product.price }} 
+                        </div>
+                        </div>
+                        <div class="col s12 valign-wrapper">
+                            <div id="email_modal" class="modal">
+                                <div class="col s10 offset-s1 valign" style="padding-top: 40px">
+                                    <input type="text" class="validate" placeholder="Email Id">
+                                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                                  <i class="material-icons right">send</i>
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>

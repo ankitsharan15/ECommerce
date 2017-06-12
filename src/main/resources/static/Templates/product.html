@@ -27,10 +27,10 @@
   <div id="description" class="col s8 ">{{productDetails.productDesc}}</div>
   <div id="specification" class="col s8">
   <div class="row">
-       <div class="col s6" ng-repeat ="spec in specDetails">
+       <div class="col s6" ng-repeat ="spec in specDetails track by $index">
          <h6><u>{{spec.specName}}</u></h6>
         </div>
-        <div  class="col s6" ng-repeat = " specification in specificationDetails">
+        <div  class="col s6" ng-repeat = " specification in specificationDetails track by $index">
          <h6> {{specification.specValue}}</h6>
         </div>
   </div>
@@ -42,8 +42,9 @@
           <span class="white-text">
           <div class="row">
              <div class="col s8">
-             <h4>{{merchant.merchantName}}</h4> 
-            <h4>{{productMerchant.productmerchantid.merchantId}}</h4>
+             <h4>{{merchant.merchantName}}</h4>
+             <h4>{{merchant.productMerchant.productmerchantid.merchantId}}</h4>
+
              </div>
              <div class="row">
              <button class="waves-effect light-blue darken-2 btn-large col s4 offset-s8" ng-click="addToCart(product,merchant)">Add To Cart</button>
@@ -52,6 +53,7 @@
           </span>
         </div>
       </div>
+      
     </div>
         <h4>{{merchantDetails[0].productMerchant.productmerchantid.merchantId}}</h4>
 </div>

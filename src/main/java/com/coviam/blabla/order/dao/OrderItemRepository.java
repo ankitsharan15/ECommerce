@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.coviam.blabla.order.entity.Order;
 import com.coviam.blabla.order.entity.OrderId;
 import com.coviam.blabla.order.entity.OrderItem;
 

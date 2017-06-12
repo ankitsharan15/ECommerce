@@ -1,7 +1,6 @@
 package com.coviam.blabla.product.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.coviam.blabla.merchant.dto.IdandRating;
 import com.coviam.blabla.merchant.dto.IdandScore;
 import com.coviam.blabla.merchant.dto.RatingList;
 import com.coviam.blabla.merchant.dto.ScoreUpdaterfromProduct;
@@ -46,7 +47,7 @@ public class ProductController {
 
 	@Autowired
 	SearchService searchservice;
-	
+
 	@RequestMapping(value = "/")
 	public String returnAllProducts() {
 		return ("index.html");
@@ -54,21 +55,20 @@ public class ProductController {
 
 	@RequestMapping(value = "/updateStock", method = RequestMethod.POST)
 	@ResponseBody
-	public List<ProductQty> updateStock(@RequestBody ArrayList<ProductQty> productQty) {
+	public List<ProductQty> updateStock(@RequestBody List<ProductQty> productQty) {
 		ProductMerchant productMerchant = new ProductMerchant();
 		int curStock;
 		for (ProductQty p : productQty) {
-			curStock = productMerchant.getStock() - p.getNumOfOrders();
-			if (curStock >= 0) {
-				productMerchant = productService.getProductDetails((int) p.getProductId(), (int) p.getMerchantId());
-				productMerchant.setStock(curStock);
-				productService.saveProductMerchant(productMerchant);
-			}
+			productMerchant = productService.getProductDetails((int) p.getProductId(), (int) p.getMerchantId());
+			curStock = productMerchant.getStock();
+			productMerchant.setStock(curStock - p.getNumOfOrders());
+			productService.saveProductMerchant(productMerchant);
 		}
 		return productQty;
 	}
 
 	@RequestMapping(value = "/getUpdatesfromProduct", method = RequestMethod.POST)
+	@ResponseBody
 	public ScoreUpdaterfromProduct setScoreFromProduct(@RequestBody ScoreId scoreId) {
 		ProductMerchant productMerchant = productService.getProductDetails(scoreId.getProductId(),
 				scoreId.getMerchantId());
@@ -96,7 +96,7 @@ public class ProductController {
 
 	@RequestMapping(value = "/getproductmerchant", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public List<OrderAndItems> getProductMerchant(@RequestBody ArrayList<OrderAndItems> productMerchantDto) {
+	public List<OrderAndItems> getProductMerchant(@RequestBody List<OrderAndItems> productMerchantDto) {
 
 		List<OrderAndItems> productMerchantList = new ArrayList<OrderAndItems>();
 		List<ItemDetail> itemdetaillist = new ArrayList<ItemDetail>();
@@ -171,10 +171,16 @@ public class ProductController {
 
 	@RequestMapping("/merchant")
 	@ResponseBody
-	public void Merchantindex() {
-		//return (List<Merchant>) msi.getMerchantDetails(null);
+	public List<Merchant> Merchantindex() {
+		return (List<Merchant>) merchantService.getMerchantDetails();
 	}
-
+	
+	@RequestMapping("/getmerchant")
+	@ResponseBody
+	public IdandRating getMerchant(@RequestBody int merchantId){
+	return	merchantService.getMerchant(merchantId);
+	}
+	
 	@RequestMapping("/update")
 	@ResponseBody
 	public void updateRating(RatingList rl) {
@@ -183,37 +189,31 @@ public class ProductController {
 
 	@RequestMapping(value = "/orders/checkout", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean saveOrder(@RequestBody OrderAndItems orderanditems){
-
+	public void saveOrder(@RequestBody OrderAndItems orderanditems) {
 		Order savedOrder = orderservice.saveOrder(orderanditems);
 		long orderId = savedOrder.getOrderId();
 		List<OrderItem> savedOrderItems = orderservice.saveOrderItems(orderanditems, orderId);
 		orderservice.updateStockinProductMicroService(savedOrderItems);
 		orderservice.updateProductRatingQuantityinMerchantMicroService(savedOrderItems);
 		orderservice.sendOrderConfirmationEmail(orderId, orderanditems);
-		return true;
-		
-		}
 
-
+	}
 
 	@RequestMapping(value = "/orders/history", method = RequestMethod.POST)
 	@ResponseBody
-	public List<OrderAndItems> fetchOrderHistory(@RequestBody String email){
+	public List<OrderAndItems> fetchOrderHistory(@RequestBody String email) {
 		List<OrderAndItems> orderHistory = orderservice.fetchOrderHistory(email);
-		if(orderHistory.size() == 0)
+		if (orderHistory.size() == 0)
 			return null;
 		return orderHistory;
 	}
-	
+
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	@ResponseBody
-	public List<ProductSearch> searchProduct(@RequestBody String productName){
+	public List<ProductSearch> searchProduct(String productName) {
 		List<ProductSearch> productsearchedlist = searchservice.getProductByName(productName);
 		return productsearchedlist;
 	}
-	
-
 
 	@RequestMapping(value = "/getProductByName/{productName}")
 	@ResponseBody

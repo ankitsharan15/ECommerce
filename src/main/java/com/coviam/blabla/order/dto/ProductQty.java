@@ -6,6 +6,11 @@ import com.coviam.blabla.order.entity.OrderItem;
 
 public class ProductQty implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private int productId;
 
 	private int merchantId;

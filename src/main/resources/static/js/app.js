@@ -8,9 +8,12 @@ app.controller('Ctrl', function ($scope,$location,$rootScope,orderDetails,produc
   $location.path( path );
   }
   $rootScope.searchProducts = function(){
-	  var seachText = $('#search').val();
+	  $rootScope.seachText = $('#search').val();
       console.log('search initiated');
-	  $rootScope.searchData=searchRepository.search(seachText);
+	  $rootScope.searchData=searchRepository.search($rootScope.seachText).success(function(data) {
+        		$rootScope.searchData=data;
+        		        		
+            });
       console.log('searchData',$rootScope.searchData);
       $rootScope.go('/search');
   }
@@ -53,9 +56,13 @@ app.controller('Ctrl', function ($scope,$location,$rootScope,orderDetails,produc
 
     }
 $('.carousel').carousel({
-    padding: 200    
+
+padding : 200
+
 });
-autoplay()   
+
+autoplay()
+
 function autoplay() {
     $('.carousel').carousel('next');
     setTimeout(autoplay, 4500);
@@ -235,4 +242,4 @@ app.controller('rateController',function($scope,$rootScope){
 
 app.controller('searchController',function($scope,$rootScope){
     
-});
+})

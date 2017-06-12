@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.coviam.blabla.merchant.dao.MerchantRepository;
@@ -18,7 +20,7 @@ import com.coviam.blabla.merchant.entity.ScoreId;
 
 @Service
 public class ScoreCalculator implements iScoreCalculator{
-	double weights[]={1,3,2,1,9,2};
+	double weights[]={1,3,4,5,9,2};
 	
 		@Autowired
 		private ScoreRepository scoreRepository;
@@ -26,6 +28,9 @@ public class ScoreCalculator implements iScoreCalculator{
 		private MerchantRepository merchantRepository;
 		@Autowired
 		RestTemplate restTemplate;
+		
+		@Value("${productUri}")
+	    String productUri;
 		
 //		@Override
 //		public List<IdandScore> generateScore(List<ScoreUpdaterfromOrder> scoreUpdaterListfromOrder){
@@ -64,29 +69,31 @@ public class ScoreCalculator implements iScoreCalculator{
 //					score.setNumOfProd(numOfProdOfMerchant);
 //					}
 		
+		@Transactional
 		@Override
 		public void setUpdatesFromOrder(List<ScoreUpdaterfromOrder> scoreUpdaterListfromOrder){
-			for(ScoreUpdaterfromOrder scoreUpdater : scoreUpdaterListfromOrder){
-				int merchantId=scoreUpdater.getMerchantId();
-				int numOfProdSold=scoreUpdater.getNumOfProd();
-				int productId=scoreUpdater.getProductId();
-				double prodRating=scoreUpdater.getRating();
+			for(ScoreUpdaterfromOrder scoreUpdaterOrder : scoreUpdaterListfromOrder){
+				int merchantId=scoreUpdaterOrder.getMerchantId();
+				int numOfProdSold = scoreUpdaterOrder.getNumOfProd();
+				int productId=scoreUpdaterOrder.getProductId();
+				double prodRating=scoreUpdaterOrder.getRating();
 				ScoreId scoreId = new ScoreId(merchantId,productId);
-				scoreId.setMerchantId(merchantId);
-				scoreId.setProductId(productId);
 				Score score = scoreRepository.findOne(scoreId);
-				score.setNumOfProd(numOfProdSold+score.getNumProdSold());
 				double currRating=score.getCustomerRating();
 				int counterCurrRating=score.getCounterCustomerRating();
 				prodRating=((currRating*counterCurrRating)+prodRating)/(counterCurrRating+1);
 				score.setCustomerRating(prodRating);	
-				final String uri="http://172.16.20.36:8080/getUpdatesfromProduct";
+
+				final String uri=productUri+"/getUpdatesfromProduct";
 				ScoreUpdaterfromProduct scoreUpdaterProduct = restTemplate.postForObject(uri, scoreId, ScoreUpdaterfromProduct.class);
 						int currentStock=scoreUpdaterProduct.getCurrentStock();
 						int numOfProdOfMerchant=scoreUpdaterProduct.getNumOfProdOfMerchant();
+						int difference = score.getCurrentStock() - currentStock;
 						score.setCurrentStock(currentStock);
+						int updatedProdSold=difference+(score.getNumProdSold());
+						score.setNumProdSold(updatedProdSold);
 						score.setNumOfProd(numOfProdOfMerchant);
-				scoreRepository.save(score);
+						scoreRepository.save(score);
 				}
 			List<IdandScore> calcIdScoreList=new ArrayList<IdandScore>();
 			for(ScoreUpdaterfromOrder scoreUpdater : scoreUpdaterListfromOrder){
@@ -110,7 +117,7 @@ public class ScoreCalculator implements iScoreCalculator{
 				score.setCalcScore(calcScore);
 				scoreRepository.save(score);
 				}
-			final String uri="http://172.16.20.36:8080/setscoretoproduct";
+	final String uri=productUri+"/setscoretoproduct";
 			Boolean bool= restTemplate.postForObject(uri, calcIdScoreList, Boolean.class);
 			System.out.println(bool);
 		}
@@ -118,6 +125,7 @@ public class ScoreCalculator implements iScoreCalculator{
 		public Iterable<Score> getScoreDetails() {
 			return scoreRepository.findAll();
 		}
+		
 		
 //		public List<ScoreUpdaterfromOrder> testCase(){
 //		System.out.println("Reached 0");

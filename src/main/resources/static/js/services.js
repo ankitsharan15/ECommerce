@@ -1,12 +1,21 @@
-//services for all api  calls
-var app = angular.module('app');
-app.factory('userRepository',function ($http){
+//services for api  call
+
+var myApp = angular.module('app');
+
+myApp.factory('userRepository',function ($http){
+
    return {
+
         getByCategory:function(product){
+
            var url="/category/"+product;
+
            return $http.get(url);
+
        }
+
    };
+
 });
 app.factory('productsRepository',function ($http){
     
