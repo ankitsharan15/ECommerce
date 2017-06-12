@@ -10,8 +10,10 @@
          </button>
     </div>
 </div>
-
-<div class="row" style="border-bottom:1px dashed;padding-bottom:10px">
+<div class="col s12 emptyCart">
+<h5 style="display:inline-block">You have nothing in your cart &nbsp;</h5><h5 style="display:inline-block;color:#0000EE" class="clickable" ng-click="go('\home')">Click Here &nbsp;</h5><h5 style="display:inline-block">to visit our homepage.</h5>
+</div>
+<div class="row cartHeader" style="border-bottom:1px dashed;padding-bottom:10px">
     <div class="col s2 offset-s4 merchant left" style="margin:0px,padding:0px">Price</div>
     <div class="col s2 merchant left" style="margin:0px,padding:0px">Quantity</div>
     <div class="col s2 merchant left" style="margin:0px,padding:0px">Rating</div>
@@ -55,4 +57,3 @@
     <div class="col s2 left">
         <input id="review" type="text"  placeholder="Review">
 </div>
-    <button ng-click="Test()">test me</button>

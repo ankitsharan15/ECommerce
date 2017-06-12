@@ -206,7 +206,7 @@ public class ProductController {
 		return orderHistory;
 	}
 	
-	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	@ResponseBody
 	public List<ProductSearch> searchProduct(@RequestBody String productName){
 		List<ProductSearch> productsearchedlist = searchservice.getProductByName(productName);

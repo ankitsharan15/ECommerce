@@ -8,7 +8,8 @@ app.factory('userRepository',function ($http){
        }
    };
 });
-app.factory('productRepository',function ($http){
+app.factory('productsRepository',function ($http){
+    
 	   return {
 	        getByProduct:function(productId){
 	           var url="/product/"+productId;
@@ -47,21 +48,11 @@ app.factory('orderDetails',function ($http,$q,$log){
 app.factory('searchRepository',function ($http,$q,$log){
 	   return {
 		      search:function(searchQuery){
-		       var deferred = $q.defer();
-	           var url="/search";          	    	   
-	           $http.post(url,searchQuery)
-	           .success(function(results) { 		        	  
-	        	             deferred.resolve(
-	        	            	 JSON.stringify(results)
-	        	                );
-	        	          }).error(function(msg, code) {
-	        	             deferred.reject(msg);
-	        	             $log.error(msg, code);
-	        	          });
-	        	        return deferred.promise;
+	           var url="/search?productName="+searchQuery;
+	           return $http.get(url);
 	       }
-	   }
-});	   
+	       }
+	   });	   
 app.factory('merchantRepository',function ($http){
 	   return {
 		      merchantRating:function(rating){

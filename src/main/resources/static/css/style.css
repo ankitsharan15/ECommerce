@@ -78,7 +78,7 @@ body{
 .product_action{
     border: 2px outset #d4d5d9 ;
 }
-.product_action,#cart,#productDiv,#rate_star,a,.clickable:hover{
+.product_action,#cart,#productDiv,#rate_star,a,.clickable,#logo:hover{
     cursor:pointer
 }
 .modal{

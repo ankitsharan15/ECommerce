@@ -12,13 +12,13 @@
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script> 
  </head>
- <body ng-app="myApp" ng-controller ="myCtrl">
+ <body ng-app="app" ng-controller ="Ctrl">
     <div class="row" style="height:80%;">
         <div class="col s2">
-             <ul id="slide-out" class="side-nav fixed">
+            <ul id="slide-out" class="side-nav fixed">
                 <li>
-                  <div class="userView" style="height:236px;">
-                   <div class="background">
+                  <div class="userView" id="logo" style="height:236px;" ng-click="go('/home')">
+                <div class="background">
                     <img src="images/loogo.png" style="width:100%;">
                    </div>
                   </div>
@@ -29,27 +29,7 @@
                 <li><a href="#list" ng-init="Book='book'" ng-click="getViaCategory(Book)">Book</a></li>
                 <li><a href="#list" ng-init="Fashion='fashion'" ng-click="getViaCategory(Fashion)">Fashion</a></li>
                 <li><a href="#list" ng-init="Shoes='shoes'" ng-click="getViaCategory(Shoes)">Shoes</a></li>    
-             </ul>
-             
-             <div class="row" style="padding-top:20px">
-                <a class="dropdown-button btn waves-effect waves-light btn-floating" href="#" data- activates='dropdown-nav'>
-                    <i class="material-icons">menu</i>
-                </a>                            
-                <ul id="dropdown-nav" class="dropdown-content" style="z-index:900">
-                     <li>
-                        <div class="userView">
-                            <div class="background">
-                                <img src="images/loogo.png" style="width:100%;">
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="#list" ng-init="Phone='phone'" ng-click="getViaCategory(Phone)">Phone</a></li>
-                    <li><a href="#list" ng-init="Tablet='tablet'" ng-click="getViaCategory(Tablet)">Book</a></li>
-                    <li><a href="#list" ng-init="Book='book'" ng-click="getViaCategory(Book)">Fashion</a></li>
-                    <li><a href="#list" ng-init="Fashion='fashion'" ng-click="getViaCategory(Fashion)">Shoes</a></li>
-                    <li><href="#list" ng-init="Shoes='shoes'" ng-click="getViaCategory(Shoes)">My Orders</a></li>
-               </ul>
-             </div>           
+             </ul>  
        </div>
        <div class="col s10" style="margin-left:0px;">  
          <div class="row">

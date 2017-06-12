@@ -17,11 +17,10 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public List<ProductSearch> getProductByName(String productName) {
 		
-		final String uri = "http://172.16.20.36:8080/getProductByName/{productName}";
+		final String uri = "http://127.0.0.1:8080/getProductByName/{productName}";
 		ProductSearch[] result = restTemplate.getForObject(uri, ProductSearch[].class, productName);
 		List<ProductSearch> resultList = Arrays.asList(result);
 		return resultList;
 		
 	}
-
 }
