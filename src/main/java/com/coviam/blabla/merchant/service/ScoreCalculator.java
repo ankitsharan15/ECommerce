@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,7 +19,7 @@ import com.coviam.blabla.merchant.entity.ScoreId;
 
 @Service
 public class ScoreCalculator implements iScoreCalculator{
-	double weights[]={1,3,2,1,9,2};
+	double weights[]={1,3,4,5,9,2};
 	
 		@Autowired
 		private ScoreRepository scoreRepository;
@@ -26,6 +27,9 @@ public class ScoreCalculator implements iScoreCalculator{
 		private MerchantRepository merchantRepository;
 		@Autowired
 		RestTemplate restTemplate;
+		
+		@Value("${productUri}")
+	    String productUri;
 		
 //		@Override
 //		public List<IdandScore> generateScore(List<ScoreUpdaterfromOrder> scoreUpdaterListfromOrder){
@@ -80,7 +84,7 @@ public class ScoreCalculator implements iScoreCalculator{
 				int counterCurrRating=score.getCounterCustomerRating();
 				prodRating=((currRating*counterCurrRating)+prodRating)/(counterCurrRating+1);
 				score.setCustomerRating(prodRating);	
-				final String uri="http://172.16.20.36:8080/getUpdatesfromProduct";
+				final String uri=productUri+"getUpdatesfromProduct";
 				ScoreUpdaterfromProduct scoreUpdaterProduct = restTemplate.postForObject(uri, scoreId, ScoreUpdaterfromProduct.class);
 						int currentStock=scoreUpdaterProduct.getCurrentStock();
 						int numOfProdOfMerchant=scoreUpdaterProduct.getNumOfProdOfMerchant();
@@ -110,7 +114,7 @@ public class ScoreCalculator implements iScoreCalculator{
 				score.setCalcScore(calcScore);
 				scoreRepository.save(score);
 				}
-			final String uri="http://172.16.20.36:8080/setscoretoproduct";
+			final String uri=productUri+"setscoretoproduct";
 			Boolean bool= restTemplate.postForObject(uri, calcIdScoreList, Boolean.class);
 			System.out.println(bool);
 		}

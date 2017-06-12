@@ -1,7 +1,6 @@
 package com.coviam.blabla.product.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.coviam.blabla.merchant.dto.IdandRating;
 import com.coviam.blabla.merchant.dto.IdandScore;
 import com.coviam.blabla.merchant.dto.RatingList;
 import com.coviam.blabla.merchant.dto.ScoreUpdaterfromProduct;
@@ -61,7 +62,6 @@ public class ProductController {
 			productMerchant = productService.getProductDetails((int) p.getProductId(), (int) p.getMerchantId());
 			curStock = productMerchant.getStock();
 			productMerchant.setStock(curStock - p.getNumOfOrders());
-			System.out.println("-----" + curStock + "----\n----" + p.getNumOfOrders());
 			productService.saveProductMerchant(productMerchant);
 		}
 		return productQty;
@@ -171,10 +171,16 @@ public class ProductController {
 
 	@RequestMapping("/merchant")
 	@ResponseBody
-	public void Merchantindex() {
-		// return (List<Merchant>) msi.getMerchantDetails(null);
+	public List<Merchant> Merchantindex() {
+		return (List<Merchant>) merchantService.getMerchantDetails();
 	}
-
+	
+	@RequestMapping("/getmerchant")
+	@ResponseBody
+	public IdandRating getMerchant(@RequestBody int merchantId){
+	return	merchantService.getMerchant(merchantId);
+	}
+	
 	@RequestMapping("/update")
 	@ResponseBody
 	public void updateRating(RatingList rl) {

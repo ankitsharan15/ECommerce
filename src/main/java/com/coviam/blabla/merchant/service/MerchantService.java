@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.coviam.blabla.merchant.dao.MerchantRepository;
 import com.coviam.blabla.merchant.dao.ScoreRepository;
+import com.coviam.blabla.merchant.dto.IdandRating;
 import com.coviam.blabla.merchant.dto.MerchantNameandRating;
 import com.coviam.blabla.merchant.dto.RatingList;
 import com.coviam.blabla.merchant.entity.Merchant;
@@ -58,5 +59,13 @@ public class MerchantService implements MerchantServiceInterface {
 			merchant.setMerchantRating(currentRating);
 			merchantrepository.save(merchant);
 		}
+	}
+
+	@Override
+	public IdandRating getMerchant(int merchantId) {
+		// TODO Auto-generated method stub
+		Merchant merchant = merchantrepository.findOne(merchantId);
+		IdandRating id = new IdandRating(merchant);
+		 return id;
 	}
 }
