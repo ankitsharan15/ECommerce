@@ -1,12 +1,12 @@
 package com.coviam.blabla.merchant.service;
 
 import java.util.List;
-
 import com.coviam.blabla.merchant.dto.IdandRating;
 import com.coviam.blabla.merchant.dto.MerchantNameandRating;
 import com.coviam.blabla.merchant.dto.RatingList;
 import com.coviam.blabla.merchant.entity.Merchant;
 import com.coviam.blabla.merchant.entity.ScoreId;
+
 
 public interface MerchantServiceInterface {
 	Iterable<Merchant> getMerchantDetails();

@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.coviam.blabla.merchant.dao.MerchantRepository;
 import com.coviam.blabla.merchant.dao.ScoreRepository;
 import com.coviam.blabla.merchant.dto.IdandRating;
@@ -45,6 +47,7 @@ public class MerchantService implements MerchantServiceInterface {
 		return scoreList;
 	}
 
+	@Transactional
 	@Override
 	public void updateMerchantRating(RatingList ratinglist) {
 		List<MerchantNameandRating> idratinglist = ratinglist.getIdandRating();
